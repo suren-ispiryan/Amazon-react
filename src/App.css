@@ -2,37 +2,104 @@
   text-align: center;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+/* sign */
+.sign-parent {
   display: flex;
-  flex-direction: column;
-  align-items: center;
   justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
 }
 
-.App-link {
-  color: #61dafb;
+.sign-form {
+  border: 1px black solid;
+  border-radius: 5px;
+  padding: 25px;
+  margin-top: 100px;
+  width: 400px;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
+/*My store*/
+.product-create-parent {
+  border-left: 1px black solid !important;
+}
+
+.create-product-form {
+  border-radius: 5px;
+  padding: 10px 20px;
+  width: 350px;
+  border: 1px black solid;
+}
+
+.users-products {
+  padding: 15px 0px;
+  margin: 10px;
+  border: 1px black solid;
+  border-radius: 5px;
+}
+
+.auth-user-posts-action {
+  display: flex;
+  justify-content: center;
+  text-align: left;
+}
+
+.auth-user-posts-action-btn {
+  display: flex;
+  justify-content: space-around;
+}
+
+.product-images {
+  padding: 5px;
+}
+
+.product-image {
+  height: 150px;
+}
+
+.errors {
+  padding: 1px;
+}
+
+.centering-objects {
+  display: flex;
+  justify-content: center;
+}
+
+.my-store-parent-row {
+  margin-left: 20px;
+}
+
+@media only screen and (max-width: 992px) {
+  .my-store-parent-row {
+    display: flex;
+    justify-content: center;
   }
-  to {
-    transform: rotate(360deg);
-  }
+}
+
+/*profile*/
+.create-address {
+  display: flex;
+  justify-content: center;
+}
+
+.form-create-address {
+  border: 1px black solid;
+  border-radius: 5px;
+}
+
+li {
+  list-style-type: none;
+}
+
+.make-default-radio-btn {
+  cursor: pointer;
+}
+
+.password-change-row {
+  display: flex;
+  justify-content: center;
+}
+
+.password-change-col {
+  padding: 15px;
+  border: 1px black solid;
+  border-radius: 5px;
 }

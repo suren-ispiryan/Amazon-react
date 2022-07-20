@@ -1,23 +1,34 @@
-import logo from './logo.svg';
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import NavigationBar from './components/NavigationBar';
+import AllProducts from './components/AllProducts';
+import Login from './components/Login';
+import Register from './components/Register';
+import UserProfile from './components/UserProfile';
+import MyStore from './components/MyStore';
+import axios from 'axios';
 import './App.css';
+import { UserProvider } from './UserContext';
 
-function App() {
+const App = () => {
+    const client = axios.create({
+        baseURL: 'http://localhost:8000/api',
+        headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }
+    });
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+        <BrowserRouter>
+            <NavigationBar client={client} />
+            <UserProvider>
+                <Routes>
+                    <Route path="/" element={<AllProducts />} />
+                    <Route path="login" element={<Login client={client} />} />
+                    <Route path="register" element={<Register client={client} />} />
+                    <Route path="my-store" element={<MyStore client={client} />} />
+                    <Route path="user-profile" element={<UserProfile client={client} />} />
+                </Routes>
+            </UserProvider>
+        </BrowserRouter>
     </div>
   );
 }
