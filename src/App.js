@@ -21,7 +21,7 @@ const App = () => {
             <NavigationBar client={client} />
             <UserProvider>
                 <Routes>
-                    <Route path="/" element={<AllProducts />} />
+                    <Route path="/" element={<AllProducts client={client} />} />
                     <Route path="login" element={<Login client={client} />} />
                     <Route path="register" element={<Register client={client} />} />
                     <Route path="my-store" element={<MyStore client={client} />} />
