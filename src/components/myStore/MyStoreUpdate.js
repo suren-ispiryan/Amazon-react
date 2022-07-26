@@ -9,13 +9,13 @@ const MyStoreUpdate = ({ initialValues, client, show, setShow, productImage, upd
     const [productUpdateAttributes, setProductUpdateAttributes] = useState(initialValues);
 
     const handleChangeUpdate = ({target}) => {
-        setProductUpdateAttributes({
-            ...productUpdateAttributes,
+        setUpdatedProduct({
+            ...updatedProduct,
             [target.name]: target.value,
         })
         if (target.name === 'picture') {
-            setProductUpdateAttributes({
-                ...productUpdateAttributes,
+            setUpdatedProduct({
+                ...updatedProduct,
                 [target.name]: target.files[0],
             })
         }
@@ -30,14 +30,14 @@ const MyStoreUpdate = ({ initialValues, client, show, setShow, productImage, upd
         setShow(false)
         const dataUpdate = new FormData();
         dataUpdate.append('id', id);
-        dataUpdate.append('name', productUpdateAttributes.name);
-        dataUpdate.append('description', productUpdateAttributes.description);
-        dataUpdate.append('brand', productUpdateAttributes.brand);
-        dataUpdate.append('price', productUpdateAttributes.price);
-        dataUpdate.append('color', productUpdateAttributes.color);
-        dataUpdate.append('size', productUpdateAttributes.size);
-        dataUpdate.append('category', productUpdateAttributes.category);
-        dataUpdate.append('picture', productUpdateAttributes.picture);
+        dataUpdate.append('name', updatedProduct.name);
+        dataUpdate.append('description', updatedProduct.description);
+        dataUpdate.append('brand', updatedProduct.brand);
+        dataUpdate.append('price', updatedProduct.price);
+        dataUpdate.append('color', updatedProduct.color);
+        dataUpdate.append('size', updatedProduct.size);
+        dataUpdate.append('category', updatedProduct.category);
+        dataUpdate.append('picture', updatedProduct.picture);
         productImage.current.value = ''
         setProductUpdateAttributes(initialValues)
         dispatch({
@@ -58,7 +58,7 @@ const MyStoreUpdate = ({ initialValues, client, show, setShow, productImage, upd
                     className="form-control my-3"
                     placeholder="Name"
                     onChange={handleChangeUpdate}
-                    value={productUpdateAttributes.name}
+                    value={updatedProduct.name}
                 />
 
                 <input
@@ -67,7 +67,7 @@ const MyStoreUpdate = ({ initialValues, client, show, setShow, productImage, upd
                     className="form-control my-3"
                     placeholder="Description"
                     onChange={handleChangeUpdate}
-                    value={productUpdateAttributes.description}
+                    value={updatedProduct.description}
                 />
 
                 <input
@@ -76,7 +76,7 @@ const MyStoreUpdate = ({ initialValues, client, show, setShow, productImage, upd
                     className="form-control my-3"
                     placeholder="Brand"
                     onChange={handleChangeUpdate}
-                    value={productUpdateAttributes.brand}
+                    value={updatedProduct.brand}
                 />
 
                 <input
@@ -85,7 +85,7 @@ const MyStoreUpdate = ({ initialValues, client, show, setShow, productImage, upd
                     className="form-control my-3"
                     placeholder="Price"
                     onChange={handleChangeUpdate}
-                    value={productUpdateAttributes.price}
+                    value={updatedProduct.price}
                 />
 
                 <input
@@ -94,14 +94,14 @@ const MyStoreUpdate = ({ initialValues, client, show, setShow, productImage, upd
                     className="form-control my-3"
                     placeholder="Color"
                     onChange={handleChangeUpdate}
-                    value={productUpdateAttributes.color}
+                    value={updatedProduct.color}
                 />
 
                 <select onChange={handleChangeUpdate}
                         className="form-select my-3"
                         name="size"
                         aria-label="Default select example"
-                        value={productUpdateAttributes.size}
+                        value={updatedProduct.size}
                 >
                     <option defaultValue>Select size</option>
                     <option value="small">small</option>
@@ -113,7 +113,7 @@ const MyStoreUpdate = ({ initialValues, client, show, setShow, productImage, upd
                         className="form-select my-3"
                         name="category"
                         aria-label="Default select example"
-                        value={productUpdateAttributes.category}
+                        value={updatedProduct.category}
                 >
                     <option defaultValue>Select category</option>
                     <option value="toys">toys</option>

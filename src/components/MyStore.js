@@ -22,7 +22,7 @@ const MyStore = ({ client }) => {
     const [allProducts, setAllProducts] = useState([]);
     const [show, setShow] = useState(false);
     const [updateProductItem, setUpdateProductItem] = useState({});
-    const [updatedProduct, setUpdatedProduct] = useState([]);
+    const [updatedProduct, setUpdatedProduct] = useState(initialValues);
 
     useEffect(() => {
         dispatch({
