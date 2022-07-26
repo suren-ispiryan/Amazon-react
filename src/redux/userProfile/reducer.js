@@ -29,7 +29,6 @@ const profileReducer = (state = initialState, action) => {
                 addresses: [...state.addresses],
             }
         case CREATE_ADDRESS_SUCCESS:
-            console.log(action.address)
             return {
                 ...state,
                 loading: false,
