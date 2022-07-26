@@ -18,7 +18,7 @@ const initialValues = {
 const MyStore = ({ client }) => {
     const {products, loading} = useSelector((state) => state.products)
     const dispatch = useDispatch();
-    const productImage = useRef();
+    const productImage = useRef('');
     const [allProducts, setAllProducts] = useState([]);
     const [show, setShow] = useState(false);
     const [updateProductItem, setUpdateProductItem] = useState({});
@@ -46,7 +46,6 @@ const MyStore = ({ client }) => {
                     allProducts={allProducts}
                     client={client}
                     setShow={setShow}
-                    setAllProducts={setAllProducts}
                     setUpdatedProduct={setUpdatedProduct}
                 />
 
@@ -56,7 +55,9 @@ const MyStore = ({ client }) => {
                     productImage={productImage}
                 />
 
-                <MyStoreUpdate
+               <MyStoreUpdate
+                   products={products}
+                    loading={loading}
                     setUpdatedProduct={setUpdatedProduct}
                     initialValues={initialValues}
                     client={client}

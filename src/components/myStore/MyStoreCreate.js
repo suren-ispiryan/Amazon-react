@@ -73,7 +73,7 @@ const MyStoreCreate = ({ client, productImage, initialValues }) => {
     }
 
     return (
-        <div className="col-lg-4 col-md-12 product-create-parent">
+        <div className="col-lg-4 col-md-12 mt-5 product-create-parent">
             <div className="row d-flex justify-content-center">
                 <div className="col-md-10 m-1 create-product-form">
                     <h4 className="my-4">Create a product</h4>

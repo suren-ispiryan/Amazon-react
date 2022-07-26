@@ -24,7 +24,7 @@ const UserInfo = ({client}) => {
         }
     }, [loading])
 
-    const makeDefaultAddress = (id) => {
+    const makeDefaultAddress = (event, id) => {
         dispatch({
             type: DEFAULT_ADDRESS_REQUEST,
             payload: id, client
@@ -42,7 +42,7 @@ const UserInfo = ({client}) => {
         <div className="user-info">
             <h2 className="mb-5">Your addresses</h2>
             {
-                userData.length &&  userData.map((address, index) => {
+                userData.length &&  userData.map((address) => {
                     return(
                         <ul key={uuid()}>
                             <li> <span className="text-danger"> Name: </span> {address.name} </li>
@@ -54,18 +54,17 @@ const UserInfo = ({client}) => {
                                     address.default === 1
                                     ?
                                         <input
-                                            checked
+                                            defaultChecked
                                             className="make-default-radio-btn"
                                             type="radio"
                                             name="makeDefault"
-                                            onChange={() => makeDefaultAddress(address.id)}
                                         />
                                     :
                                         <input
                                             className="make-default-radio-btn"
                                             type="radio"
                                             name="makeDefault"
-                                            onChange={() => makeDefaultAddress(address.id)}
+                                            onChange={event => makeDefaultAddress(event, address.id)}
                                         />
                                 }
                             </li>

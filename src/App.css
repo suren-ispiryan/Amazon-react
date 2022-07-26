@@ -18,7 +18,7 @@
 
 /*My store*/
 .product-create-parent {
-  border-left: 1px black solid !important;
+  /*border-left: 1px black solid !important;*/
 }
 
 .create-product-form {
@@ -107,4 +107,10 @@ li {
   padding: 15px;
   border: 1px black solid;
   border-radius: 5px;
+}
+
+
+/*spinner*/
+.loading-spinner {
+  text-align: center;
 }

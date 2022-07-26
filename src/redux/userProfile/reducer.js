@@ -97,6 +97,7 @@ const profileReducer = (state = initialState, action) => {
             const newProducts = [];
             state.addresses.map(i => {
                 if(i.id !== parseInt(action.address.id)) {
+                    i.default = 0
                     newProducts.push(i)
                 } else {
                     newProducts.push(action.address)
