@@ -54,7 +54,7 @@ const MyStoreShow = ({allProducts, client, setShow, setUpdatedProduct}) => {
                                     </div>
                                     <div className="col-md-5">
                                         <div className="text-danger centering-objects">color:</div>
-                                        <div className="centering-objects">{product.color}</div>
+                                        <div className="centering-objects product-color-box" style={{backgroundColor: `${product.color}`}}></div>
                                     </div>
                                 </div>
                                 <hr/>

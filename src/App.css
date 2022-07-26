@@ -74,6 +74,11 @@
   }
 }
 
+.product-color-box {
+  height: 25px;
+  width: 100%;
+}
+
 /*profile*/
 .create-address {
   display: flex;

@@ -6,7 +6,6 @@ import { UPDATE_PRODUCT_REQUEST } from '../../redux/myStore/actions';
 
 const MyStoreUpdate = ({ initialValues, client, show, setShow, productImage, updatedProduct, setUpdatedProduct }) => {
     const dispatch = useDispatch();
-    const [productUpdateAttributes, setProductUpdateAttributes] = useState(initialValues);
 
     const handleChangeUpdate = ({target}) => {
         setUpdatedProduct({
@@ -39,7 +38,6 @@ const MyStoreUpdate = ({ initialValues, client, show, setShow, productImage, upd
         dataUpdate.append('category', updatedProduct.category);
         dataUpdate.append('picture', updatedProduct.picture);
         productImage.current.value = ''
-        setProductUpdateAttributes(initialValues)
         dispatch({
             type: UPDATE_PRODUCT_REQUEST,
             payload: dataUpdate, client
