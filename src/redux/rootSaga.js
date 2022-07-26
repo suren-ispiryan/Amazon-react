@@ -1,9 +1,11 @@
 import { all } from 'redux-saga/effects';
+import myStore from './myStore/saga';
+import userProfile from './userProfile/saga'
 
-import todo from './myStore/saga'
-
-export default function* rootSaga() {
+function* rootSaga() {
     yield all([
-        todo()
-    ]);
+        myStore(),
+        userProfile()
+    ])
 }
+export default rootSaga

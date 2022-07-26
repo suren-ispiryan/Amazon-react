@@ -1,18 +1,12 @@
 import { useState } from 'react';
+import { useDispatch } from 'react-redux';
 import Modal from 'react-bootstrap/Modal';
 import Button from 'react-bootstrap/Button';
+import { UPDATE_PRODUCT_REQUEST } from '../../redux/myStore/actions';
 
-const MyStoreUpdate = ({
-    client,
-    show,
-    setShow,
-    setUpdateProductItem,
-    updateProductItem,
-    productImage,
-    updatedProduct
-}) => {
-
-    const [productUpdateAttributes, setProductUpdateAttributes] = useState({});
+const MyStoreUpdate = ({ initialValues, client, show, setShow, productImage, updatedProduct, setUpdatedProduct }) => {
+    const dispatch = useDispatch();
+    const [productUpdateAttributes, setProductUpdateAttributes] = useState(initialValues);
 
     const handleChangeUpdate = ({target}) => {
         setProductUpdateAttributes({
@@ -27,31 +21,29 @@ const MyStoreUpdate = ({
         }
     }
 
-    const handleClose = () => setShow(false);
+    const handleClose = () => {
+        setShow(false);
+        setUpdatedProduct(initialValues)
+    }
 
-    const update = () => {
-        setUpdateProductItem({
-            ...productUpdateAttributes,
-            id: updatedProduct.id
-        })
+    const update = (event, id) => {
         setShow(false)
         const dataUpdate = new FormData();
-        dataUpdate.append('id', updateProductItem.id);
-        dataUpdate.append('name', updateProductItem.name);
-        dataUpdate.append('description', updateProductItem.description);
-        dataUpdate.append('brand', updateProductItem.brand);
-        dataUpdate.append('price', updateProductItem.price);
-        dataUpdate.append('color', updateProductItem.color);
-        dataUpdate.append('size', updateProductItem.size);
-        dataUpdate.append('category', updateProductItem.category);
-        dataUpdate.append('picture', updateProductItem.picture);
-        client.post('/update-product', dataUpdate)
-            .then(function (response) {
-                if (response.status === 200) { console.log(response.data) }
-            })
-            .catch(function (error) {
-                console.log(error)
-            });
+        dataUpdate.append('id', id);
+        dataUpdate.append('name', productUpdateAttributes.name);
+        dataUpdate.append('description', productUpdateAttributes.description);
+        dataUpdate.append('brand', productUpdateAttributes.brand);
+        dataUpdate.append('price', productUpdateAttributes.price);
+        dataUpdate.append('color', productUpdateAttributes.color);
+        dataUpdate.append('size', productUpdateAttributes.size);
+        dataUpdate.append('category', productUpdateAttributes.category);
+        dataUpdate.append('picture', productUpdateAttributes.picture);
+        productImage.current.value = ''
+        setProductUpdateAttributes(initialValues)
+        dispatch({
+            type: UPDATE_PRODUCT_REQUEST,
+            payload: dataUpdate, client
+        })
     }
 
     return (
@@ -66,7 +58,7 @@ const MyStoreUpdate = ({
                     className="form-control my-3"
                     placeholder="Name"
                     onChange={handleChangeUpdate}
-                    value={productUpdateAttributes.name || updatedProduct.name}
+                    value={productUpdateAttributes.name}
                 />
 
                 <input
@@ -75,7 +67,7 @@ const MyStoreUpdate = ({
                     className="form-control my-3"
                     placeholder="Description"
                     onChange={handleChangeUpdate}
-                    value={productUpdateAttributes.description || updatedProduct.description}
+                    value={productUpdateAttributes.description}
                 />
 
                 <input
@@ -84,7 +76,7 @@ const MyStoreUpdate = ({
                     className="form-control my-3"
                     placeholder="Brand"
                     onChange={handleChangeUpdate}
-                    value={productUpdateAttributes.brand || updatedProduct.brand}
+                    value={productUpdateAttributes.brand}
                 />
 
                 <input
@@ -93,7 +85,7 @@ const MyStoreUpdate = ({
                     className="form-control my-3"
                     placeholder="Price"
                     onChange={handleChangeUpdate}
-                    value={productUpdateAttributes.price || updatedProduct.price}
+                    value={productUpdateAttributes.price}
                 />
 
                 <input
@@ -102,14 +94,14 @@ const MyStoreUpdate = ({
                     className="form-control my-3"
                     placeholder="Color"
                     onChange={handleChangeUpdate}
-                    value={productUpdateAttributes.color || updatedProduct.color}
+                    value={productUpdateAttributes.color}
                 />
 
                 <select onChange={handleChangeUpdate}
                         className="form-select my-3"
                         name="size"
                         aria-label="Default select example"
-                        value={productUpdateAttributes.size || updatedProduct.size}
+                        value={productUpdateAttributes.size}
                 >
                     <option defaultValue>Select size</option>
                     <option value="small">small</option>
@@ -121,7 +113,7 @@ const MyStoreUpdate = ({
                         className="form-select my-3"
                         name="category"
                         aria-label="Default select example"
-                        value={productUpdateAttributes.category || updatedProduct.category}
+                        value={productUpdateAttributes.category}
                 >
                     <option defaultValue>Select category</option>
                     <option value="toys">toys</option>
@@ -146,7 +138,7 @@ const MyStoreUpdate = ({
                 <Button variant="secondary" onClick={handleClose}>
                     Close
                 </Button>
-                <Button variant="primary" onClick={update}>
+                <Button variant="primary" onClick={event => update(event, updatedProduct.id)}>
                     Save Changes
                 </Button>
             </Modal.Footer>

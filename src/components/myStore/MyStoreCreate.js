@@ -1,16 +1,9 @@
 import { useState } from 'react';
+import { useDispatch } from 'react-redux';
+import { CREATE_PRODUCT_REQUEST } from '../../redux/myStore/actions';
 
-const initialValues = {
-        name: '',
-        description: '',
-        brand: '',
-        price: '',
-        color: '',
-        size: '',
-        category: ''
-}
-
-const MyStoreCreate = ({client, createProductItem, setCreateProductItem, productImage}) => {
+const MyStoreCreate = ({ client, productImage, initialValues }) => {
+    const dispatch = useDispatch();
     const [productAttributes, setProductAttributes] = useState({});
     const [formErrors, setFormErrors ] = useState({});
     const [isSubmited, setIsSubmited ] = useState(false);
@@ -29,31 +22,24 @@ const MyStoreCreate = ({client, createProductItem, setCreateProductItem, product
     }
 
     const createProduct = () => {
-        setCreateProductItem({
-            ...productAttributes
-        })
         setFormErrors(validate(productAttributes));
         setIsSubmited(true);
-        if (Object.keys(formErrors).length === 0 && isSubmited) {
+        if (Object.keys(formErrors).length === 0) {
             const data = new FormData();
-            data.append('name', createProductItem.name);
-            data.append('description', createProductItem.description);
-            data.append('brand', createProductItem.brand);
-            data.append('price', createProductItem.price);
-            data.append('color', createProductItem.color);
-            data.append('size', createProductItem.size);
-            data.append('category', createProductItem.category);
-            data.append('picture', createProductItem.picture);
-            client.post('/create-product', data)
-                .then(function (response) {
-                    if (response.status === 200) {
-                        productImage.current.value = ''
-                        setProductAttributes(initialValues);
-                    }
-                })
-                .catch(function (error) {
-                    console.log(error)
-                });
+            data.append('name', productAttributes.name);
+            data.append('description', productAttributes.description);
+            data.append('brand', productAttributes.brand);
+            data.append('price', productAttributes.price);
+            data.append('color', productAttributes.color);
+            data.append('size', productAttributes.size);
+            data.append('category', productAttributes.category);
+            data.append('picture', productAttributes.picture);
+            productImage.current.value = ''
+            setProductAttributes(initialValues)
+            dispatch({
+                type: CREATE_PRODUCT_REQUEST,
+                payload: data, client
+            })
         }
     }
 

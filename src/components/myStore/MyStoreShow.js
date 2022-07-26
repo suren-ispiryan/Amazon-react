@@ -1,12 +1,9 @@
 import uuid from 'react-uuid';
+import { DELETE_PRODUCTS_REQUEST } from '../../redux/myStore/actions';
+import { useDispatch } from 'react-redux';
 
-const MyStoreShow = ({
-    allProducts,
-    client,
-    setShow,
-    setAllProducts,
-    setUpdatedProduct
-}) => {
+const MyStoreShow = ({allProducts, client, setShow, setUpdatedProduct}) => {
+    const dispatch = useDispatch();
 
     const getUpdatePostData = (event, id) => {
         setShow(true);
@@ -19,14 +16,12 @@ const MyStoreShow = ({
     }
 
     const deletePost = (event, id) => {
-        client.get('/delete-auth-user-products/'+id)
-            .then(function (response) {
-                client.get('/get-auth-user-products')
-                    .then(function (response) {
-                        if (response.status === 200) { setAllProducts(response.data)}
-                    })
-            })
+        dispatch({
+            type: DELETE_PRODUCTS_REQUEST,
+            payload: id, client
+        })
     }
+
 
     return (
         <div className="col-md-8 product-create-user px-5">
@@ -66,7 +61,7 @@ const MyStoreShow = ({
                                 <div className="row auth-user-posts-action">
                                     <div className="col-md-5">
                                         <div className="text-danger centering-objects">owner:</div>
-                                        <div className="centering-objects">{product.user.name}</div>
+                                        <div className="centering-objects">{product.user && product.user.name}</div>
                                     </div>
                                     <div className="col-md-5">
                                         <div className="text-danger centering-objects">price:</div>

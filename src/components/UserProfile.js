@@ -8,7 +8,9 @@ const UserProfile = ({client}) => {
             <div className="container">
                 <div className="row pt-5">
                     <div className="col-md-6">
-                        <UserInfo client={client} />
+                        <UserInfo
+                            client={client}
+                        />
                     </div>
                     <div className="col-md-6">
                         <CreateAddress

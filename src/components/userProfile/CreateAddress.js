@@ -1,5 +1,6 @@
-import { useEffect, useState, useContext } from 'react';
-import { UserContext } from '../../UserContext';
+import { useState } from 'react';
+import { useDispatch } from 'react-redux';
+import { CREATE_ADDRESS_REQUEST } from '../../redux/userProfile/actions';
 
 const initialState = {
     name: '',
@@ -10,10 +11,9 @@ const initialState = {
     zip: null
 }
 
-const CreateAddress = ({client}) => {
+const CreateAddress = ({ client }) => {
+    const dispatch = useDispatch();
     const [address, setAddress] = useState(initialState);
-    const [fullAddress, setFullAddress] = useContext(UserContext);
-    const [userData, setUserData] = useState(UserContext);
 
     const handleChange = ({target}) => {
        setAddress({
@@ -23,20 +23,12 @@ const CreateAddress = ({client}) => {
     }
 
     const createAddress = () => {
-        setFullAddress(address);
-        client.post('/create-address', fullAddress)
-            .then(function (response) { setAddress(initialState) })
-            .catch(function (error) { console.log(error) });
-        client.get('/get-user-data')
-            .then(function (response) { setUserData(response.data) })
-            .catch(function (error) { console.log(error) });
+        dispatch({
+            type: CREATE_ADDRESS_REQUEST,
+            payload: address, client
+        })
+        setAddress(initialState)
     }
-
-    useEffect(() => {
-        client.get('/get-user-data')
-            .then(function (response) { setUserData(response.data) })
-            .catch(function (error) { console.log(error) });
-    }, [fullAddress, client]);
 
     return (
         <div className="create-address row">

@@ -1,12 +1,9 @@
-// ** Redux Imports
 import { combineReducers } from 'redux';
-
-// ** Reducers Imports
-import
-    todos from './myStore/reducer'
+import myStore from './myStore/reducer';
+import userProfile from './userProfile/reducer';
 
 const rootReducer = combineReducers({
-    todos,
-});
-
-export default rootReducer;
+    products: myStore,
+    addresses: userProfile
+})
+export default rootReducer

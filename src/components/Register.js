@@ -4,8 +4,7 @@ import { Link, useNavigate } from 'react-router-dom';
 const Register = ({client}) => {
     const navigate = useNavigate();
     const [registerInfo, setRegisterInfo] = useState({});
-    const [userData, setUserData] = useState({});
-
+    
     const handleChange = ({target}) => {
         setRegisterInfo({
             ...registerInfo,
@@ -14,8 +13,7 @@ const Register = ({client}) => {
     }
 
     const registerUser = () => {
-        setUserData({...registerInfo});
-        client.post('/register', { userData })
+        client.post('/register', { registerInfo })
             .then(function (response) {
                 if(response.status === 200) {
                     navigate('/login')

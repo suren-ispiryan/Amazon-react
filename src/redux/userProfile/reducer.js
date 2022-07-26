@@ -1,113 +1,114 @@
 import {
-    CREATE_PRODUCT_REQUEST,
-    CREATE_PRODUCT_SUCCESS,
-    CREATE_PRODUCT_FAILURE,
-    GET_PRODUCTS_REQUEST,
-    GET_PRODUCTS_SUCCESS,
-    GET_PRODUCTS_FAILURE,
-    DELETE_PRODUCTS_REQUEST,
-    DELETE_PRODUCTS_SUCCESS,
-    DELETE_PRODUCTS_FAILURE,
-    UPDATE_PRODUCT_REQUEST,
-    UPDATE_PRODUCT_SUCCESS,
-    UPDATE_PRODUCT_FAILURE
+    CREATE_ADDRESS_REQUEST,
+    CREATE_ADDRESS_SUCCESS,
+    CREATE_ADDRESS_FAILURE,
+    GET_ADDRESS_REQUEST,
+    GET_ADDRESS_SUCCESS,
+    GET_ADDRESS_FAILURE,
+    DELETE_ADDRESS_REQUEST,
+    DELETE_ADDRESS_SUCCESS,
+    DELETE_ADDRESS_FAILURE,
+    DEFAULT_ADDRESS_REQUEST,
+    DEFAULT_ADDRESS_SUCCESS,
+    DEFAULT_ADDRESS_FAILURE
 } from "./actions"
 
-const initialStata = {
-    products: [],
+const initialState = {
+    addresses: [],
     loading: false,
     message: '',
 }
-const userReducer = (state = initialStata, action) => {
+const profileReducer = (state = initialState, action) => {
     switch (action.type) {
     //CREATE
-        case CREATE_PRODUCT_REQUEST:
+        case CREATE_ADDRESS_REQUEST:
             return {
                 ...state,
                 loading: true,
                 message: '',
-                products: [...state.products],
+                addresses: [...state.addresses],
             }
-        case CREATE_PRODUCT_SUCCESS:
+        case CREATE_ADDRESS_SUCCESS:
+            console.log(action.address)
             return {
                 ...state,
                 loading: false,
-                products: [...state.products, action.products],
+                addresses: [...state.addresses, action.address],
                 message: action.message
             }
-        case CREATE_PRODUCT_FAILURE:
-            return {
-                ...state,
-                loading: false,
-                message: action.message
-            }
-    // GET
-        case GET_PRODUCTS_REQUEST:
-            return {
-               ...state,
-                loading: true,
-                message: '',
-                products: []
-            }
-        case GET_PRODUCTS_SUCCESS:
-            return {
-                ...state,
-                loading: false,
-                products: action.products,
-                message: action.message
-            }
-        case GET_PRODUCTS_FAILURE:
+        case CREATE_ADDRESS_FAILURE:
             return {
                 ...state,
                 loading: false,
                 message: action.message
             }
-    // DELETE
-        case DELETE_PRODUCTS_REQUEST:
+    //GET
+        case GET_ADDRESS_REQUEST:
             return {
                 ...state,
                 loading: true,
                 message: '',
-                products: [...state.products]
+                addresses: []
             }
-        case DELETE_PRODUCTS_SUCCESS:
-            const removedProduct = state.products.filter(i => i.id !== parseInt(action.products))
+        case GET_ADDRESS_SUCCESS:
             return {
                 ...state,
                 loading: false,
-                products: removedProduct,
+                addresses: action.address,
                 message: action.message
             }
-        case DELETE_PRODUCTS_FAILURE:
+        case GET_ADDRESS_FAILURE:
             return {
                 ...state,
                 loading: false,
                 message: action.message
             }
-    // UPDATE
-        case UPDATE_PRODUCT_REQUEST:
+    //DELETE
+        case DELETE_ADDRESS_REQUEST:
             return {
                 ...state,
                 loading: true,
                 message: '',
-                products: [...state.products]
+                addresses: [...state.addresses]
             }
-        case UPDATE_PRODUCT_SUCCESS:
+        case DELETE_ADDRESS_SUCCESS:
+            const removedAddress = state.addresses.filter(i => i.id !== parseInt(action.address))
+            return {
+                ...state,
+                loading: false,
+                addresses: removedAddress,
+                message: action.message
+            }
+        case DELETE_ADDRESS_FAILURE:
+            return {
+                ...state,
+                loading: false,
+                message: action.message
+            }
+    //MAKE DEFAULT
+        case DEFAULT_ADDRESS_REQUEST:
+            return {
+                ...state,
+                loading: true,
+                message: '',
+                addresses: [...state.addresses]
+            }
+        case DEFAULT_ADDRESS_SUCCESS:
             const newProducts = [];
-            state.products.map(i => {
-                if(i.id !== parseInt(action.products.id)) {
+            state.addresses.map(i => {
+                if(i.id !== parseInt(action.address.id)) {
                     newProducts.push(i)
                 } else {
-                    newProducts.push(action.products)
+                    newProducts.push(action.address)
                 }
             })
             return {
                 ...state,
                 loading: false,
-                products: newProducts,
+                addresses: newProducts,
                 message: action.message
             }
-        case UPDATE_PRODUCT_FAILURE:
+        case DEFAULT_ADDRESS_FAILURE:
             return {
                 ...state,
                 loading: false,
@@ -118,4 +119,4 @@ const userReducer = (state = initialStata, action) => {
             return state
     }
 }
-export default userReducer
+export default profileReducer

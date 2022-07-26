@@ -2,29 +2,40 @@ import { useEffect, useState, useRef } from 'react';
 import MyStoreCreate from './myStore/MyStoreCreate';
 import MyStoreUpdate from './myStore/MyStoreUpdate';
 import MyStoreShow from './myStore/MyStoreShow';
+import { GET_PRODUCTS_REQUEST } from '../redux/myStore/actions';
+import { useDispatch, useSelector } from 'react-redux';
 
-const MyStore = ({
-    client
-}) => {
+const initialValues = {
+    name: '',
+    description: '',
+    brand: '',
+    price: '',
+    color: '#000000',
+    size: '',
+    category: ''
+}
 
+const MyStore = ({ client }) => {
+    const {products, loading} = useSelector((state) => state.products)
+    const dispatch = useDispatch();
     const productImage = useRef();
-    const [createProductItem, setCreateProductItem] = useState({});
     const [allProducts, setAllProducts] = useState([]);
     const [show, setShow] = useState(false);
     const [updateProductItem, setUpdateProductItem] = useState({});
     const [updatedProduct, setUpdatedProduct] = useState([]);
 
     useEffect(() => {
-            client.get('/get-auth-user-products')
-                .then(function (response) {
-                    if (response.status === 200) {
-                        setAllProducts(response.data);
-                    }
-                })
-                .catch(function (error) {
-                    console.log(error)
-                });
-        }, [createProductItem, updateProductItem, client]);
+        dispatch({
+            type: GET_PRODUCTS_REQUEST,
+            payload: client
+        })
+    }, []);
+
+    useEffect(() => {
+        if (!loading) {
+            setAllProducts(products)
+        }
+    }, [loading])
 
     return (
         <div className="my-store container-fluid">
@@ -40,13 +51,14 @@ const MyStore = ({
                 />
 
                 <MyStoreCreate
-                    createProductItem={createProductItem}
-                    setCreateProductItem={setCreateProductItem}
+                    initialValues={initialValues}
                     client={client}
                     productImage={productImage}
                 />
 
                 <MyStoreUpdate
+                    setUpdatedProduct={setUpdatedProduct}
+                    initialValues={initialValues}
                     client={client}
                     show={show}
                     setShow={setShow}
@@ -61,3 +73,4 @@ const MyStore = ({
 }
 
 export default MyStore;
+

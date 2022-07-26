@@ -1,40 +1,48 @@
-import { useEffect, useState, useContext } from 'react';
+import { useEffect, useState } from 'react';
 import { UserContext } from '../../UserContext';
 import uuid from 'react-uuid';
+import { useDispatch, useSelector } from 'react-redux';
+import { GET_ADDRESS_REQUEST } from '../../redux/userProfile/actions';
+import { DELETE_ADDRESS_REQUEST } from '../../redux/userProfile/actions';
+import { DEFAULT_ADDRESS_REQUEST } from '../../redux/userProfile/actions';
 
 const UserInfo = ({client}) => {
     const [userData, setUserData] = useState(UserContext);
-    const [fullAddress, setFullAddress] = useContext(UserContext);
+    const {addresses, loading} = useSelector((state) => state.addresses)
+    const dispatch = useDispatch();
 
     useEffect(() => {
-        client.get('/get-user-data')
-              .then(function (response) { setUserData(response.data) })
-              .catch(function (error) { console.log(error) });
-    }, [client, fullAddress, setFullAddress]);
+        dispatch({
+            type: GET_ADDRESS_REQUEST,
+            payload: client
+        })
+    }, []);
+
+    useEffect(() => {
+        if (!loading) {
+            setUserData(addresses)
+        }
+    }, [loading])
 
     const makeDefaultAddress = (id) => {
-        client.get('/make-address-default/' + id)
-              .then(function (response) { console.log(response) })
-              .catch(function (error) { console.log(error) });
-        client.get('/get-user-data')
-              .then(function (response) { setUserData(response.data) })
-              .catch(function (error) { console.log(error) });
+        dispatch({
+            type: DEFAULT_ADDRESS_REQUEST,
+            payload: id, client
+        })
     }
 
     const deleteAddress = (id) => {
-        client.get('/delete-address/' + id)
-              .then(function (response) { console.log(response) })
-              .catch(function (error) { console.log(error) });
-        client.get('/get-user-data')
-              .then(function (response) { setUserData(response.data) })
-              .catch(function (error) { console.log(error) });
+        dispatch({
+            type: DELETE_ADDRESS_REQUEST,
+            payload: id, client
+        })
     }
 
     return (
         <div className="user-info">
             <h2 className="mb-5">Your addresses</h2>
             {
-                userData?.[0]?.addresses?.length &&  userData[0].addresses.map((address, index) => {
+                userData.length &&  userData.map((address, index) => {
                     return(
                         <ul key={uuid()}>
                             <li> <span className="text-danger"> Name: </span> {address.name} </li>

@@ -4,7 +4,6 @@ import { Link, useNavigate } from 'react-router-dom';
 const Login = ({client}) => {
     const navigate = useNavigate();
     const [loginInfo, setLoginInfo] = useState({});
-    const [userLoginData, setUserLoginData] = useState({});
 
     const handleChange = ({target}) => {
         setLoginInfo({
@@ -14,8 +13,7 @@ const Login = ({client}) => {
     }
 
     const loginUser = () => {
-        setUserLoginData({...loginInfo});
-        client.post('/login', { userLoginData })
+        client.post('/login', { loginInfo })
             .then(function (response) {
                 if(response.status === 200) {
                     localStorage.setItem('token', response.data);
