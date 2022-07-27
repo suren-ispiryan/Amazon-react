@@ -4,7 +4,10 @@ import {
     GET_ALLPRODUCTS_FAILURE,
     GET_PRODUCTDETAILS_REQUEST,
     GET_PRODUCTDETAILS_SUCCESS,
-    GET_PRODUCTDETAILS_FAILURE
+    GET_PRODUCTDETAILS_FAILURE,
+    GET_SEARCH_FOR_PRODUCT_REQUEST,
+    GET_SEARCH_FOR_PRODUCT_SUCCESS,
+    GET_SEARCH_FOR_PRODUCT_FAILURE
 } from "./actions"
 
 const initialStata = {
@@ -36,7 +39,7 @@ const userReducer = (state = initialStata, action) => {
                 loading: false,
                 message: action.message
             }
-        // GET DETAILS
+    // GET DETAILS
         case GET_PRODUCTDETAILS_REQUEST:
             return {
                 ...state,
@@ -52,6 +55,27 @@ const userReducer = (state = initialStata, action) => {
                 message: action.message
             }
         case GET_PRODUCTDETAILS_FAILURE:
+            return {
+                ...state,
+                loading: false,
+                message: action.message
+            }
+    // GET SEARCHED
+        case GET_SEARCH_FOR_PRODUCT_REQUEST:
+            return {
+                ...state,
+                loading: true,
+                message: '',
+                allProducts: []
+            }
+        case GET_SEARCH_FOR_PRODUCT_SUCCESS:
+            return {
+                ...state,
+                loading: false,
+                allProducts: action.product,
+                message: action.message
+            }
+        case GET_SEARCH_FOR_PRODUCT_FAILURE:
             return {
                 ...state,
                 loading: false,

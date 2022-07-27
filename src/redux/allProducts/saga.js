@@ -5,7 +5,10 @@ import {
     GET_ALLPRODUCTS_FAILURE,
     GET_PRODUCTDETAILS_REQUEST,
     GET_PRODUCTDETAILS_SUCCESS,
-    GET_PRODUCTDETAILS_FAILURE
+    GET_PRODUCTDETAILS_FAILURE,
+    GET_SEARCH_FOR_PRODUCT_REQUEST,
+    GET_SEARCH_FOR_PRODUCT_SUCCESS,
+    GET_SEARCH_FOR_PRODUCT_FAILURE
 } from './actions'
 
 //GET ALL
@@ -42,7 +45,25 @@ function* getProductDetails(action) {
     }
 }
 
+//GET SEARCHED
+function* getSearchForProduct(action) {
+    try {
+        const response = yield action.client.post('/get-searched-product', action.payload)
+        yield put({
+            type: GET_SEARCH_FOR_PRODUCT_SUCCESS,
+            message: 'Success fetching data',
+            product: response.data
+        });
+    } catch (e) {
+        yield put({
+            type: GET_SEARCH_FOR_PRODUCT_FAILURE,
+            message: 'Something went wrong'
+        });
+    }
+}
+
 export default function* () {
     yield takeLatest(GET_ALLPRODUCTS_REQUEST, getAllProducts);
     yield takeLatest(GET_PRODUCTDETAILS_REQUEST, getProductDetails);
+    yield takeLatest(GET_SEARCH_FOR_PRODUCT_REQUEST, getSearchForProduct);
 }

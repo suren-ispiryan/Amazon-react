@@ -1,14 +1,15 @@
 import { useDispatch, useSelector } from 'react-redux';
 import { useEffect, useState } from 'react';
-import { GET_ALLPRODUCTS_REQUEST } from '../redux/allProducts/actions';
+import { GET_ALLPRODUCTS_REQUEST, GET_SEARCH_FOR_PRODUCT_REQUEST } from '../redux/allProducts/actions';
 import uuid from 'react-uuid';
-import { Link } from "react-router-dom";
-import LoadingSpinner from "./LoadingSpinner";
+import { Link } from 'react-router-dom';
+import LoadingSpinner from './LoadingSpinner';
 
 const AllProducts = ({ client }) => {
     const {allProducts, loading} = useSelector((state) => state.allProducts)
     const dispatch = useDispatch();
     const [allUsersProducts, setAllUsersProducts] = useState([]);
+    const [searchParameter, setSearchParameter] = useState('');
 
     useEffect(() => {
         dispatch({
@@ -23,13 +24,49 @@ const AllProducts = ({ client }) => {
         }
     }, [loading])
 
+    const handleChange = ({ target }) => {
+            setSearchParameter(target.value)
+    }
+
+    const searchProduct = () => {
+        dispatch({
+            type: GET_SEARCH_FOR_PRODUCT_REQUEST,
+            payload: {searchParameter: searchParameter}, client
+        })
+    }
+
     return (
         <div className="col-md-12 px-5">
             {loading
                 ?
-                <LoadingSpinner /> :
+                    <LoadingSpinner />
+                :
                 (<>
-                    <h4 className="my-4">My products</h4>
+                    <h4 className="my-4">All products</h4>
+
+                    <div className="row search-parent-row">
+                        <div className="col-md-2">
+                            <input
+                                type="text"
+                                name="search"
+                                className="form-control"
+                                placeholder="Search for..."
+                                value={searchParameter}
+                                onChange={handleChange}
+                            />
+                        </div>
+
+                        <div className="col-md-1">
+                            <button
+                                className="btn btn-primary form-control"
+                                type="submit"
+                                onClick={searchProduct}
+                            >
+                                Search
+                            </button>
+                        </div>
+                    </div>
+
                     <div className="row my-store-parent-row">
                         {
                             allUsersProducts.map((product) => {
@@ -90,7 +127,8 @@ const AllProducts = ({ client }) => {
                             })
                         }
                     </div>
-                </>)}
+                </>)
+            }
         </div>
     );
 }

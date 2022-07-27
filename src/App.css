@@ -143,3 +143,10 @@ li {
   margin: 70px 0 20px 0;
   padding: 20px;
 }
+
+.search-parent-row {
+  display: flex;
+  justify-content: left;
+  padding: 10px 0 40px 30px;
+}
+
