@@ -1,6 +1,7 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import NavigationBar from './components/NavigationBar';
 import AllProducts from './components/AllProducts';
+import ProductDetails from './components/ProductDetails';
 import Login from './components/Login';
 import Register from './components/Register';
 import UserProfile from './components/UserProfile';
@@ -26,6 +27,7 @@ const App = () => {
                     <Route path="register" element={<Register client={client} />} />
                     <Route path="my-store" element={<MyStore client={client} />} />
                     <Route path="user-profile" element={<UserProfile client={client} />} />
+                    <Route path="product-details/:id" element={<ProductDetails client={client} />} />
                 </Routes>
             </UserProvider>
         </BrowserRouter>

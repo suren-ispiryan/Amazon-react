@@ -3,26 +3,12 @@ import {
     GET_ALLPRODUCTS_REQUEST,
     GET_ALLPRODUCTS_SUCCESS,
     GET_ALLPRODUCTS_FAILURE,
+    GET_PRODUCTDETAILS_REQUEST,
+    GET_PRODUCTDETAILS_SUCCESS,
+    GET_PRODUCTDETAILS_FAILURE
 } from './actions'
 
-//CREATE
-// function* createProduct(action) {
-//     try {
-//         const response = yield action.client.post('/create-product', action.payload)
-//         yield put({
-//             type: CREATE_PRODUCT_SUCCESS,
-//             message: 'product successfully created',
-//             products: response.data
-//         });
-//     } catch (e) {
-//         yield put({
-//             type: CREATE_PRODUCT_FAILURE,
-//             message: 'Something went wrong'
-//         });
-//     }
-// }
-
-//GET
+//GET ALL
 function* getAllProducts(action) {
     try {
         const response = yield action.payload.get('/get-all-user-products')
@@ -39,43 +25,24 @@ function* getAllProducts(action) {
     }
 }
 
-//DELETE
-// function* deleteProducts(action) {
-//     try {
-//         const response = yield action.client.delete('/delete-auth-user-products/'+action.payload)
-//         yield put({
-//             type: DELETE_PRODUCTS_SUCCESS,
-//             message: 'Product successfully deleted',
-//             products: response.data
-//         });
-//     } catch (e) {
-//         yield put({
-//             type: DELETE_PRODUCTS_FAILURE,
-//             message: 'Something went wrong'
-//         });
-//     }
-// }
-
-//UPDATE
-// function* updateProducts(action) {
-//     try {
-//         const response = yield action.client.post('/update-product', action.payload)
-//         yield put({
-//             type: UPDATE_PRODUCT_SUCCESS,
-//             message: 'product successfully created',
-//             products: response.data
-//         });
-//     } catch (e) {
-//         yield put({
-//             type: UPDATE_PRODUCT_FAILURE,
-//             message: 'Something went wrong'
-//         });
-//     }
-// }
+//GET DETAILS
+function* getProductDetails(action) {
+    try {
+        const response = yield action.client.get('/get-product-details/'+action.payload)
+        yield put({
+            type: GET_PRODUCTDETAILS_SUCCESS,
+            message: 'Success fetching data',
+            product: response.data
+        });
+    } catch (e) {
+        yield put({
+            type: GET_PRODUCTDETAILS_FAILURE,
+            message: 'Something went wrong'
+        });
+    }
+}
 
 export default function* () {
-    // yield takeLatest(CREATE_PRODUCT_REQUEST, createProduct);
     yield takeLatest(GET_ALLPRODUCTS_REQUEST, getAllProducts);
-    // yield takeLatest(DELETE_PRODUCTS_REQUEST, deleteProducts);
-    // yield takeLatest(UPDATE_PRODUCT_REQUEST, updateProducts);
+    yield takeLatest(GET_PRODUCTDETAILS_REQUEST, getProductDetails);
 }
