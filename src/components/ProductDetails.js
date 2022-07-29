@@ -4,6 +4,7 @@ import { GET_PRODUCTDETAILS_REQUEST } from '../redux/allProducts/actions';
 import { useDispatch, useSelector } from 'react-redux';
 import uuid from 'react-uuid';
 import LoadingSpinner from './LoadingSpinner';
+import { ADD_TO_CART_REQUEST } from '../redux/userCart/actions';
 
 const ProductDetails = ({ client }) => {
     let { id } = useParams();
@@ -24,6 +25,27 @@ const ProductDetails = ({ client }) => {
             setProductDetails(productDetail)
         }
     }, [loading])
+
+    const addToCart = (event, id) => {
+        if (localStorage.getItem('token')) {
+            dispatch({
+                type: ADD_TO_CART_REQUEST,
+                payload: id, client
+            })
+        } else {
+            let addedToCart = []
+            if(!JSON.parse(localStorage.getItem('addedToCart'))){
+                addedToCart.push(id);
+                localStorage.setItem('addedToCart', JSON.stringify(addedToCart));
+            }else{
+                addedToCart = JSON.parse(localStorage.getItem('addedToCart'));
+                if (!addedToCart.includes(id)) {
+                    addedToCart.push(id);
+                    localStorage.setItem('addedToCart', JSON.stringify(addedToCart));
+                }
+            }
+        }
+    }
 
     return (
         <div>
@@ -68,6 +90,15 @@ const ProductDetails = ({ client }) => {
                                             </div><hr/>
                                             <div className="product-details-columns">Price: {productDetailItem.price} $</div><hr/>
                                         </div>
+                                    </div>
+
+                                    <div className="product-details-columns-add-to-cart">
+                                        <button
+                                            className="btn btn-success"
+                                            onClick={event => addToCart(event, productDetailItem.id)}
+                                        >
+                                            Add to cart
+                                        </button>
                                     </div>
                                 </div>
                             )

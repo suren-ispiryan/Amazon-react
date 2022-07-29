@@ -150,3 +150,7 @@ li {
   padding: 10px 0 40px 30px;
 }
 
+.product-details-columns-add-to-cart {
+  display: flex;
+  justify-content: flex-end;
+ }

@@ -1,6 +1,7 @@
 import { useDispatch, useSelector } from 'react-redux';
 import { useEffect, useState } from 'react';
 import { GET_ALLPRODUCTS_REQUEST, GET_SEARCH_FOR_PRODUCT_REQUEST } from '../redux/allProducts/actions';
+import { ADD_TO_CART_REQUEST } from '../redux/userCart/actions';
 import uuid from 'react-uuid';
 import { Link } from 'react-router-dom';
 import LoadingSpinner from './LoadingSpinner';
@@ -33,6 +34,30 @@ const AllProducts = ({ client }) => {
             type: GET_SEARCH_FOR_PRODUCT_REQUEST,
             payload: {searchParameter: searchParameter}, client
         })
+        setSearchParameter('')
+    }
+
+    const addToCart = (event, id) => {
+        if (localStorage.getItem('token')) {
+        // registered user
+            dispatch({
+                type: ADD_TO_CART_REQUEST,
+                payload: id, client
+            })
+        } else {
+        // not registered user
+            let addedToCart = []
+            if(!JSON.parse(localStorage.getItem('addedToCart'))){
+                addedToCart.push(id);
+                localStorage.setItem('addedToCart', JSON.stringify(addedToCart));
+            }else{
+                addedToCart = JSON.parse(localStorage.getItem('addedToCart'));
+                if (!addedToCart.includes(id)) {
+                    addedToCart.push(id);
+                    localStorage.setItem('addedToCart', JSON.stringify(addedToCart));
+                }
+            }
+        }
     }
 
     return (
@@ -120,6 +145,12 @@ const AllProducts = ({ client }) => {
                                                         See details
                                                     </button>
                                                 </Link>
+                                                    <button
+                                                        className="btn btn-success"
+                                                        onClick={event => addToCart(event, product.id)}
+                                                    >
+                                                        Add to cart
+                                                    </button>
                                             </div>
                                         </div>
                                     </div>

@@ -6,6 +6,8 @@ import Login from './components/Login';
 import Register from './components/Register';
 import UserProfile from './components/UserProfile';
 import MyStore from './components/MyStore';
+import MyCart from './components/MyCart';
+import GuestCart from './components/GuestCart';
 import axios from 'axios';
 import './App.css';
 import { UserProvider } from './UserContext';
@@ -26,6 +28,8 @@ const App = () => {
                     <Route path="login" element={<Login client={client} />} />
                     <Route path="register" element={<Register client={client} />} />
                     <Route path="my-store" element={<MyStore client={client} />} />
+                    <Route path="my-cart" element={<MyCart client={client} />} />
+                    <Route path="guest-cart" element={<GuestCart client={client} />} />
                     <Route path="user-profile" element={<UserProfile client={client} />} />
                     <Route path="product-details/:id" element={<ProductDetails client={client} />} />
                 </Routes>
