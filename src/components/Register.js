@@ -4,7 +4,7 @@ import { Link, useNavigate } from 'react-router-dom';
 const Register = ({client}) => {
     const navigate = useNavigate();
     const [registerInfo, setRegisterInfo] = useState({});
-    
+
     const handleChange = ({target}) => {
         setRegisterInfo({
             ...registerInfo,
@@ -13,7 +13,10 @@ const Register = ({client}) => {
     }
 
     const registerUser = () => {
-        client.post('/register', { registerInfo })
+        let guestCardProducts;
+        guestCardProducts = JSON.parse(localStorage.getItem('addedToCart'))
+
+        client.post('/register', { registerInfo, guestCardProducts })
             .then(function (response) {
                 if(response.status === 200) {
                     navigate('/login')

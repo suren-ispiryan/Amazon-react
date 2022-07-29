@@ -12,9 +12,6 @@ import {
     GUEST_PRODUCT_GET_REQUEST,
     GUEST_PRODUCT_GET_SUCCESS,
     GUEST_PRODUCT_GET_FAILURE,
-    // GUEST_PRODUCT_REMOVE_REQUEST,
-    // GUEST_PRODUCT_REMOVE_SUCCESS,
-    // GUEST_PRODUCT_REMOVE_FAILURE
 } from './actions'
 
 //ADD
@@ -85,28 +82,10 @@ function* getGuestProductsFromCart (action) {
     }
 }
 
-//REMOVE GUEST
-// function* removeGuestProductsFromCart(action) {
-//     try {
-//         const response = yield action.client.get('/remove-from-guest-cart/'+action.payload)
-//         yield put({
-//             type: GUEST_PRODUCT_REMOVE_SUCCESS,
-//             message: 'product successfully created',
-//             addedToCart: response.data
-//         });
-//     } catch (e) {
-//         yield put({
-//             type: GUEST_PRODUCT_REMOVE_FAILURE,
-//             message: 'Something went wrong'
-//         });
-//     }
-// }
-
 
 export default function* () {
     yield takeLatest(ADD_TO_CART_REQUEST, addToCart);
     yield takeLatest(GET_FROM_CART_REQUEST, getFromCart);
     yield takeLatest(REMOVE_FROM_CART_REQUEST, removeFromCart);
     yield takeLatest(GUEST_PRODUCT_GET_REQUEST, getGuestProductsFromCart);
-    // yield takeLatest(GUEST_PRODUCT_REMOVE_REQUEST, removeGuestProductsFromCart);
 }

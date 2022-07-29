@@ -10,10 +10,7 @@ import {
     REMOVE_FROM_CART_FAILURE,
     GUEST_PRODUCT_GET_REQUEST,
     GUEST_PRODUCT_GET_SUCCESS,
-    GUEST_PRODUCT_GET_FAILURE,
-    // GUEST_PRODUCT_REMOVE_REQUEST,
-    // GUEST_PRODUCT_REMOVE_SUCCESS,
-    // GUEST_PRODUCT_REMOVE_FAILURE
+    GUEST_PRODUCT_GET_FAILURE
 } from "./actions"
 
 const initialStata = {
@@ -119,39 +116,6 @@ const userReducer = (state = initialStata, action) => {
                 loading: false,
                 message: action.message
             }
-    //REMOVE GUEST
-    //     case GUEST_PRODUCT_REMOVE_REQUEST:
-    //         return {
-    //             ...state,
-    //             loading: true,
-    //             message: '',
-    //             addedToCart: [...state.addedToCart]
-    //         }
-    //     case GUEST_PRODUCT_REMOVE_SUCCESS:
-    //         let removedProduct = [];
-    //         if (action.addedToCart.product_count === 0) {
-    //             removedProduct = state.addedToCart.filter(i => i.product_id !== parseInt(action.addedToCart.product_id))
-    //         } else {
-    //             state.addedToCart.map(i => {
-    //                 if(i.product_id !== action.addedToCart.product_id) {
-    //                     removedProduct.push(i)
-    //                 } else {
-    //                     removedProduct.push(action.addedToCart)
-    //                 }
-    //             })
-    //         }
-    //         return {
-    //             ...state,
-    //             loading: false,
-    //             addedToCart: removedProduct,
-    //             message: action.message
-    //         }
-    //     case GUEST_PRODUCT_REMOVE_FAILURE:
-    //         return {
-    //             ...state,
-    //             loading: false,
-    //             message: action.message
-    //         }
     // DEFAULT
         default:
             return state
