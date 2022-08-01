@@ -39,6 +39,14 @@ const MyCart = ({ client }) => {
                 (<>
                     <h4 className="my-4">Products on cart</h4>
 
+                    <div className="row pb-5">
+                        <div className="col-md-12 auth-user-products-buy text-end">
+                            <Link to={"/buy-details"}>
+                                <button className="btn btn-success">Buy products</button>
+                            </Link>
+                        </div>
+                    </div>
+
                     <div className="row my-store-parent-row">
                         {
                             allInCardProducts.map((item) => {

@@ -154,3 +154,10 @@ li {
   display: flex;
   justify-content: flex-end;
  }
+
+/* buy */
+.buy-product-image {
+  height: 50px;
+}
+
+

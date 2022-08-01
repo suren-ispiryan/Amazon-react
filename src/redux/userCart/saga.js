@@ -12,6 +12,9 @@ import {
     GUEST_PRODUCT_GET_REQUEST,
     GUEST_PRODUCT_GET_SUCCESS,
     GUEST_PRODUCT_GET_FAILURE,
+    BUY_PRODUCTS_FROM_CART_REQUEST,
+    BUY_PRODUCTS_FROM_CART_SUCCESS,
+    BUY_PRODUCTS_FROM_CART_FAILURE
 } from './actions'
 
 //ADD
@@ -82,10 +85,28 @@ function* getGuestProductsFromCart (action) {
     }
 }
 
+//BUY
+function* buyProductsFromCart (action) {
+    try {
+        const response = yield action.payload.get('/buy-products-from-cart')
+        console.log(response.data)
+        yield put({
+            type: BUY_PRODUCTS_FROM_CART_SUCCESS,
+            message: 'product successfully created',
+            addedToCart: response.data
+        });
+    } catch (e) {
+        yield put({
+            type: BUY_PRODUCTS_FROM_CART_FAILURE,
+            message: 'Something went wrong'
+        });
+    }
+}
 
 export default function* () {
     yield takeLatest(ADD_TO_CART_REQUEST, addToCart);
     yield takeLatest(GET_FROM_CART_REQUEST, getFromCart);
     yield takeLatest(REMOVE_FROM_CART_REQUEST, removeFromCart);
     yield takeLatest(GUEST_PRODUCT_GET_REQUEST, getGuestProductsFromCart);
+    yield takeLatest(BUY_PRODUCTS_FROM_CART_REQUEST, buyProductsFromCart);
 }
