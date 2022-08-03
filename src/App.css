@@ -120,6 +120,9 @@ li {
 }
 .product-color-box {
   height: 25px;
+  color: white;
+  font-size: 14px;
+  text-align: center;
   width: 100%;
 }
 

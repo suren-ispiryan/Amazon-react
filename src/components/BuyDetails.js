@@ -4,6 +4,8 @@ import {useDispatch, useSelector} from 'react-redux';
 import {useEffect, useState} from "react";
 import Table from 'react-bootstrap/Table';
 import uuid from 'react-uuid';
+import { useNavigate } from "react-router-dom";
+import { GetColorName } from 'hex-color-to-color-name';
 
 const BuyDetails = ({ client }) => {
     const {addedToCart, loading} = useSelector((state) => state.addedToCart)
@@ -11,7 +13,7 @@ const BuyDetails = ({ client }) => {
     const [allInCardProducts, setAllInCardProducts] = useState([])
     const [usersAddresses, setUsersAddresses] = useState([])
     const {addresses} = useSelector((state) => state.addresses)
-
+    const navigate = useNavigate()
 
     useEffect(() => {
         dispatch({
@@ -51,11 +53,13 @@ const BuyDetails = ({ client }) => {
             type: BUY_PRODUCTS_FROM_CART_REQUEST,
             payload: client
         })
+        navigate('/orders')
     }
 
     return (
         <div className="m-3">
             <h4 className="mt-5 mb-4">On cart products</h4>
+
             <Table striped bordered hover>
                 <thead>
                     <tr>
@@ -88,7 +92,11 @@ const BuyDetails = ({ client }) => {
                                 <th className="pt-4">{item.product.name}</th>
                                 <th className="pt-4">{item.product.description}</th>
                                 <th className="pt-4">{item.product.brand}</th>
-                                <th className="pt-4">{item.product.color}</th>
+                                <th className="pt-4">
+                                    <div className="centering-objects product-color-box" style={{backgroundColor: `${item.product.color}`}}>
+                                        {GetColorName(item.product.color)}
+                                    </div>
+                                </th>
                                 <th className="pt-4">{item.product.size}</th>
                                 <th className="pt-4">{item.product.category}</th>
                                 <th className="pt-4">{item.product_count}</th>
@@ -107,8 +115,8 @@ const BuyDetails = ({ client }) => {
             {
                 usersAddresses.length &&  usersAddresses.map((address) => {
                     return(
-                        <div className="col-md-3">
-                            <ul key={uuid()} className="border py-3">
+                        <div className="col-md-3" key={uuid()}>
+                            <ul className="border py-3">
                                 <li> <span className="text-danger"> Name: </span> {address.name} </li>
                                 <li> <span className="text-danger"> phone: </span> {address.number} </li>
                                 <li> <span className="text-danger"> Address: </span> {address.country}/{address.city}/{address.street} </li>

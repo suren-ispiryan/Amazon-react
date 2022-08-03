@@ -8,6 +8,8 @@ const rootReducer = combineReducers({
     products: myStore,
     addresses: userProfile,
     allProducts: allProducts,
-    addedToCart: userCart
+    addedToCart: userCart,
+    orders: userCart,
+    orderedProducts: userCart
 })
 export default rootReducer

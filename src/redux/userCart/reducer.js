@@ -10,11 +10,18 @@ import {
     REMOVE_FROM_CART_FAILURE,
     GUEST_PRODUCT_GET_REQUEST,
     GUEST_PRODUCT_GET_SUCCESS,
-    GUEST_PRODUCT_GET_FAILURE
+    GUEST_PRODUCT_GET_FAILURE,
+    BUY_PRODUCTS_FROM_CART_REQUEST,
+    BUY_PRODUCTS_FROM_CART_SUCCESS,
+    BUY_PRODUCTS_FROM_CART_FAILURE,
+    GET_ORDERS_REQUEST,
+    GET_ORDERS_SUCCESS,
+    GET_ORDERS_FAILURE
 } from "./actions"
 
 const initialStata = {
     addedToCart: [],
+    orderedProducts: [],
     loading: false,
     message: '',
 }
@@ -41,7 +48,7 @@ const userReducer = (state = initialStata, action) => {
                 loading: false,
                 message: action.message
             }
-    // // GET
+    // GET
         case GET_FROM_CART_REQUEST:
             return {
                ...state,
@@ -111,6 +118,46 @@ const userReducer = (state = initialStata, action) => {
                 message: action.message
             }
         case GUEST_PRODUCT_GET_FAILURE:
+            return {
+                ...state,
+                loading: false,
+                message: action.message
+            }
+    //ORDER
+        case BUY_PRODUCTS_FROM_CART_REQUEST:
+            return {
+                ...state,
+                loading: true,
+                message: ''
+            }
+        case BUY_PRODUCTS_FROM_CART_SUCCESS:
+            return {
+                ...state,
+                loading: true,
+                message: 'Products were successfully ordered',
+            }
+        case BUY_PRODUCTS_FROM_CART_FAILURE:
+            return {
+                ...state.orders,
+                loading: true,
+                message: '',
+            }
+    //GET ORDERED
+        case GET_ORDERS_REQUEST:
+            return {
+                ...state,
+                loading: true,
+                message: '',
+                orderedProducts: []
+            }
+        case GET_ORDERS_SUCCESS:
+            return {
+                ...state,
+                loading: false,
+                orderedProducts: action.addedToCart,
+                message: action.message
+            }
+        case GET_ORDERS_FAILURE:
             return {
                 ...state,
                 loading: false,

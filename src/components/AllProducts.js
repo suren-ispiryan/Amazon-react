@@ -5,6 +5,7 @@ import { ADD_TO_CART_REQUEST } from '../redux/userCart/actions';
 import uuid from 'react-uuid';
 import { Link } from 'react-router-dom';
 import LoadingSpinner from './LoadingSpinner';
+import {GetColorName} from "hex-color-to-color-name";
 
 const AllProducts = ({ client }) => {
     const {allProducts, loading} = useSelector((state) => state.allProducts)
@@ -120,7 +121,9 @@ const AllProducts = ({ client }) => {
                                             </div>
                                             <div className="col-md-5">
                                                 <div className="text-danger centering-objects">color:</div>
-                                                <div className="centering-objects product-color-box" style={{backgroundColor: `${product.color}`}}></div>
+                                                <div className="centering-objects product-color-box" style={{backgroundColor: `${product.color}`}}>
+                                                    {GetColorName(product.color)}
+                                                </div>
                                             </div>
                                         </div>
                                         <hr/>

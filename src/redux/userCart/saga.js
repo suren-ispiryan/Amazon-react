@@ -14,7 +14,10 @@ import {
     GUEST_PRODUCT_GET_FAILURE,
     BUY_PRODUCTS_FROM_CART_REQUEST,
     BUY_PRODUCTS_FROM_CART_SUCCESS,
-    BUY_PRODUCTS_FROM_CART_FAILURE
+    BUY_PRODUCTS_FROM_CART_FAILURE,
+    GET_ORDERS_REQUEST,
+    GET_ORDERS_SUCCESS,
+    GET_ORDERS_FAILURE
 } from './actions'
 
 //ADD
@@ -34,7 +37,7 @@ function* addToCart(action) {
     }
 }
 
-//GET
+//GET ONCART
 function* getFromCart(action) {
     try {
         const response = yield action.payload.get('/get-from-cart')
@@ -89,15 +92,31 @@ function* getGuestProductsFromCart (action) {
 function* buyProductsFromCart (action) {
     try {
         const response = yield action.payload.get('/buy-products-from-cart')
-        console.log(response.data)
         yield put({
             type: BUY_PRODUCTS_FROM_CART_SUCCESS,
+            message: 'Order made successfully',
+            orders: response.data
+        });
+    } catch (e) {
+        yield put({
+            type: BUY_PRODUCTS_FROM_CART_FAILURE,
+            message: 'Something went wrong'
+        });
+    }
+}
+
+//GET ORDERED
+function* getOrders (action) {
+    try {
+        const response = yield action.payload.get('/get-ordered')
+        yield put({
+            type: GET_ORDERS_SUCCESS,
             message: 'product successfully created',
             addedToCart: response.data
         });
     } catch (e) {
         yield put({
-            type: BUY_PRODUCTS_FROM_CART_FAILURE,
+            type: GET_ORDERS_FAILURE,
             message: 'Something went wrong'
         });
     }
@@ -109,4 +128,5 @@ export default function* () {
     yield takeLatest(REMOVE_FROM_CART_REQUEST, removeFromCart);
     yield takeLatest(GUEST_PRODUCT_GET_REQUEST, getGuestProductsFromCart);
     yield takeLatest(BUY_PRODUCTS_FROM_CART_REQUEST, buyProductsFromCart);
+    yield takeLatest(GET_ORDERS_REQUEST, getOrders);
 }

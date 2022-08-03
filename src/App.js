@@ -9,6 +9,7 @@ import MyStore from './components/MyStore';
 import MyCart from './components/MyCart';
 import BuyDetails from './components/BuyDetails';
 import GuestCart from './components/GuestCart';
+import Orders from './components/Orders';
 import axios from 'axios';
 import './App.css';
 import { UserProvider } from './UserContext';
@@ -34,6 +35,7 @@ const App = () => {
                     <Route path="user-profile" element={<UserProfile client={client} />} />
                     <Route path="product-details/:id" element={<ProductDetails client={client} />} />
                     <Route path="buy-details" element={<BuyDetails client={client} />} />
+                    <Route path="orders" element={<Orders client={client} />} />
                 </Routes>
             </UserProvider>
         </BrowserRouter>

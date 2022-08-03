@@ -4,6 +4,7 @@ import {useDispatch, useSelector} from 'react-redux';
 import { Link } from 'react-router-dom';
 import uuid from 'react-uuid';
 import LoadingSpinner from './LoadingSpinner';
+import {GetColorName} from "hex-color-to-color-name";
 
 const MyCart = ({ client }) => {
     const {addedToCart, loading} = useSelector((state) => state.addedToCart)
@@ -84,7 +85,9 @@ const MyCart = ({ client }) => {
                                             </div>
                                             <div className="col-md-5">
                                                 <div className="text-danger centering-objects">color:</div>
-                                                <div className="centering-objects product-color-box" style={{backgroundColor: `${item.product.color}`}} />
+                                                <div className="centering-objects product-color-box" style={{backgroundColor: `${item.product.color}`}}>
+                                                    {GetColorName(item.product.color)}
+                                                </div>
                                             </div>
                                         </div>
                                         <hr/>

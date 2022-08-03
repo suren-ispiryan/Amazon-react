@@ -45,6 +45,9 @@ const NavigationBar = ({client}) => {
                                         <li className="nav-item active">
                                             <Link className="nav-link" to="my-cart">My cart</Link>
                                         </li>
+                                        <li className="nav-item active">
+                                            <Link className="nav-link" to="/orders">My orders</Link>
+                                        </li>
                                     </>
                                 :
                                     <li className="nav-item active">
