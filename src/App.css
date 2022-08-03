@@ -163,4 +163,37 @@ li {
   height: 50px;
 }
 
+/* all product*/
+.count-control {
+  border-radius: 100%;
+  height: 30px;
+  width: 30px;
+  justify-content: center;
+  align-items: center;
+  display: flex;
+}
 
+.count-control-container {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  min-height: 65px;
+}
+
+.cart-page-count-control-left {
+  margin-right: 4px;
+  height: 40px;
+  width: 40px;
+}
+
+.cart-page-count-control-right {
+  margin-right: 20px;
+  height: 40px;
+  width: 40px;
+}
+
+.cart-page-count-controls {
+  margin-top: 10px;
+  min-height: 15px;
+  justify-content: flex-end;
+}

@@ -14,6 +14,7 @@ const BuyDetails = ({ client }) => {
     const [usersAddresses, setUsersAddresses] = useState([])
     const {addresses} = useSelector((state) => state.addresses)
     const navigate = useNavigate()
+    const [update, setUpdate] = useState({})
 
     useEffect(() => {
         dispatch({
@@ -24,14 +25,14 @@ const BuyDetails = ({ client }) => {
             type: GET_FROM_CART_REQUEST,
             payload: client
         })
-    }, []);
+    }, [update]);
 
     useEffect(() => {
         if (!loading) {
             setAllInCardProducts(addedToCart)
             setUsersAddresses(addresses)
         }
-    }, [addresses, loading])
+    }, [addresses, loading, update])
 
     const countTotalPrice = () => {
         let totalPrice = 0;
@@ -54,6 +55,16 @@ const BuyDetails = ({ client }) => {
             payload: client
         })
         navigate('/orders')
+    }
+
+    const reduceProduct = (event, id) => {
+        client.get('/reduce-product/'+id)
+              .then(response => setUpdate(response.data))
+    }
+
+    const addProduct = (event, id) => {
+        client.get('/add-product/'+id)
+              .then(response => setUpdate(response.data))
     }
 
     return (
@@ -99,8 +110,18 @@ const BuyDetails = ({ client }) => {
                                 </th>
                                 <th className="pt-4">{item.product.size}</th>
                                 <th className="pt-4">{item.product.category}</th>
-                                <th className="pt-4">{item.product_count}</th>
-                                <th className="pt-4">{item.product.price}$
+                                <th className="pt-4 count-control-container">
+                                    <button
+                                        className="btn btn-danger count-control"
+                                        onClick={event => reduceProduct(event, item.product.id)}
+                                    >-</button>
+                                    {item.product_count}
+                                    <button
+                                        className="btn btn-success count-control"
+                                        onClick={event => addProduct(event, item.product.id)}
+                                    >+</button>
+                                </th>
+                                <th className="pt-4">{item.product.price*item.product_count}$
                                 </th>
                             </tr>
                         )

@@ -23,7 +23,7 @@ import {
 //ADD
 function* addToCart(action) {
     try {
-        const response = yield action.client.get('/add-to-cart/'+action.payload)
+        const response = yield action.client.get('/add-to-cart/'+action.payload+'/'+action.productCount )
         yield put({
             type: ADD_TO_CART_SUCCESS,
             message: 'product successfully created',

@@ -10,25 +10,36 @@ const MyCart = ({ client }) => {
     const {addedToCart, loading} = useSelector((state) => state.addedToCart)
     const dispatch = useDispatch();
     const [allInCardProducts, setAllInCardProducts] = useState([])
+    const [updateProd, setUpdateProd] = useState({})
 
     useEffect(() => {
         dispatch({
             type: GET_FROM_CART_REQUEST,
             payload: client
         })
-    }, []);
+    }, [updateProd]);
 
     useEffect(() => {
         if (!loading) {
             setAllInCardProducts(addedToCart)
         }
-    }, [loading])
+    }, [loading, updateProd])
 
     const removeFromCart = (event, id) => {
         dispatch({
             type: REMOVE_FROM_CART_REQUEST,
             payload: id, client
         })
+    }
+
+    const reduceProduct = (event, id) => {
+        client.get('/reduce-product/'+id)
+            .then(response => setUpdateProd(response.data))
+    }
+
+    const addProduct = (event, id) => {
+        client.get('/add-product/'+id)
+            .then(response => setUpdateProd(response.data))
     }
 
     return(
@@ -58,9 +69,21 @@ const MyCart = ({ client }) => {
                                                 <span className="text-danger">Name: </span>
                                                 <span>{item.product.name}</span>
                                             </div>
+
                                             <div className="text-success col-md-6">
                                                 <span className="text-danger">Count: </span>
-                                                <span>{item.product_count} pcs</span>
+                                                {item.product_count} pcs
+
+                                                <div className="count-control-container cart-page-count-controls">
+                                                    <button
+                                                        className="btn btn-danger count-control cart-page-count-control-left"
+                                                        onClick={event => reduceProduct(event, item.product.id)}
+                                                    >-</button>
+                                                    <button
+                                                        className="btn btn-success count-control cart-page-count-control-right"
+                                                        onClick={event => addProduct(event, item.product.id)}
+                                                    >+</button>
+                                                </div>
                                             </div>
                                         </div>
                                         <hr />
