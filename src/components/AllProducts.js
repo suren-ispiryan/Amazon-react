@@ -16,10 +16,14 @@ const AllProducts = ({ client }) => {
     const [chosenId, setChosenId] = useState(null);
     const [productCount, setProductCount] = useState(null);
     const [show, setShow] = useState(false);
+    const [stock, setStock] = useState();
+
 
     const handleClose = () => setShow(false);
-    const handleShow = (event, id) => {
+
+    const handleShow = (event, id, inStock) => {
         setShow(true);
+        setStock(inStock)
         setChosenId(id)
     }
 
@@ -53,7 +57,6 @@ const AllProducts = ({ client }) => {
     }
 
     const addToCart = () => {
-
         if (localStorage.getItem('token')) {
         // registered user
             dispatch({
@@ -174,7 +177,7 @@ const AllProducts = ({ client }) => {
 
                                                 <button
                                                     className="btn btn-success"
-                                                    onClick={event => handleShow(event, product.id)}
+                                                    onClick={event => handleShow(event, product.id, product.in_stock)}
                                                 >
                                                     Add to cart
                                                 </button>
@@ -189,7 +192,7 @@ const AllProducts = ({ client }) => {
                     {/* MODAL */}
                     <Modal show={show} onHide={handleClose}>
                         <Modal.Header closeButton>
-                            <Modal.Title>Choose product count</Modal.Title>
+                            <Modal.Title>Choose product count, max {stock}</Modal.Title>
                         </Modal.Header>
                         <Modal.Body>
                             <input
@@ -197,7 +200,8 @@ const AllProducts = ({ client }) => {
                                 name="count"
                                 className="form-control"
                                 defaultValue="1"
-                                placeholder="Count of product"
+                                max={stock}
+                                placeholder={"Count of product, max" + stock}
                                 onChange={handleCount}
                             />
                         </Modal.Body>

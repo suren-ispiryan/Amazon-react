@@ -5,13 +5,29 @@ import { useDispatch, useSelector } from 'react-redux';
 import uuid from 'react-uuid';
 import LoadingSpinner from './LoadingSpinner';
 import { ADD_TO_CART_REQUEST } from '../redux/userCart/actions';
+import {Button, Modal} from "react-bootstrap";
 
 const ProductDetails = ({ client }) => {
     let { id } = useParams();
     const { productDetail, loading } = useSelector((state) => state.allProducts)
     const dispatch = useDispatch();
-
+    const [show, setShow] = useState(false);
     const [productDetails, setProductDetails] = useState([]);
+    const [chosenId, setChosenId] = useState(null);
+    const [stock, setStock] = useState();
+    const [productCount, setProductCount] = useState(null);
+
+    const handleClose = () => setShow(false);
+
+    const handleShow = (event, id, inStock) => {
+        setShow(true);
+        setStock(inStock)
+        setChosenId(id)
+    }
+
+    const handleCount = ({ target }) => {
+        setProductCount(target.value)
+    }
 
     useEffect(() => {
         dispatch({
@@ -26,25 +42,35 @@ const ProductDetails = ({ client }) => {
         }
     }, [loading])
 
-    const addToCart = (event, id) => {
+    const addToCart = () => {
         if (localStorage.getItem('token')) {
+            // registered user
             dispatch({
                 type: ADD_TO_CART_REQUEST,
-                payload: id, client
+                payload: chosenId, client, productCount
             })
         } else {
+            // not registered user
             let addedToCart = []
             if(!JSON.parse(localStorage.getItem('addedToCart'))){
-                addedToCart.push(id);
+                addedToCart.push({
+                    id: chosenId,
+                    count: productCount
+                });
                 localStorage.setItem('addedToCart', JSON.stringify(addedToCart));
             }else{
                 addedToCart = JSON.parse(localStorage.getItem('addedToCart'));
-                if (!addedToCart.includes(id)) {
-                    addedToCart.push(id);
+                let test = addedToCart.filter( key => key['id'] === chosenId )
+                if (test) {
+                    addedToCart.push({
+                        id: chosenId,
+                        count: productCount
+                    });
                     localStorage.setItem('addedToCart', JSON.stringify(addedToCart));
                 }
             }
         }
+        setShow(false);
     }
 
     return (
@@ -95,7 +121,7 @@ const ProductDetails = ({ client }) => {
                                     <div className="product-details-columns-add-to-cart">
                                         <button
                                             className="btn btn-success"
-                                            onClick={event => addToCart(event, productDetailItem.id)}
+                                            onClick={event => handleShow(event, productDetailItem.id, productDetailItem.in_stock)}
                                         >
                                             Add to cart
                                         </button>
@@ -103,6 +129,32 @@ const ProductDetails = ({ client }) => {
                                 </div>
                             )
                         }
+
+                        {/* MODAL */}
+                        <Modal show={show} onHide={handleClose}>
+                            <Modal.Header closeButton>
+                                <Modal.Title>Choose product count, max {stock}</Modal.Title>
+                            </Modal.Header>
+                            <Modal.Body>
+                                <input
+                                    type="number"
+                                    name="count"
+                                    className="form-control"
+                                    defaultValue="1"
+                                    max={stock}
+                                    placeholder={"Count of product, max" + stock}
+                                    onChange={handleCount}
+                                />
+                            </Modal.Body>
+                            <Modal.Footer>
+                                <Button variant="secondary" onClick={handleClose}>
+                                    Close
+                                </Button>
+                                <Button variant= "primary" onClick={addToCart}>
+                                    Add to cart
+                                </Button>
+                            </Modal.Footer>
+                        </Modal>
                     </>)
             }
         </div>

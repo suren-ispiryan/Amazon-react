@@ -12,7 +12,8 @@ const initialValues = {
     price: '',
     color: '#000000',
     size: '',
-    category: ''
+    category: '',
+    inStock: 0
 }
 
 const MyStore = ({ client }) => {

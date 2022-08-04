@@ -38,6 +38,7 @@ const MyStoreUpdate = ({ initialValues, client, show, setShow, productImage, upd
         dataUpdate.append('size', updatedProduct.size);
         dataUpdate.append('category', updatedProduct.category);
         dataUpdate.append('picture', updatedProduct.picture);
+        dataUpdate.append('inStock', updatedProduct.inStock);
         productImage.current.value = ''
         dispatch({
             type: UPDATE_PRODUCT_REQUEST,
@@ -89,6 +90,15 @@ const MyStoreUpdate = ({ initialValues, client, show, setShow, productImage, upd
                             placeholder="Price"
                             onChange={handleChangeUpdate}
                             value={updatedProduct.price}
+                        />
+
+                        <input
+                            type="number"
+                            name="inStock"
+                            className="form-control my-3"
+                            placeholder="In stock"
+                            onChange={handleChangeUpdate}
+                            value={updatedProduct.inStock}
                         />
 
                         <input
