@@ -1,5 +1,4 @@
 import { useEffect, useState } from 'react';
-import { UserContext } from '../../UserContext';
 import uuid from 'react-uuid';
 import { useDispatch, useSelector } from 'react-redux';
 import { GET_ADDRESS_REQUEST } from '../../redux/userProfile/actions';
@@ -7,7 +6,7 @@ import { DELETE_ADDRESS_REQUEST } from '../../redux/userProfile/actions';
 import { DEFAULT_ADDRESS_REQUEST } from '../../redux/userProfile/actions';
 
 const UserInfo = ({client}) => {
-    const [userData, setUserData] = useState(UserContext);
+    const [userData, setUserData] = useState({});
     const {addresses, loading} = useSelector((state) => state.addresses)
     const dispatch = useDispatch();
 

@@ -15,7 +15,11 @@ const NavigationBar = ({client}) => {
         client.get('/logout')
              .then(function (response) {
                  localStorage.removeItem('token');
-                 navigate('/login-admin')
+                 if (role !== 'superAdmin' && role !== 'admin') {
+                     navigate('/login')
+                 }  else {
+                     navigate('/login-admin')
+                 }
             })
             .catch(function (error) {console.log(error)});
     }

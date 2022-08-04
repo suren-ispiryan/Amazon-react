@@ -14,7 +14,6 @@ import LoginAdmin from './components/LoginAdmin';
 import AdminDashboard from './components/admin/AdminDashboard';
 import axios from 'axios';
 import './App.css';
-import { UserProvider } from './UserContext';
 
 const App = () => {
     const client = axios.create({
@@ -26,7 +25,6 @@ const App = () => {
     <div className="App">
         <BrowserRouter>
             <NavigationBar client={client} />
-            <UserProvider>
                 <Routes>
                     <Route path="/" element={<AllProducts client={client} />} />
                     <Route path="login" element={<Login client={client} />} />
@@ -41,8 +39,7 @@ const App = () => {
                     <Route path="login-admin" element={<LoginAdmin client={client} />} />
                     <Route path="admin-dashboard" element={<AdminDashboard client={client} />} />
                 </Routes>
-            </UserProvider>
-        </BrowserRouter>
+            </BrowserRouter>
     </div>
   );
 }
