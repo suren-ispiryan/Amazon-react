@@ -1,23 +1,23 @@
 import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 
-const Login = ({client}) => {
+const LoginAdmin = ({client}) => {
     const navigate = useNavigate();
-    const [loginInfo, setLoginInfo] = useState({});
+    const [loginAdminInfo, setLoginAdminInfo] = useState({});
 
     const handleChange = ({target}) => {
-        setLoginInfo({
-            ...loginInfo,
+        setLoginAdminInfo({
+            ...loginAdminInfo,
             [target.name]: target.value,
         })
     }
 
     const loginUser = () => {
-        client.post('/login', { loginInfo })
+        client.post('/login-admin', { loginAdminInfo })
             .then(function (response) {
                 if(response.status === 200 && response.data !== 'failure') {
                     localStorage.setItem('token', response.data);
-                    navigate('/user-profile')
+                    navigate('/admin-dashboard')
                 }
             })
             .catch(function (error) {console.log('error login')});
@@ -28,7 +28,7 @@ const Login = ({client}) => {
             <div className="row">
                 <div className="col-md-12 sign-parent">
                     <div className="sign-form">
-                        <h2>Login</h2>
+                        <h2>Admin login</h2>
 
                         <input
                             type="email"
@@ -36,7 +36,7 @@ const Login = ({client}) => {
                             className="form-control my-3"
                             placeholder="Email"
                             onChange={handleChange}
-                            value={loginInfo.email || ''}
+                            value={loginAdminInfo.email || ''}
                         />
 
                         <input
@@ -45,7 +45,7 @@ const Login = ({client}) => {
                             className="form-control my-3"
                             placeholder="Password"
                             onChange={handleChange}
-                            value={loginInfo.password || ''}
+                            value={loginAdminInfo.password || ''}
                         />
 
                         <button
@@ -68,4 +68,4 @@ const Login = ({client}) => {
     );
 }
 
-export default Login;
+export default LoginAdmin;

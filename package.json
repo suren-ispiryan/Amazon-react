@@ -12,6 +12,7 @@
     "formik": "^2.2.9",
     "hex-color-to-color-name": "^1.0.2",
     "js-cookie": "^3.0.1",
+    "jwt-decode": "^3.1.2",
     "react": "^18.2.0",
     "react-axios": "^2.0.6",
     "react-bootstrap": "^2.4.0",

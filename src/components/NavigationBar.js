@@ -1,15 +1,21 @@
 import { Link, useNavigate } from 'react-router-dom';
+import {useEffect, useState} from "react";
 
 const NavigationBar = ({client}) => {
     const navigate = useNavigate();
+    const [role, setRole] = useState();
 
-    // console.log(client);
+    useEffect(() => {
+        client.get('/get-auth-user-role')
+              .then(function (response) {setRole(response.data)})
+              .catch(function (error) {console.log(error)});
+     }, [])
 
     const logoutUser = () => {
         client.get('/logout')
              .then(function (response) {
                  localStorage.removeItem('token');
-                 navigate('/login')
+                 navigate('/login-admin')
             })
             .catch(function (error) {console.log(error)});
     }
@@ -29,27 +35,43 @@ const NavigationBar = ({client}) => {
                     <div className="col-md-9">
                         <div className="mx-5 collapse navbar-collapse" id="navbarNav">
                             <ul className="navbar-nav">
+                                {(role !== 'superAdmin' && role !== 'admin')
+                                ?
                                 <li className="nav-item active">
                                     <Link className="nav-link" to="/">All products</Link>
                                 </li>
+                                :
+                                    ''
+                                }
                                 {localStorage.getItem('token')
                                 ?
-                                    <>
-                                        <li className="nav-item active">
-                                            <Link className="nav-link" to="user-profile">Profile</Link>
-                                        </li>
+                                    (role !== 'superAdmin' && role !== 'admin')
+                                    ?
+                                        // user
+                                        <>
+                                            <li className="nav-item active">
+                                                <Link className="nav-link" to="user-profile">Profile</Link>
+                                            </li>
 
-                                        <li className="nav-item active">
-                                            <Link className="nav-link" to="my-store">My store</Link>
-                                        </li>
-                                        <li className="nav-item active">
-                                            <Link className="nav-link" to="my-cart">My cart</Link>
-                                        </li>
-                                        <li className="nav-item active">
-                                            <Link className="nav-link" to="/orders">My orders</Link>
-                                        </li>
-                                    </>
+                                            <li className="nav-item active">
+                                                <Link className="nav-link" to="my-store">My store</Link>
+                                            </li>
+                                            <li className="nav-item active">
+                                                <Link className="nav-link" to="my-cart">My cart</Link>
+                                            </li>
+                                            <li className="nav-item active">
+                                                <Link className="nav-link" to="/orders">My orders</Link>
+                                            </li>
+                                        </>
+                                    :
+                                        // admin
+                                        <>
+                                            <li className="nav-item active">
+                                                <Link className="nav-link" to="/admin-dashboard">Dashboard</Link>
+                                            </li>
+                                        </>
                                 :
+                                    // guest
                                     <li className="nav-item active">
                                         <Link className="nav-link" to="guest-cart">GuestCart</Link>
                                     </li>

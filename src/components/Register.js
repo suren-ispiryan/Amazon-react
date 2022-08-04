@@ -19,8 +19,8 @@ const Register = ({client}) => {
         client.post('/register', { registerInfo, guestCardProducts })
             .then(function (response) {
                 if(response.status === 200) {
-                    localStorage.removeItem('addedToCart');
                     navigate('/login')
+                    localStorage.removeItem('addedToCart');
                 }
             })
             .catch(function (error) {console.log(error)});

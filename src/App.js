@@ -10,6 +10,8 @@ import MyCart from './components/MyCart';
 import BuyDetails from './components/BuyDetails';
 import GuestCart from './components/GuestCart';
 import Orders from './components/Orders';
+import LoginAdmin from './components/LoginAdmin';
+import AdminDashboard from './components/admin/AdminDashboard';
 import axios from 'axios';
 import './App.css';
 import { UserProvider } from './UserContext';
@@ -36,6 +38,8 @@ const App = () => {
                     <Route path="product-details/:id" element={<ProductDetails client={client} />} />
                     <Route path="buy-details" element={<BuyDetails client={client} />} />
                     <Route path="orders" element={<Orders client={client} />} />
+                    <Route path="login-admin" element={<LoginAdmin client={client} />} />
+                    <Route path="admin-dashboard" element={<AdminDashboard client={client} />} />
                 </Routes>
             </UserProvider>
         </BrowserRouter>
