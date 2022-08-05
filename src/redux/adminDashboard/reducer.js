@@ -1,7 +1,13 @@
 import {
     GET_ALL_USER_PRODUCTS_REQUEST,
     GET_ALL_USER_PRODUCTS_SUCCESS,
-    GET_ALL_USER_PRODUCTS_FAILURE
+    GET_ALL_USER_PRODUCTS_FAILURE,
+    DELETE_USER_PRODUCT_REQUEST,
+    DELETE_USER_PRODUCT_SUCCESS,
+    DELETE_USER_PRODUCT_FAILURE,
+    UPDATE_USER_PRODUCT_REQUEST,
+    UPDATE_USER_PRODUCT_SUCCESS,
+    UPDATE_USER_PRODUCT_FAILURE
 } from "./actions"
 
 const initialState = {
@@ -11,27 +17,6 @@ const initialState = {
 }
 const adminDashboardReducer = (state = initialState, action) => {
     switch (action.type) {
-    //CREATE
-    //     case CREATE_ADDRESS_REQUEST:
-    //         return {
-    //             ...state,
-    //             loading: true,
-    //             message: '',
-    //             addresses: [...state.addresses],
-    //         }
-    //     case CREATE_ADDRESS_SUCCESS:
-    //         return {
-    //             ...state,
-    //             loading: false,
-    //             addresses: [...state.addresses, action.address],
-    //             message: action.message
-    //         }
-    //     case CREATE_ADDRESS_FAILURE:
-    //         return {
-    //             ...state,
-    //             loading: false,
-    //             message: action.message
-    //         }
     //GET
         case GET_ALL_USER_PRODUCTS_REQUEST:
             return {
@@ -54,57 +39,56 @@ const adminDashboardReducer = (state = initialState, action) => {
                 message: action.message
             }
     //DELETE
-    //     case DELETE_ADDRESS_REQUEST:
-    //         return {
-    //             ...state,
-    //             loading: true,
-    //             message: '',
-    //             addresses: [...state.addresses]
-    //         }
-    //     case DELETE_ADDRESS_SUCCESS:
-    //         const removedAddress = state.addresses.filter(i => i.id !== parseInt(action.address))
-    //         return {
-    //             ...state,
-    //             loading: false,
-    //             addresses: removedAddress,
-    //             message: action.message
-    //         }
-    //     case DELETE_ADDRESS_FAILURE:
-    //         return {
-    //             ...state,
-    //             loading: false,
-    //             message: action.message
-    //         }
-    //MAKE DEFAULT
-    //     case DEFAULT_ADDRESS_REQUEST:
-    //         return {
-    //             ...state,
-    //             loading: true,
-    //             message: '',
-    //             addresses: [...state.addresses]
-    //         }
-    //     case DEFAULT_ADDRESS_SUCCESS:
-    //         const newProducts = [];
-    //         state.addresses.map(i => {
-    //             if(i.id !== parseInt(action.address.id)) {
-    //                 i.default = 0
-    //                 newProducts.push(i)
-    //             } else {
-    //                 newProducts.push(action.address)
-    //             }
-    //         })
-    //         return {
-    //             ...state,
-    //             loading: false,
-    //             addresses: newProducts,
-    //             message: action.message
-    //         }
-    //     case DEFAULT_ADDRESS_FAILURE:
-    //         return {
-    //             ...state,
-    //             loading: false,
-    //             message: action.message
-    //         }
+        case DELETE_USER_PRODUCT_REQUEST:
+            return {
+                ...state,
+                loading: true,
+                message: '',
+                adminProducts: [...state.adminProducts]
+            }
+        case DELETE_USER_PRODUCT_SUCCESS:
+            const removedProduct = state.adminProducts.filter(i => i.id !== parseInt(action.adminProducts))
+            return {
+                ...state,
+                loading: false,
+                adminProducts: removedProduct,
+                message: action.message
+            }
+        case DELETE_USER_PRODUCT_FAILURE:
+            return {
+                ...state,
+                loading: false,
+                message: action.message
+            }
+    //ADMIN UPDATE
+        case UPDATE_USER_PRODUCT_REQUEST:
+            return {
+                ...state,
+                loading: true,
+                message: '',
+                adminProducts: [...state.adminProducts]
+            }
+        case UPDATE_USER_PRODUCT_SUCCESS:
+            const newProducts = [];
+            state.adminProducts.map(i => {
+                if(i.id !== parseInt(action.adminProducts.id)) {
+                    newProducts.push(i)
+                } else {
+                    newProducts.push(action.adminProducts)
+                }
+            })
+            return {
+                ...state,
+                loading: false,
+                adminProducts: newProducts,
+                message: action.message
+            }
+        case UPDATE_USER_PRODUCT_FAILURE:
+            return {
+                ...state,
+                loading: false,
+                message: action.message
+            }
     // DEFAULT
         default:
             return state

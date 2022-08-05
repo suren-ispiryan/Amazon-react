@@ -124,12 +124,12 @@ const AllProducts = () => {
                                 return (
                                     <div className="col-md-2 users-products" key={uuid()}>
                                         <div className="row">
-                                            <div className="text-success col-md-8 px-4 text-start">
+                                            <div className="text-success col-md-6 px-4 text-start">
                                                 <span className="text-danger">Name: </span>
                                                 {product.name}
                                             </div>
-                                            <div className="text-success col-md-4">
-                                                <i className="products-count p-2">{stock} pcs left</i>
+                                            <div className="text-success col-md-6">
+                                                <i className="products-count p-2">{product.in_stock} pcs left</i>
                                             </div>
                                         </div>
                                         <hr />

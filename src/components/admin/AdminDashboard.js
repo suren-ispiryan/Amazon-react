@@ -1,15 +1,37 @@
-import {useEffect, useState} from "react";
-import {GET_ALL_USER_PRODUCTS_REQUEST} from '../../redux/adminDashboard/actions';
-import {useDispatch, useSelector} from "react-redux";
+import {useEffect, useRef, useState} from "react";
+import {
+    GET_ALL_USER_PRODUCTS_REQUEST,
+    DELETE_USER_PRODUCT_REQUEST,
+    UPDATE_USER_PRODUCT_REQUEST
+} from '../../redux/adminDashboard/actions';
+import { useDispatch, useSelector } from "react-redux";
 import LoadingSpinner from "../LoadingSpinner";
 import Table from "react-bootstrap/Table";
 import uuid from "react-uuid";
-import {GetColorName} from "hex-color-to-color-name";
+import { GetColorName } from "hex-color-to-color-name";
+import Modal from "react-bootstrap/Modal";
+import Button from "react-bootstrap/Button";
+
+const updateInitialValues = {
+    name: '',
+    description: '',
+    brand: '',
+    price: '',
+    color: '#000000',
+    size: '',
+    category: '',
+    inStock: 0
+}
 
 const AdminDashboard = () => {
     const {adminProducts, loading} = useSelector((state) => state.adminProducts)
     const dispatch = useDispatch();
     const [ownersProducts, setOwnersProducts] = useState([]);
+    const [updatedProduct, setUpdatedProduct] = useState(updateInitialValues);
+    const productImage = useRef('');
+    const [updateProductItem, setUpdateProductItem] = useState({})
+    const [show, setShow] = useState(false);
+    const [id, setId] = useState();
 
     useEffect(() => {
         dispatch({
@@ -22,6 +44,66 @@ const AdminDashboard = () => {
             setOwnersProducts(adminProducts)
         }
     }, [loading])
+
+    const changeProduct = (event, id, item) => {
+        setId(id)
+        setUpdatedProduct({
+            name: item.name,
+            brand: item.brand,
+            description: item.description,
+            price: item.price,
+            color: item.color,
+            size: item.size,
+            category: item.category,
+            inStock: item.in_stock
+        })
+        setShow(true)
+    }
+
+    const adminHandleChangeUpdate = ({target}) => {
+        setUpdateProductItem({
+            ...updateProductItem,
+            [target.name]: target.value,
+        })
+        if (target.name === 'picture') {
+            setUpdateProductItem({
+                ...updateProductItem,
+                [target.name]: target.files[0],
+            })
+        }
+    }
+
+    const update = () => {
+        const dataUpdate = new FormData();
+        dataUpdate.append('id', id);
+        dataUpdate.append('name', updateProductItem.name);
+        dataUpdate.append('description', updateProductItem.description);
+        dataUpdate.append('brand', updateProductItem.brand);
+        dataUpdate.append('price', updateProductItem.price);
+        dataUpdate.append('color', updateProductItem.color);
+        dataUpdate.append('size', updateProductItem.size);
+        dataUpdate.append('category', updateProductItem.category);
+        dataUpdate.append('picture', updateProductItem.picture);
+        dataUpdate.append('inStock', updateProductItem.inStock);
+        productImage.current.value = ''
+        dispatch({
+            type: UPDATE_USER_PRODUCT_REQUEST,
+            payload: dataUpdate
+        })
+        setShow(false)
+    }
+
+    const handleClose = () => {
+        setShow(false)
+        setUpdateProductItem(updateInitialValues)
+    }
+
+    const deleteProduct = (event, id) => {
+        dispatch({
+            type: DELETE_USER_PRODUCT_REQUEST,
+            payload: id
+        })
+    }
 
     return (
         <>
@@ -44,6 +126,7 @@ const AdminDashboard = () => {
                                 <th>Details</th>
                                 <th>Info</th>
                                 <th>Owner info</th>
+                                <th>Modify product</th>
                             </tr>
                             </thead>
                             <tbody>
@@ -60,13 +143,13 @@ const AdminDashboard = () => {
                                                     src={`http://localhost:8000/assets/product_images/${item.picture}`}
                                                 />
                                             </th>
-                                            <th className="pt-4"><h5>{item.name}</h5></th>
-                                            <th className="pt-4"><h5>{item.description}</h5></th>
-                                            <th className="pt-4"><h5>{item.brand}</h5></th>
+                                            <th className="pt-4"><h6>{item.name}</h6></th>
+                                            <th className="pt-4"><h6>{item.description}</h6></th>
+                                            <th className="pt-4"><h6>{item.brand}</h6></th>
 
                                             <th className="pt-4">
                                                 <ul>
-                                                <h5>
+                                                <h6>
                                                     <li>
                                                         <span className="text-danger">Color: </span>
                                                         <span className="centering-objects admin-product-color-box"
@@ -82,7 +165,7 @@ const AdminDashboard = () => {
                                                         <span className="text-danger">Category: </span>
                                                         {item.category}
                                                     </li>
-                                                </h5>
+                                                </h6>
                                                 </ul>
                                             </th>
 
@@ -91,12 +174,12 @@ const AdminDashboard = () => {
                                                 <ul>
                                                     <h5>
                                                     <li>
-                                                        <span className="text-danger">Bought: </span>
-                                                        {item.carts[0].order.product_count}
+                                                        <span className="text-danger">In stock: </span>
+                                                        {item.in_stock} pcs
                                                     </li>
                                                     <li className="pt-2">
                                                         <span className="text-danger">Price for 1 pcs: </span>
-                                                        {item.carts[0].order.price}$
+                                                        {item.price}$
                                                     </li>
                                                     </h5>
                                                 </ul>
@@ -104,7 +187,7 @@ const AdminDashboard = () => {
 
                                             <th className="pt-4">
                                                 <ul>
-                                                    <h5>
+                                                    <h6>
                                                         <li>
                                                             <span className="text-danger">Name: </span>
                                                             {item.user.name}
@@ -121,7 +204,28 @@ const AdminDashboard = () => {
                                                             <span className="text-danger">Role: </span>
                                                             {item.user.role}
                                                         </li>
-                                                    </h5>
+                                                    </h6>
+                                                </ul>
+                                            </th>
+
+                                            <th className="pt-4">
+                                                <ul>
+                                                    <li className="m-2">
+                                                        <button
+                                                            className="btn btn-primary"
+                                                            onClick={event => changeProduct(event, item.id, item)}
+                                                        >
+                                                            Change
+                                                        </button>
+                                                    </li>
+                                                    <li className="m-2">
+                                                        <button
+                                                            className="btn btn-danger"
+                                                            onClick={event => deleteProduct(event, item.id)}
+                                                        >
+                                                            Delete
+                                                        </button>
+                                                    </li>
                                                 </ul>
                                             </th>
                                         </tr>
@@ -133,6 +237,132 @@ const AdminDashboard = () => {
                     </>)
                 }
             </div>
+
+            {/* modal for update */}
+            <Modal
+                show={show}
+                onHide={handleClose}
+            >
+                <Modal.Header closeButton>
+                    <Modal.Title>Update product</Modal.Title>
+                </Modal.Header>
+                <Modal.Body>
+                    {!updatedProduct.name
+                        ?
+                        <LoadingSpinner /> :
+                        (<>
+                                <input
+                                    type="text"
+                                    name="name"
+                                    className="form-control my-3"
+                                    placeholder="Name"
+                                    onChange={adminHandleChangeUpdate}
+                                    value={updateProductItem.name ? updateProductItem.name : updatedProduct.name}
+                                />
+
+                                <input
+                                    type="text"
+                                    name="description"
+                                    className="form-control my-3"
+                                    placeholder="Description"
+                                    onChange={adminHandleChangeUpdate}
+                                    value={updateProductItem.description ? updateProductItem.description : updatedProduct.description}
+                                />
+
+                                <input
+                                    type="text"
+                                    name="brand"
+                                    className="form-control my-3"
+                                    placeholder="Brand"
+                                    onChange={adminHandleChangeUpdate}
+                                    value={updateProductItem.brand ? updateProductItem.brand : updatedProduct.brand}
+                                />
+
+                                <input
+                                    type="number"
+                                    name="price"
+                                    className="form-control my-3"
+                                    placeholder="Price"
+                                    onChange={adminHandleChangeUpdate}
+                                    value={updateProductItem.price ? updateProductItem.price : updatedProduct.price}
+                                />
+
+                                <input
+                                    type="number"
+                                    name="inStock"
+                                    className="form-control my-3"
+                                    placeholder="In stock"
+                                    onChange={adminHandleChangeUpdate}
+                                    value={updateProductItem.inStock ? updateProductItem.inStock : updatedProduct.inStock}
+                                />
+
+                                <input
+                                    type="color"
+                                    name="color"
+                                    className="form-control my-3"
+                                    placeholder="Color"
+                                    onChange={adminHandleChangeUpdate}
+                                    value={updateProductItem.color ? updateProductItem.color : updatedProduct.color}
+                                />
+
+                                <select
+                                    onChange={adminHandleChangeUpdate}
+                                        className="form-select my-3"
+                                        name="size"
+                                        aria-label="Default select example"
+                                        value={updateProductItem.size ? updateProductItem.size : updatedProduct.size}
+                                >
+                                    <option defaultValue>Select size</option>
+                                    <option value="small">small</option>
+                                    <option value="medium">medium</option>
+                                    <option value="big">big</option>
+                                </select>
+
+                                <select
+                                        onChange={adminHandleChangeUpdate}
+                                        className="form-select my-3"
+                                        name="category"
+                                        aria-label="Default select example"
+                                        value={updateProductItem.category ? updateProductItem.category : updatedProduct.category}
+                                >
+                                    <option defaultValue>Select category</option>
+                                    <option value="toys">toys</option>
+                                    <option value="clothes">clothes</option>
+                                    <option value="furniture">furniture</option>
+                                    <option value="phones">phones</option>
+                                    <option value="food">food</option>
+                                </select>
+
+                                <div className="form-group">
+                                    <input
+                                        name="picture"
+                                        type="file"
+                                        className="form-control-file my-3"
+                                        id="exampleFormControlFile1"
+                                        ref={productImage}
+                                        onChange={adminHandleChangeUpdate}
+                                    />
+                                </div>
+                            </>
+                        )}
+
+                </Modal.Body>
+                <Modal.Footer>
+                    <Button
+                        variant="secondary"
+                        onClick={handleClose}
+                    >
+                        Close
+                    </Button>
+                    <Button
+                        variant="primary"
+                        onClick={update}
+                    >
+                        Save Changes
+                    </Button>
+                </Modal.Footer>
+            </Modal>
+
         </>
     )
 }
