@@ -1,4 +1,5 @@
-import { put, takeLatest } from 'redux-saga/effects'
+import { put, takeLatest } from 'redux-saga/effects';
+import axiosInstance from '../../config/axiosInstance';
 import {
     CREATE_PRODUCT_SUCCESS,
     CREATE_PRODUCT_REQUEST,
@@ -17,7 +18,7 @@ import {
 //CREATE
 function* createProduct(action) {
     try {
-        const response = yield action.client.post('/create-product', action.payload)
+        const response = yield axiosInstance.post('/create-product', action.payload)
         yield put({
             type: CREATE_PRODUCT_SUCCESS,
             message: 'product successfully created',
@@ -34,7 +35,7 @@ function* createProduct(action) {
 //GET
 function* getProducts(action) {
     try {
-        const response = yield action.payload.get('/get-auth-user-products')
+        const response = yield axiosInstance.get('/get-auth-user-products')
         yield put({
             type: GET_PRODUCTS_SUCCESS,
             message: 'Success fetching data',
@@ -51,7 +52,7 @@ function* getProducts(action) {
 //DELETE
 function* deleteProducts(action) {
     try {
-        const response = yield action.client.delete('/delete-auth-user-products/'+action.payload)
+        const response = yield axiosInstance.delete('/delete-auth-user-products/'+action.payload)
         yield put({
             type: DELETE_PRODUCTS_SUCCESS,
             message: 'Product successfully deleted',
@@ -68,7 +69,7 @@ function* deleteProducts(action) {
 //UPDATE
 function* updateProducts(action) {
     try {
-        const response = yield action.client.post('/update-product', action.payload)
+        const response = yield axiosInstance.post('/update-product', action.payload)
         yield put({
             type: UPDATE_PRODUCT_SUCCESS,
             message: 'product successfully created',

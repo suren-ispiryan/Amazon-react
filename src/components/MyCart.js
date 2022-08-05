@@ -5,8 +5,9 @@ import { Link } from 'react-router-dom';
 import uuid from 'react-uuid';
 import LoadingSpinner from './LoadingSpinner';
 import {GetColorName} from "hex-color-to-color-name";
+import axiosInstance from './../config/axiosInstance';
 
-const MyCart = ({ client }) => {
+const MyCart = () => {
     const {addedToCart, loading} = useSelector((state) => state.addedToCart)
     const dispatch = useDispatch();
     const [allInCardProducts, setAllInCardProducts] = useState([])
@@ -15,7 +16,6 @@ const MyCart = ({ client }) => {
     useEffect(() => {
         dispatch({
             type: GET_FROM_CART_REQUEST,
-            payload: client
         })
     }, [updateProd]);
 
@@ -28,17 +28,17 @@ const MyCart = ({ client }) => {
     const removeFromCart = (event, id) => {
         dispatch({
             type: REMOVE_FROM_CART_REQUEST,
-            payload: id, client
+            payload: id
         })
     }
 
     const reduceProduct = (event, id) => {
-        client.get('/reduce-product/'+id)
+        axiosInstance.get('/reduce-product/'+id)
             .then(response => setUpdateProd(response.data))
     }
 
     const addProduct = (event, id) => {
-        client.get('/add-product/'+id)
+        axiosInstance.get('/add-product/'+id)
             .then(response => setUpdateProd(response.data))
     }
 

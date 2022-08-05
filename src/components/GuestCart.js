@@ -4,8 +4,9 @@ import {useEffect, useState} from 'react';
 import { GUEST_PRODUCT_GET_REQUEST } from '../redux/userCart/actions';
 import LoadingSpinner from "./LoadingSpinner";
 import {Link} from "react-router-dom";
+import axiosInstance from './../config/axiosInstance';
 
-const GuestCart = ({ client }) => {
+const GuestCart = () => {
     const dispatch = useDispatch();
     const {addedToCart, loading} = useSelector((state) => state.addedToCart)
     const [allGuestProducts, setAllGuestProducts] = useState([])
@@ -15,7 +16,7 @@ const GuestCart = ({ client }) => {
         const guestCartProducts = (JSON.parse(localStorage.getItem('addedToCart')))
         dispatch({
             type: GUEST_PRODUCT_GET_REQUEST,
-            payload: {guestCartProducts: guestCartProducts}, client
+            payload: {guestCartProducts: guestCartProducts}
         })
     }, [productNewIds]);
 

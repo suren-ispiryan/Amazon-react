@@ -1,5 +1,5 @@
 import { put, takeLatest } from 'redux-saga/effects'
-
+import axiosInstance from '../../config/axiosInstance';
 import {
     CREATE_ADDRESS_REQUEST,
     CREATE_ADDRESS_SUCCESS,
@@ -18,7 +18,7 @@ import {
 //CREATE
 function* createAddress(action) {
     try {
-        const response = yield action.client.post('/create-address', action.payload)
+        const response = yield axiosInstance.post('/create-address', action.payload)
         yield put({
             type: CREATE_ADDRESS_SUCCESS,
             message: 'product successfully created',
@@ -35,7 +35,7 @@ function* createAddress(action) {
 //GET
 function* getAddress(action) {
     try {
-        const response = yield action.payload.get('/get-user-data')
+        const response = yield axiosInstance.get('/get-user-data')
         yield put({
             type: GET_ADDRESS_SUCCESS,
             message: 'Success fetching data',
@@ -52,7 +52,7 @@ function* getAddress(action) {
 //DELETE
 function* deleteAddress(action) {
     try {
-        const response = yield action.client.delete('/delete-address/'+action.payload)
+        const response = yield axiosInstance.delete('/delete-address/'+action.payload)
         yield put({
             type: DELETE_ADDRESS_SUCCESS,
             message: 'Success fetching data',
@@ -69,7 +69,7 @@ function* deleteAddress(action) {
 //MAKE DEFAULT
 function* defaultAddress(action) {
     try {
-        const response = yield action.client.get('/make-address-default/'+action.payload)
+        const response = yield axiosInstance.get('/make-address-default/'+action.payload)
         yield put({
             type: DEFAULT_ADDRESS_SUCCESS,
             message: 'Success fetching data',

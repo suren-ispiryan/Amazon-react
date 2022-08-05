@@ -74,6 +74,12 @@
   }
 }
 
+.products-count {
+  border-radius: 5px;
+  border: 1px black solid;
+  background-color: yellow;
+}
+
 /*profile*/
 .create-address {
   display: flex;
@@ -196,4 +202,18 @@ li {
   margin-top: 10px;
   min-height: 15px;
   justify-content: flex-end;
+}
+
+.admin-product-color-box {
+  height: 25px;
+  padding: 5px;
+  display: unset;
+  color: white;
+  font-size: 14px;
+  text-align: center;
+  width: 10%;
+}
+
+.admin-products-image {
+  height: 120px;
 }

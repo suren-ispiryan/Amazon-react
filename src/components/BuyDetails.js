@@ -6,8 +6,9 @@ import Table from 'react-bootstrap/Table';
 import uuid from 'react-uuid';
 import { useNavigate } from "react-router-dom";
 import { GetColorName } from 'hex-color-to-color-name';
+import axiosInstance from "../config/axiosInstance";
 
-const BuyDetails = ({ client }) => {
+const BuyDetails = () => {
     const {addedToCart, loading} = useSelector((state) => state.addedToCart)
     const dispatch = useDispatch();
     const [allInCardProducts, setAllInCardProducts] = useState([])
@@ -18,12 +19,10 @@ const BuyDetails = ({ client }) => {
 
     useEffect(() => {
         dispatch({
-            type: GET_ADDRESS_REQUEST,
-            payload: client
+            type: GET_ADDRESS_REQUEST
         })
         dispatch({
-            type: GET_FROM_CART_REQUEST,
-            payload: client
+            type: GET_FROM_CART_REQUEST
         })
     }, [update]);
 
@@ -45,25 +44,24 @@ const BuyDetails = ({ client }) => {
     const makeDefaultAddress = (event, id) => {
         dispatch({
             type: DEFAULT_ADDRESS_REQUEST,
-            payload: id, client
+            payload: id
         })
     }
 
     const BuyProductsFromCart = () => {
         dispatch({
-            type: BUY_PRODUCTS_FROM_CART_REQUEST,
-            payload: client
+            type: BUY_PRODUCTS_FROM_CART_REQUEST
         })
         navigate('/orders')
     }
 
     const reduceProduct = (event, id) => {
-        client.get('/reduce-product/'+id)
+        axiosInstance.get('/reduce-product/'+id)
               .then(response => setUpdate(response.data))
     }
 
     const addProduct = (event, id) => {
-        client.get('/add-product/'+id)
+        axiosInstance.get('/add-product/'+id)
               .then(response => setUpdate(response.data))
     }
 

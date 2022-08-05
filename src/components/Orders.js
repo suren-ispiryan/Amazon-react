@@ -6,14 +6,13 @@ import { GET_ORDERS_REQUEST } from "../redux/userCart/actions";
 import {GetColorName} from "hex-color-to-color-name";
 import LoadingSpinner from "./LoadingSpinner";
 
-const Orders = ({ client }) => {
+const Orders = () => {
   const dispatch = useDispatch();
   const [ordered, setOrdered] = useState([])
   const {orderedProducts, loading} = useSelector((state) => state.orderedProducts)
 
   useEffect(() => {
     dispatch({
-      payload: client,
       type: GET_ORDERS_REQUEST
     })
   }, []);

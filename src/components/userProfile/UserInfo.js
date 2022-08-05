@@ -4,16 +4,16 @@ import { useDispatch, useSelector } from 'react-redux';
 import { GET_ADDRESS_REQUEST } from '../../redux/userProfile/actions';
 import { DELETE_ADDRESS_REQUEST } from '../../redux/userProfile/actions';
 import { DEFAULT_ADDRESS_REQUEST } from '../../redux/userProfile/actions';
+import axiosInstance from './../../config/axiosInstance';
 
-const UserInfo = ({client}) => {
+const UserInfo = () => {
     const [userData, setUserData] = useState({});
     const {addresses, loading} = useSelector((state) => state.addresses)
     const dispatch = useDispatch();
 
     useEffect(() => {
         dispatch({
-            type: GET_ADDRESS_REQUEST,
-            payload: client
+            type: GET_ADDRESS_REQUEST
         })
     }, []);
 
@@ -26,14 +26,14 @@ const UserInfo = ({client}) => {
     const makeDefaultAddress = (event, id) => {
         dispatch({
             type: DEFAULT_ADDRESS_REQUEST,
-            payload: id, client
+            payload: id
         })
     }
 
     const deleteAddress = (id) => {
         dispatch({
             type: DELETE_ADDRESS_REQUEST,
-            payload: id, client
+            payload: id
         })
     }
 

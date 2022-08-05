@@ -1,4 +1,5 @@
 import { put, takeLatest } from 'redux-saga/effects'
+import axiosInstance from '../../config/axiosInstance';
 import {
     ADD_TO_CART_REQUEST,
     ADD_TO_CART_SUCCESS,
@@ -23,7 +24,7 @@ import {
 //ADD
 function* addToCart(action) {
     try {
-        const response = yield action.client.get('/add-to-cart/'+action.payload+'/'+action.productCount )
+        const response = yield axiosInstance.get('/add-to-cart/'+action.payload+'/'+action.productCount )
         yield put({
             type: ADD_TO_CART_SUCCESS,
             message: 'product successfully created',
@@ -40,7 +41,7 @@ function* addToCart(action) {
 //GET ONCART
 function* getFromCart(action) {
     try {
-        const response = yield action.payload.get('/get-from-cart')
+        const response = yield axiosInstance.get('/get-from-cart')
         yield put({
             type: GET_FROM_CART_SUCCESS,
             message: 'product successfully created',
@@ -57,7 +58,7 @@ function* getFromCart(action) {
 //REMOVE
 function* removeFromCart(action) {
     try {
-        const response = yield action.client.get('/remove-from-cart/'+action.payload)
+        const response = yield axiosInstance.get('/remove-from-cart/'+action.payload)
         yield put({
             type: REMOVE_FROM_CART_SUCCESS,
             message: 'product successfully created',
@@ -74,7 +75,7 @@ function* removeFromCart(action) {
 //GET GUEST
 function* getGuestProductsFromCart (action) {
     try {
-        const response = yield action.client.post('/get-guest-from-cart', action.payload)
+        const response = yield axiosInstance.post('/get-guest-from-cart', action.payload)
         yield put({
             type: GUEST_PRODUCT_GET_SUCCESS,
             message: 'product successfully created',
@@ -91,7 +92,7 @@ function* getGuestProductsFromCart (action) {
 //BUY
 function* buyProductsFromCart (action) {
     try {
-        const response = yield action.payload.get('/buy-products-from-cart')
+        const response = yield axiosInstance.get('/buy-products-from-cart')
         yield put({
             type: BUY_PRODUCTS_FROM_CART_SUCCESS,
             message: 'Order made successfully',
@@ -108,7 +109,7 @@ function* buyProductsFromCart (action) {
 //GET ORDERED
 function* getOrders (action) {
     try {
-        const response = yield action.payload.get('/get-ordered')
+        const response = yield axiosInstance.get('/get-ordered')
         yield put({
             type: GET_ORDERS_SUCCESS,
             message: 'product successfully created',

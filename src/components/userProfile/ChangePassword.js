@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import axiosInstance from '../../config/axiosInstance';
 
 const initialState = {
     oldPassword: '',
@@ -6,7 +7,7 @@ const initialState = {
     repeatNewPassword: ''
 }
 
-const ChangePassword = ({client}) => {
+const ChangePassword = () => {
     const [pass, setPass] = useState(initialState);
     const [passwordUpdateMessage, setPasswordUpdateMessage] = useState('');
 
@@ -18,7 +19,7 @@ const ChangePassword = ({client}) => {
     }
 
     const setPassword = () => {
-        client.post('/change-password', pass)
+        axiosInstance.post('/change-password', pass)
             .then(function (response) {
                 setPass(initialState);
                 setPasswordUpdateMessage(response.data);

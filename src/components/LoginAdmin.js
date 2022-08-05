@@ -1,7 +1,8 @@
 import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
+import axiosInstance from '../config/axiosInstance';
 
-const LoginAdmin = ({client}) => {
+const LoginAdmin = () => {
     const navigate = useNavigate();
     const [loginAdminInfo, setLoginAdminInfo] = useState({});
 
@@ -13,7 +14,7 @@ const LoginAdmin = ({client}) => {
     }
 
     const loginUser = () => {
-        client.post('/login-admin', { loginAdminInfo })
+        axiosInstance.post('/login-admin', { loginAdminInfo })
             .then(function (response) {
                 if(response.status === 200 && response.data !== 'failure') {
                     localStorage.setItem('token', response.data);

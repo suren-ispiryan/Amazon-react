@@ -1,13 +1,14 @@
 import uuid from 'react-uuid';
 import { DELETE_PRODUCTS_REQUEST } from '../../redux/myStore/actions';
 import { useDispatch } from 'react-redux';
+import axiosInstance from '../../config/axiosInstance';
 
-const MyStoreShow = ({allProducts, client, setShow, setUpdatedProduct}) => {
+const MyStoreShow = ({allProducts, setShow, setUpdatedProduct}) => {
     const dispatch = useDispatch();
 
     const getUpdatePostData = (event, id) => {
         setShow(true);
-        client.get('/update-product-data/'+id)
+        axiosInstance.get('/update-product-data/'+id)
             .then(function (response) {
                 if (response.status === 200) {
                     setUpdatedProduct(response.data)
@@ -18,7 +19,7 @@ const MyStoreShow = ({allProducts, client, setShow, setUpdatedProduct}) => {
     const deletePost = (event, id) => {
         dispatch({
             type: DELETE_PRODUCTS_REQUEST,
-            payload: id, client
+            payload: id
         })
     }
 

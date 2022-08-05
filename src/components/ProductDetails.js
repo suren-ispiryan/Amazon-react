@@ -7,7 +7,7 @@ import LoadingSpinner from './LoadingSpinner';
 import { ADD_TO_CART_REQUEST } from '../redux/userCart/actions';
 import {Button, Modal} from "react-bootstrap";
 
-const ProductDetails = ({ client }) => {
+const ProductDetails = () => {
     let { id } = useParams();
     const { productDetail, loading } = useSelector((state) => state.allProducts)
     const dispatch = useDispatch();
@@ -32,7 +32,7 @@ const ProductDetails = ({ client }) => {
     useEffect(() => {
         dispatch({
             type: GET_PRODUCTDETAILS_REQUEST,
-            payload: id, client
+            payload: id
         })
     }, []);
 
@@ -47,7 +47,7 @@ const ProductDetails = ({ client }) => {
             // registered user
             dispatch({
                 type: ADD_TO_CART_REQUEST,
-                payload: chosenId, client, productCount
+                payload: chosenId, productCount
             })
         } else {
             // not registered user

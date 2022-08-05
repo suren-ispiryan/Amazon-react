@@ -1,18 +1,19 @@
 import { Link, useNavigate } from 'react-router-dom';
 import {useEffect, useState} from "react";
+import axiosInstance from './../config/axiosInstance';
 
-const NavigationBar = ({client}) => {
+const NavigationBar = () => {
     const navigate = useNavigate();
     const [role, setRole] = useState();
 
     useEffect(() => {
-        client.get('/get-auth-user-role')
+        axiosInstance.get('/get-auth-user-role')
               .then(function (response) {setRole(response.data)})
               .catch(function (error) {console.log(error)});
-     }, [])
+    }, [])
 
     const logoutUser = () => {
-        client.get('/logout')
+        axiosInstance.get('/logout')
              .then(function (response) {
                  localStorage.removeItem('token');
                  if (role !== 'superAdmin' && role !== 'admin') {
@@ -32,7 +33,7 @@ const NavigationBar = ({client}) => {
                         <a className="navbar-brand" href="/">Amazon</a>
                         <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
                                 aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-                            <span className="navbar-toggler-icon"></span>
+                            <span className="navbar-toggler-icon"/>
                         </button>
                     </div>
 
@@ -71,7 +72,16 @@ const NavigationBar = ({client}) => {
                                         // admin
                                         <>
                                             <li className="nav-item active">
-                                                <Link className="nav-link" to="/admin-dashboard">Dashboard</Link>
+                                                <Link className="nav-link" to="/admin-dashboard">Products</Link>
+                                            </li>
+                                            <li className="nav-item active">
+                                                <Link className="nav-link" to="/admin-product-ordered">Orders</Link>
+                                            </li>
+                                            <li className="nav-item active">
+                                                <Link className="nav-link" to="/admin-users">Users</Link>
+                                            </li>
+                                            <li className="nav-item active">
+                                                <Link className="nav-link" to="/admin-product-details">Details</Link>
                                             </li>
                                         </>
                                 :

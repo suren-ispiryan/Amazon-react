@@ -12,33 +12,33 @@ import GuestCart from './components/GuestCart';
 import Orders from './components/Orders';
 import LoginAdmin from './components/LoginAdmin';
 import AdminDashboard from './components/admin/AdminDashboard';
-import axios from 'axios';
+import AdminUsers from './components/admin/AdminUsers';
+import AdminProductDetails from './components/admin/AdminProductDetails';
+import AdminOrderedProducts from './components/admin/AdminOrderedProducts';
 import './App.css';
 
 const App = () => {
-    const client = axios.create({
-        baseURL: 'http://localhost:8000/api',
-        headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }
-    });
-
   return (
     <div className="App">
         <BrowserRouter>
-            <NavigationBar client={client} />
-                <Routes>
-                    <Route path="/" element={<AllProducts client={client} />} />
-                    <Route path="login" element={<Login client={client} />} />
-                    <Route path="register" element={<Register client={client} />} />
-                    <Route path="my-store" element={<MyStore client={client} />} />
-                    <Route path="my-cart" element={<MyCart client={client} />} />
-                    <Route path="guest-cart" element={<GuestCart client={client} />} />
-                    <Route path="user-profile" element={<UserProfile client={client} />} />
-                    <Route path="product-details/:id" element={<ProductDetails client={client} />} />
-                    <Route path="buy-details" element={<BuyDetails client={client} />} />
-                    <Route path="orders" element={<Orders client={client} />} />
-                    <Route path="login-admin" element={<LoginAdmin client={client} />} />
-                    <Route path="admin-dashboard" element={<AdminDashboard client={client} />} />
-                </Routes>
+            <NavigationBar />
+            <Routes>
+                <Route path="/" element={<AllProducts />} />
+                <Route path="login" element={<Login />} />
+                <Route path="register" element={<Register />} />
+                <Route path="my-store" element={<MyStore />} />
+                <Route path="my-cart" element={<MyCart />} />
+                <Route path="guest-cart" element={<GuestCart />} />
+                <Route path="user-profile" element={<UserProfile />} />
+                <Route path="product-details/:id" element={<ProductDetails />} />
+                <Route path="buy-details" element={<BuyDetails />} />
+                <Route path="orders" element={<Orders />} />
+                <Route path="login-admin" element={<LoginAdmin />} />
+                <Route path="admin-dashboard" element={<AdminDashboard />} />
+                <Route path="admin-users" element={<AdminUsers />} />
+                <Route path="admin-product-details" element={<AdminProductDetails />} />
+                <Route path="admin-product-ordered" element={<AdminOrderedProducts />} />
+            </Routes>
             </BrowserRouter>
     </div>
   );

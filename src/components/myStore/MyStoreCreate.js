@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { CREATE_PRODUCT_REQUEST } from '../../redux/myStore/actions';
 
-const MyStoreCreate = ({ client, productImage, initialValues }) => {
+const MyStoreCreate = ({ productImage, initialValues }) => {
     const dispatch = useDispatch();
     const [productAttributes, setProductAttributes] = useState({});
     const [formErrors, setFormErrors ] = useState({});
@@ -39,7 +39,7 @@ const MyStoreCreate = ({ client, productImage, initialValues }) => {
             setProductAttributes(initialValues)
             dispatch({
                 type: CREATE_PRODUCT_REQUEST,
-                payload: data, client
+                payload: data
             })
         }
     }

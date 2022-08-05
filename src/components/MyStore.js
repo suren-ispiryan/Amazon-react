@@ -4,6 +4,7 @@ import MyStoreUpdate from './myStore/MyStoreUpdate';
 import MyStoreShow from './myStore/MyStoreShow';
 import { GET_PRODUCTS_REQUEST } from '../redux/myStore/actions';
 import { useDispatch, useSelector } from 'react-redux';
+import axiosInstance from '../config/axiosInstance';
 
 const initialValues = {
     name: '',
@@ -16,7 +17,7 @@ const initialValues = {
     inStock: 0
 }
 
-const MyStore = ({ client }) => {
+const MyStore = () => {
     const {products, loading} = useSelector((state) => state.products)
     const dispatch = useDispatch();
     const productImage = useRef('');
@@ -27,8 +28,7 @@ const MyStore = ({ client }) => {
 
     useEffect(() => {
         dispatch({
-            type: GET_PRODUCTS_REQUEST,
-            payload: client
+            type: GET_PRODUCTS_REQUEST
         })
     }, []);
 
@@ -45,14 +45,12 @@ const MyStore = ({ client }) => {
 
                 <MyStoreShow
                     allProducts={allProducts}
-                    client={client}
                     setShow={setShow}
                     setUpdatedProduct={setUpdatedProduct}
                 />
 
                 <MyStoreCreate
                     initialValues={initialValues}
-                    client={client}
                     productImage={productImage}
                 />
 
@@ -61,7 +59,6 @@ const MyStore = ({ client }) => {
                     loading={loading}
                     setUpdatedProduct={setUpdatedProduct}
                     initialValues={initialValues}
-                    client={client}
                     show={show}
                     setShow={setShow}
                     updatedProduct={updatedProduct}

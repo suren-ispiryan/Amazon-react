@@ -1,7 +1,8 @@
 import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
+import axiosInstance from './../config/axiosInstance';
 
-const Register = ({client}) => {
+const Register = () => {
     const navigate = useNavigate();
     const [registerInfo, setRegisterInfo] = useState({});
 
@@ -16,7 +17,7 @@ const Register = ({client}) => {
         let guestCardProducts;
         guestCardProducts = JSON.parse(localStorage.getItem('addedToCart'))
 
-        client.post('/register', { registerInfo, guestCardProducts })
+        axiosInstance.post('/register', { registerInfo, guestCardProducts })
             .then(function (response) {
                 if(response.status === 200) {
                     navigate('/login')

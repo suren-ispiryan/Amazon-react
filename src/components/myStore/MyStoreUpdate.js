@@ -4,7 +4,7 @@ import Button from 'react-bootstrap/Button';
 import { UPDATE_PRODUCT_REQUEST } from '../../redux/myStore/actions';
 import LoadingSpinner from './../LoadingSpinner';
 
-const MyStoreUpdate = ({ initialValues, client, show, setShow, productImage, updatedProduct, setUpdatedProduct }) => {
+const MyStoreUpdate = ({ initialValues, show, setShow, productImage, updatedProduct, setUpdatedProduct }) => {
 
     const dispatch = useDispatch();
 
@@ -42,7 +42,7 @@ const MyStoreUpdate = ({ initialValues, client, show, setShow, productImage, upd
         productImage.current.value = ''
         dispatch({
             type: UPDATE_PRODUCT_REQUEST,
-            payload: dataUpdate, client
+            payload: dataUpdate
         })
     }
 

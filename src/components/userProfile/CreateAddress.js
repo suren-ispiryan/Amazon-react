@@ -11,7 +11,7 @@ const initialState = {
     zip: null
 }
 
-const CreateAddress = ({ client }) => {
+const CreateAddress = () => {
     const [addressFormErrors, setAddressFormErrors ] = useState({});
     const dispatch = useDispatch();
     const [address, setAddress] = useState(initialState);
@@ -27,7 +27,7 @@ const CreateAddress = ({ client }) => {
         setAddressFormErrors(validate(address));
         dispatch({
             type: CREATE_ADDRESS_REQUEST,
-            payload: address, client
+            payload: address
         })
         setAddress(initialState)
     }

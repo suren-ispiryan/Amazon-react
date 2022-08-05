@@ -8,7 +8,7 @@ import LoadingSpinner from './LoadingSpinner';
 import {GetColorName} from "hex-color-to-color-name";
 import {Modal, Button} from 'react-bootstrap';
 
-const AllProducts = ({ client }) => {
+const AllProducts = () => {
     const {allProducts, loading} = useSelector((state) => state.allProducts)
     const dispatch = useDispatch();
     const [allUsersProducts, setAllUsersProducts] = useState([]);
@@ -29,8 +29,7 @@ const AllProducts = ({ client }) => {
 
     useEffect(() => {
         dispatch({
-            type: GET_ALLPRODUCTS_REQUEST,
-            payload: client
+            type: GET_ALLPRODUCTS_REQUEST
         })
     }, []);
 
@@ -47,7 +46,7 @@ const AllProducts = ({ client }) => {
     const searchProduct = () => {
         dispatch({
             type: GET_SEARCH_FOR_PRODUCT_REQUEST,
-            payload: {searchParameter: searchParameter}, client
+            payload: {searchParameter: searchParameter}
         })
         setSearchParameter('')
     }
@@ -61,7 +60,7 @@ const AllProducts = ({ client }) => {
         // registered user
             dispatch({
                 type: ADD_TO_CART_REQUEST,
-                payload: chosenId, client, productCount
+                payload: chosenId, productCount
             })
         } else {
         // not registered user
@@ -124,7 +123,15 @@ const AllProducts = ({ client }) => {
                             allUsersProducts.map((product) => {
                                 return (
                                     <div className="col-md-2 users-products" key={uuid()}>
-                                        <div className="text-success">{product.name}</div>
+                                        <div className="row">
+                                            <div className="text-success col-md-8 px-4 text-start">
+                                                <span className="text-danger">Name: </span>
+                                                {product.name}
+                                            </div>
+                                            <div className="text-success col-md-4">
+                                                <i className="products-count p-2">{stock} pcs left</i>
+                                            </div>
+                                        </div>
                                         <hr />
 
                                         <div className="product-images">
@@ -192,7 +199,7 @@ const AllProducts = ({ client }) => {
                     {/* MODAL */}
                     <Modal show={show} onHide={handleClose}>
                         <Modal.Header closeButton>
-                            <Modal.Title>Choose product count, max {stock}</Modal.Title>
+                            <Modal.Title>Choose product count, in stock {stock} pcs</Modal.Title>
                         </Modal.Header>
                         <Modal.Body>
                             <input
