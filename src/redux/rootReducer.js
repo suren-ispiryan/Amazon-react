@@ -6,6 +6,7 @@ import userCart from './userCart/reducer';
 import adminDashboardReducer from './adminDashboard/reducer';
 import adminOrdersReducer from './adminOrders/reducer';
 import adminUsersReducer from './adminUsers/reducer';
+import adminProductParametersReducer from './adminProductParameters/reducer';
 
 const rootReducer = combineReducers({
     products: myStore,
@@ -16,6 +17,7 @@ const rootReducer = combineReducers({
     orderedProducts: userCart,
     adminProducts: adminDashboardReducer,
     adminOrders: adminOrdersReducer,
-    adminUsers: adminUsersReducer
+    adminUsers: adminUsersReducer,
+    categories: adminProductParametersReducer
 })
 export default rootReducer

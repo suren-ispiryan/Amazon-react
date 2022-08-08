@@ -1,16 +1,16 @@
-import {useEffect, useRef, useState} from "react";
+import {useEffect, useRef, useState} from 'react';
 import {
     GET_ALL_USER_PRODUCTS_REQUEST,
     DELETE_USER_PRODUCT_REQUEST,
     UPDATE_USER_PRODUCT_REQUEST
 } from '../../redux/adminDashboard/actions';
-import { useDispatch, useSelector } from "react-redux";
-import LoadingSpinner from "../LoadingSpinner";
-import Table from "react-bootstrap/Table";
-import uuid from "react-uuid";
-import { GetColorName } from "hex-color-to-color-name";
-import Modal from "react-bootstrap/Modal";
-import Button from "react-bootstrap/Button";
+import { useDispatch, useSelector } from 'react-redux';
+import LoadingSpinner from '../LoadingSpinner';
+import Table from 'react-bootstrap/Table';
+import uuid from 'react-uuid';
+import { GetColorName } from 'hex-color-to-color-name';
+import Modal from 'react-bootstrap/Modal';
+import Button from 'react-bootstrap/Button';
 
 const updateInitialValues = {
     name: '',

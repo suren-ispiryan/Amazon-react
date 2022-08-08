@@ -81,7 +81,7 @@ const NavigationBar = () => {
                                                 <Link className="nav-link" to="/admin-users">Users</Link>
                                             </li>
                                             <li className="nav-item active">
-                                                <Link className="nav-link" to="/admin-product-details">Details</Link>
+                                                <Link className="nav-link" to="/admin-product-categories">Set categories</Link>
                                             </li>
                                         </>
                                 :

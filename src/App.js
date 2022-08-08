@@ -13,7 +13,7 @@ import Orders from './components/Orders';
 import LoginAdmin from './components/LoginAdmin';
 import AdminDashboard from './components/admin/AdminDashboard';
 import AdminUsers from './components/admin/AdminUsers';
-import AdminProductDetails from './components/admin/AdminProductDetails';
+import AdminSetCategories from './components/admin/AdminSetCategories';
 import AdminOrderedProducts from './components/admin/AdminOrderedProducts';
 import './App.css';
 
@@ -36,7 +36,7 @@ const App = () => {
                 <Route path="login-admin" element={<LoginAdmin />} />
                 <Route path="admin-dashboard" element={<AdminDashboard />} />
                 <Route path="admin-users" element={<AdminUsers />} />
-                <Route path="admin-product-details" element={<AdminProductDetails />} />
+                <Route path="admin-product-categories" element={<AdminSetCategories />} />
                 <Route path="admin-product-ordered" element={<AdminOrderedProducts />} />
             </Routes>
             </BrowserRouter>
