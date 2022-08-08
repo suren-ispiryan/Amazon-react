@@ -362,7 +362,6 @@ const AdminDashboard = () => {
                     </Button>
                 </Modal.Footer>
             </Modal>
-
         </>
     )
 }

@@ -1,18 +1,17 @@
 import { GET_ALL_ORDERED_PRODUCTS_REQUEST } from '../../redux/adminOrders/actions';
-import {useEffect, useState} from 'react';
-import {useDispatch, useSelector} from 'react-redux';
+import { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import LoadingSpinner from '../LoadingSpinner';
 import Table from 'react-bootstrap/Table';
 import uuid from 'react-uuid';
-import {GetColorName} from 'hex-color-to-color-name';
+import { GetColorName } from 'hex-color-to-color-name';
 import axiosInstance from '../../config/axiosInstance';
 
 const AdminOrderedProducts = () => {
-    const {adminOrders, loading} = useSelector((state) => state.adminOrders);
+    const { adminOrders, loading } = useSelector((state) => state.adminOrders);
     const dispatch = useDispatch();
     const [orderedProducts, setOrderedProducts] = useState([]);
     const [allUsers, setAllUsers] = useState([]);
-
 
     useEffect(() => {
         axiosInstance.get('all-users')
@@ -30,7 +29,6 @@ const AdminOrderedProducts = () => {
             setOrderedProducts(adminOrders)
         }
     }, [loading])
-
 
     return (
         <>
