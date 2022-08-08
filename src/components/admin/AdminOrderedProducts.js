@@ -5,26 +5,32 @@ import LoadingSpinner from '../LoadingSpinner';
 import Table from 'react-bootstrap/Table';
 import uuid from 'react-uuid';
 import {GetColorName} from 'hex-color-to-color-name';
+import axiosInstance from '../../config/axiosInstance';
 
 const AdminOrderedProducts = () => {
     const {adminOrders, loading} = useSelector((state) => state.adminOrders);
     const dispatch = useDispatch();
     const [orderedProducts, setOrderedProducts] = useState([]);
-    const [usersList, setUsersList] = useState([]);
+    const [allUsers, setAllUsers] = useState([]);
+
 
     useEffect(() => {
-        dispatch({
-            type: GET_ALL_ORDERED_PRODUCTS_REQUEST
-        })
-    }, []);
-    // use effect grem  vor usernerin kberi u mejy  response um es  use effecty grem , set anem
+        axiosInstance.get('all-users')
+                     .then(function (response) {
+                         setAllUsers(response.data)
+                         dispatch({
+                             type: GET_ALL_ORDERED_PRODUCTS_REQUEST
+                         })
+                     })
+                     .catch(function (error) {console.log(error)})
+    }, [])
+
     useEffect(() => {
         if (!loading) {
             setOrderedProducts(adminOrders)
         }
     }, [loading])
 
-    console.log(orderedProducts)
 
     return (
         <>
@@ -130,30 +136,34 @@ const AdminOrderedProducts = () => {
                                                 <th className="pt-4">
                                                     <ul>
                                                         <h6>
+
                                                             {
-                                                                usersList.map((user) => {
+                                                                allUsers.map((user) => {
                                                                     return (
                                                                         <>
-                                                                            user.id === item.customer_id
+                                                                        { user.id === item.customer_id
                                                                             ?
-                                                                                <li>
-                                                                                    <span className="text-danger">Name: </span>
-                                                                                    {user.name}
-                                                                                </li>
-                                                                                <li className="pt-2">
-                                                                                    <span className="text-danger">Surname: </span>
-                                                                                    {user.surname}
-                                                                                </li>
-                                                                                <li className="pt-2">
-                                                                                    <span className="text-danger">Email: </span>
-                                                                                    {user.email}
-                                                                                </li>
-                                                                                <li className="pt-2">
-                                                                                    <span className="text-danger">Role: </span>
-                                                                                    {user.role}
-                                                                                </li>
+                                                                                <>
+                                                                                    <li>
+                                                                                        <span className="text-danger">Name: </span>
+                                                                                        {user.name}
+                                                                                    </li>
+                                                                                    <li className="pt-2">
+                                                                                        <span className="text-danger">Surname: </span>
+                                                                                        {user.surname}
+                                                                                    </li>
+                                                                                    <li className="pt-2">
+                                                                                        <span className="text-danger">Email: </span>
+                                                                                        {user.email}
+                                                                                    </li>
+                                                                                    <li className="pt-2">
+                                                                                        <span className="text-danger">Role: </span>
+                                                                                        {user.role}
+                                                                                    </li>
+                                                                                </>
                                                                             :
-                                                                                <div>111111111111111</div>
+                                                                                <div />
+                                                                            }
                                                                         </>
                                                                     )
                                                                 })
