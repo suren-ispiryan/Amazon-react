@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { GET_ADDRESS_REQUEST } from '../../redux/userProfile/actions';
 import { DELETE_ADDRESS_REQUEST } from '../../redux/userProfile/actions';
 import { DEFAULT_ADDRESS_REQUEST } from '../../redux/userProfile/actions';
-import axiosInstance from './../../config/axiosInstance';
+import LoadingSpinner from '../LoadingSpinner';
 
 const UserInfo = () => {
     const [userData, setUserData] = useState({});
@@ -41,7 +41,11 @@ const UserInfo = () => {
         <div className="user-info">
             <h2 className="mb-5">Your addresses</h2>
             {
-                userData.length &&  userData.map((address) => {
+                !userData.length
+                ?
+                <LoadingSpinner />
+                :
+                (userData.map((address) => {
                     return(
                         <ul key={uuid()}>
                             <li> <span className="text-danger"> Name: </span> {address.name} </li>
@@ -78,7 +82,7 @@ const UserInfo = () => {
                             <hr/>
                         </ul>
                     )
-                })
+                }))
             }
         </div>
     );

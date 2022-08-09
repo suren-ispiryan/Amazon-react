@@ -5,8 +5,8 @@ import { ADD_TO_CART_REQUEST } from '../redux/userCart/actions';
 import uuid from 'react-uuid';
 import { Link } from 'react-router-dom';
 import LoadingSpinner from './LoadingSpinner';
-import {GetColorName} from "hex-color-to-color-name";
-import {Modal, Button} from 'react-bootstrap';
+import { GetColorName } from 'hex-color-to-color-name';
+import { Modal, Button } from 'react-bootstrap';
 
 const AllProducts = () => {
     const {allProducts, loading} = useSelector((state) => state.allProducts)

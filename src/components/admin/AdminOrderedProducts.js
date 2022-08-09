@@ -138,7 +138,7 @@ const AdminOrderedProducts = () => {
                                                             {
                                                                 allUsers.map((user) => {
                                                                     return (
-                                                                        <>
+                                                                        <div key={uuid()}>
                                                                         { user.id === item.customer_id
                                                                             ?
                                                                                 <>
@@ -162,7 +162,7 @@ const AdminOrderedProducts = () => {
                                                                             :
                                                                                 <div />
                                                                             }
-                                                                        </>
+                                                                        </div>
                                                                     )
                                                                 })
                                                             }

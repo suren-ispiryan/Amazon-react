@@ -19,6 +19,7 @@ const LoginAdmin = () => {
                 if(response.status === 200 && response.data !== 'failure') {
                     localStorage.setItem('token', response.data);
                     navigate('/admin-dashboard')
+                    window.location.reload()
                 }
             })
             .catch(function (error) {console.log('error login')});

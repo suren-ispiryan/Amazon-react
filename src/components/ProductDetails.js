@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import uuid from 'react-uuid';
 import LoadingSpinner from './LoadingSpinner';
 import { ADD_TO_CART_REQUEST } from '../redux/userCart/actions';
-import {Button, Modal} from "react-bootstrap";
+import { Button, Modal } from 'react-bootstrap';
 
 const ProductDetails = () => {
     let { id } = useParams();

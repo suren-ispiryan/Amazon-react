@@ -1,12 +1,12 @@
-import {useEffect, useState} from "react";
-import {useDispatch, useSelector} from "react-redux";
+import { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import {
     ADD_SIZE_REQUEST,
     GET_PRODUCT_SIZES_REQUEST,
     REMOVE_SIZE_REQUEST
-} from "../../../redux/adminProductParameters/actions";
-import ListGroup from "react-bootstrap/ListGroup";
-import uuid from "react-uuid";
+} from '../../../redux/adminProductParameters/actions';
+import ListGroup from 'react-bootstrap/ListGroup';
+import uuid from 'react-uuid';
 
 const sizeInitial = '';
 

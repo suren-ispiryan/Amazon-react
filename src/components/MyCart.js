@@ -1,10 +1,10 @@
 import { useEffect, useState } from 'react';
 import { GET_FROM_CART_REQUEST, REMOVE_FROM_CART_REQUEST } from '../redux/userCart/actions';
-import {useDispatch, useSelector} from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import uuid from 'react-uuid';
 import LoadingSpinner from './LoadingSpinner';
-import {GetColorName} from "hex-color-to-color-name";
+import { GetColorName } from 'hex-color-to-color-name';
 import axiosInstance from './../config/axiosInstance';
 
 const MyCart = () => {

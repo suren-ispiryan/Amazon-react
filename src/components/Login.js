@@ -1,8 +1,13 @@
-import { useState } from 'react';
+// login redux start
+import { useDispatch, useSelector } from 'react-redux';
+import { LOGIN_USER_REQUEST } from '../redux/login/actions';
+// login redux end
+import { useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import axiosInstance from './../config/axiosInstance';
 
 const Login = () => {
+    const dispatch = useDispatch();
+    const {login, loading} = useSelector((state) => state.login)
     const navigate = useNavigate();
     const [loginInfo, setLoginInfo] = useState({});
 
@@ -14,15 +19,19 @@ const Login = () => {
     }
 
     const loginUser = () => {
-        axiosInstance.post('/login', { loginInfo })
-                     .then(function (response) {
-                if(response.status === 200 && response.data !== 'failure') {
-                    localStorage.setItem('token', response.data);
-                    navigate('/user-profile')
-                }
-            })
-            .catch(function (error) {console.log('error login')});
+        dispatch({
+            type: LOGIN_USER_REQUEST,
+            payload: loginInfo
+        })
     }
+
+    useEffect(() => {
+        if(loading === true) {
+            localStorage.setItem('token', login);
+            navigate('/user-profile')
+            window.location.reload()
+        }
+    }, [loading])
 
     return (
         <div className="login container-fluid">

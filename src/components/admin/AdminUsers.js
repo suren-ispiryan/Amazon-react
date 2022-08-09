@@ -1,11 +1,15 @@
 import { useDispatch, useSelector } from 'react-redux';
 import LoadingSpinner from '../LoadingSpinner';
-import {GET_ALL_USERS_REQUEST, DELETE_USER_REQUEST, UPDATE_USER_REQUEST } from "../../redux/adminUsers/actions";
-import {useEffect, useState} from "react";
-import Table from "react-bootstrap/Table";
-import uuid from "react-uuid";
-import Modal from "react-bootstrap/Modal";
-import Button from "react-bootstrap/Button";
+import {
+    GET_ALL_USERS_REQUEST,
+    DELETE_USER_REQUEST,
+    UPDATE_USER_REQUEST
+} from '../../redux/adminUsers/actions';
+import {useEffect, useState} from 'react';
+import Table from 'react-bootstrap/Table';
+import uuid from 'react-uuid';
+import Modal from 'react-bootstrap/Modal';
+import Button from 'react-bootstrap/Button';
 
 const updateInitialValues = {
     name: '',

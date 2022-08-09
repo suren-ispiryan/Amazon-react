@@ -7,6 +7,7 @@ import adminDashboardReducer from './adminDashboard/reducer';
 import adminOrdersReducer from './adminOrders/reducer';
 import adminUsersReducer from './adminUsers/reducer';
 import adminProductParametersReducer from './adminProductParameters/reducer';
+import loginReducer from './login/reducer';
 
 const rootReducer = combineReducers({
     products: myStore,
@@ -19,6 +20,7 @@ const rootReducer = combineReducers({
     adminOrders: adminOrdersReducer,
     adminUsers: adminUsersReducer,
     categories: adminProductParametersReducer,
-    sizes: adminProductParametersReducer
+    sizes: adminProductParametersReducer,
+    login: loginReducer
 })
 export default rootReducer

@@ -1,4 +1,3 @@
-import axiosInstance from '../../config/axiosInstance';
 import Categories from './categories/Categories';
 import Sizes from './categories/Sizes';
 

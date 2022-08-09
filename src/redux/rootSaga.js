@@ -7,6 +7,7 @@ import adminDashboard from './adminDashboard/saga';
 import adminOrders from './adminOrders/saga';
 import adminUsers from './adminUsers/saga';
 import adminProductParameters from './adminProductParameters/saga';
+import login from './login/saga';
 
 function* rootSaga() {
     yield all([
@@ -17,7 +18,8 @@ function* rootSaga() {
         adminDashboard(),
         adminOrders(),
         adminUsers(),
-        adminProductParameters()
+        adminProductParameters(),
+        login()
     ])
 }
 export default rootSaga

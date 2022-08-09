@@ -4,7 +4,6 @@ import MyStoreUpdate from './myStore/MyStoreUpdate';
 import MyStoreShow from './myStore/MyStoreShow';
 import { GET_PRODUCTS_REQUEST } from '../redux/myStore/actions';
 import { useDispatch, useSelector } from 'react-redux';
-import axiosInstance from '../config/axiosInstance';
 
 const initialValues = {
     name: '',

@@ -1,5 +1,5 @@
 import { Link, useNavigate } from 'react-router-dom';
-import {useEffect, useState} from "react";
+import { useEffect, useState } from 'react';
 import axiosInstance from './../config/axiosInstance';
 
 const NavigationBar = () => {
