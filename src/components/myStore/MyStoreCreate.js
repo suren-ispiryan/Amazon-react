@@ -1,13 +1,46 @@
-import { useState } from 'react';
-import { useDispatch } from 'react-redux';
+import { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { CREATE_PRODUCT_REQUEST } from '../../redux/myStore/actions';
+import {GET_PRODUCT_CATEGORIES_REQUEST, GET_PRODUCT_SIZES_REQUEST} from '../../redux/adminProductParameters/actions';
+import uuid from "react-uuid";
 
 const MyStoreCreate = ({ productImage, initialValues }) => {
     const dispatch = useDispatch();
     const [productAttributes, setProductAttributes] = useState({});
     const [formErrors, setFormErrors ] = useState({});
     const [isSubmited, setIsSubmited ] = useState(false);
+    const { categories, loading } = useSelector((state) => state.categories)
+    const [getCategories, setGetCategories] = useState([])
+    const [getProductSizes, setGetProductSizes] = useState([]);
+    const { sizes } = useSelector((state) => state.sizes)
 
+    //show categories
+    useEffect(() => {
+        dispatch({
+            type: GET_PRODUCT_CATEGORIES_REQUEST
+        })
+    }, [])
+
+    useEffect(() => {
+        if (!loading) {
+            setGetCategories(categories)
+        }
+    }, [loading])
+
+    //show sizes
+    useEffect(() => {
+        dispatch({
+            type: GET_PRODUCT_SIZES_REQUEST
+        })
+    }, [])
+
+    useEffect(() => {
+        if (!loading) {
+            setGetProductSizes(sizes)
+        }
+    }, [sizes])
+
+    //create product
     const handleChange = ({target}) => {
         setProductAttributes({
             ...productAttributes,
@@ -117,6 +150,7 @@ const MyStoreCreate = ({ productImage, initialValues }) => {
                         name="price"
                         className="form-control my-2"
                         placeholder="Price"
+                        min="0"
                         onChange={handleChange}
                         value={productAttributes.price || ''}
                     />
@@ -127,6 +161,7 @@ const MyStoreCreate = ({ productImage, initialValues }) => {
                         name="inStock"
                         className="form-control my-2"
                         placeholder="InStock"
+                        min="0"
                         onChange={handleChange}
                         value={productAttributes.inStock || ''}
                     />
@@ -141,8 +176,8 @@ const MyStoreCreate = ({ productImage, initialValues }) => {
                         value={productAttributes.color || '#000000'}
                     />
                     <h6 className="errors text-danger">{formErrors.color}</h6>
-                    <select
 
+                    <select
                         className="form-select my-2"
                         name="size"
                         aria-label="Default select example"
@@ -150,9 +185,15 @@ const MyStoreCreate = ({ productImage, initialValues }) => {
                         value={productAttributes.size || ''}
                     >
                         <option defaultValue>Select size</option>
-                        <option value="small">small</option>
-                        <option value="medium">medium</option>
-                        <option value="big">big</option>
+                        {
+                            getProductSizes && getProductSizes.map((item) => {
+                                return (
+                                    <>
+                                        <option key={uuid()} value={item.size}>{item.size}</option>
+                                    </>
+                                )
+                            })
+                        }
                     </select>
                     <h6 className="errors text-danger">{formErrors.size}</h6>
 
@@ -164,11 +205,15 @@ const MyStoreCreate = ({ productImage, initialValues }) => {
                             value={productAttributes.category || ''}
                     >
                         <option defaultValue>Select category</option>
-                        <option value="toys">toys</option>
-                        <option value="clothes">clothes</option>
-                        <option value="furniture">furniture</option>
-                        <option value="phones">phones</option>
-                        <option value="food">food</option>
+                        {
+                            getCategories && getCategories.map((item) => {
+                                return (
+                                    <>
+                                        <option key={uuid()} value={item.category}>{item.category}</option>
+                                    </>
+                                )
+                            })
+                        }
                     </select>
                     <h6 className="errors text-danger">{formErrors.category}</h6>
 
