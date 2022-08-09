@@ -1,8 +1,11 @@
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { CREATE_PRODUCT_REQUEST } from '../../redux/myStore/actions';
-import {GET_PRODUCT_CATEGORIES_REQUEST, GET_PRODUCT_SIZES_REQUEST} from '../../redux/adminProductParameters/actions';
-import uuid from "react-uuid";
+import {
+    GET_PRODUCT_CATEGORIES_REQUEST,
+    GET_PRODUCT_SIZES_REQUEST
+} from '../../redux/adminProductParameters/actions';
+import uuid from 'react-uuid';
 
 const MyStoreCreate = ({ productImage, initialValues }) => {
     const dispatch = useDispatch();
@@ -187,11 +190,7 @@ const MyStoreCreate = ({ productImage, initialValues }) => {
                         <option defaultValue>Select size</option>
                         {
                             getProductSizes && getProductSizes.map((item) => {
-                                return (
-                                    <>
-                                        <option key={uuid()} value={item.size}>{item.size}</option>
-                                    </>
-                                )
+                                return (<option key={uuid()} value={item.size}>{item.size}</option>)
                             })
                         }
                     </select>
@@ -207,11 +206,7 @@ const MyStoreCreate = ({ productImage, initialValues }) => {
                         <option defaultValue>Select category</option>
                         {
                             getCategories && getCategories.map((item) => {
-                                return (
-                                    <>
-                                        <option key={uuid()} value={item.category}>{item.category}</option>
-                                    </>
-                                )
+                                return (<option key={uuid()} value={item.category}>{item.category}</option>)
                             })
                         }
                     </select>
