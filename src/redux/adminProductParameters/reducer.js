@@ -2,21 +2,21 @@ import {
     ADD_CATEGORY_REQUEST,
     ADD_CATEGORY_SUCCESS,
     ADD_CATEGORY_FAILURE,
-   GET_PRODUCT_CATEGORIES_REQUEST,
-   GET_PRODUCT_CATEGORIES_SUCCESS,
-   GET_PRODUCT_CATEGORIES_FAILURE,
+    GET_PRODUCT_CATEGORIES_REQUEST,
+    GET_PRODUCT_CATEGORIES_SUCCESS,
+    GET_PRODUCT_CATEGORIES_FAILURE,
     REMOVE_CATEGORY_REQUEST,
     REMOVE_CATEGORY_SUCCESS,
     REMOVE_CATEGORY_FAILURE,
-    // GUEST_PRODUCT_GET_REQUEST,
-    // GUEST_PRODUCT_GET_SUCCESS,
-    // GUEST_PRODUCT_GET_FAILURE,
-    // BUY_PRODUCTS_FROM_CART_REQUEST,
-    // BUY_PRODUCTS_FROM_CART_SUCCESS,
-    // BUY_PRODUCTS_FROM_CART_FAILURE,
-    // GET_ORDERS_REQUEST,
-    // GET_ORDERS_SUCCESS,
-    // GET_ORDERS_FAILURE
+    ADD_SIZE_REQUEST,
+    ADD_SIZE_SUCCESS,
+    ADD_SIZE_FAILURE,
+    GET_PRODUCT_SIZES_REQUEST,
+    GET_PRODUCT_SIZES_SUCCESS,
+    GET_PRODUCT_SIZES_FAILURE,
+    REMOVE_SIZE_REQUEST,
+    REMOVE_SIZE_SUCCESS,
+    REMOVE_SIZE_FAILURE
 } from "./actions"
 
 const initialStata = {
@@ -28,7 +28,7 @@ const initialStata = {
 
 const adminProductParametersReducer = (state = initialStata, action) => {
     switch (action.type) {
-    //CREATE
+    //CREATE CATEGORY
         case ADD_CATEGORY_REQUEST:
             return {
                 ...state,
@@ -49,7 +49,7 @@ const adminProductParametersReducer = (state = initialStata, action) => {
                 loading: false,
                 message: action.message
             }
-//     // GET
+    // GET CATEGORY
         case GET_PRODUCT_CATEGORIES_REQUEST:
             return {
                ...state,
@@ -70,7 +70,7 @@ const adminProductParametersReducer = (state = initialStata, action) => {
                 loading: false,
                 message: action.message
             }
-//     // REMOVE
+    // REMOVE CATEGORY
         case REMOVE_CATEGORY_REQUEST:
             return {
                 ...state,
@@ -93,67 +93,73 @@ const adminProductParametersReducer = (state = initialStata, action) => {
                 loading: false,
                 message: action.message
             }
-//     //GUEST GET
-//         case GUEST_PRODUCT_GET_REQUEST:
-//             return {
-//                 ...state,
-//                 loading: true,
-//                 message: '',
-//                 addedToCart: []
-//             }
-//         case GUEST_PRODUCT_GET_SUCCESS:
-//             return {
-//                 ...state,
-//                 loading: false,
-//                 addedToCart: action.addedToCart,
-//                 message: action.message
-//             }
-//         case GUEST_PRODUCT_GET_FAILURE:
-//             return {
-//                 ...state,
-//                 loading: false,
-//                 message: action.message
-//             }
-//     //ORDER
-//         case BUY_PRODUCTS_FROM_CART_REQUEST:
-//             return {
-//                 ...state,
-//                 loading: true,
-//                 message: ''
-//             }
-//         case BUY_PRODUCTS_FROM_CART_SUCCESS:
-//             return {
-//                 ...state,
-//                 loading: true,
-//                 message: 'Products were successfully ordered',
-//             }
-//         case BUY_PRODUCTS_FROM_CART_FAILURE:
-//             return {
-//                 ...state.orders,
-//                 loading: true,
-//                 message: '',
-//             }
-//     //GET ORDERED
-//         case GET_ORDERS_REQUEST:
-//             return {
-//                 ...state,
-//                 loading: true,
-//                 message: '',
-//                 orderedProducts: []
-//             }
-//         case GET_ORDERS_SUCCESS:
-//             return {
-//                 ...state,
-//                 loading: false,
-//                 orderedProducts: action.addedToCart,
-//                 message: action.message
-//             }
-//         case GET_ORDERS_FAILURE:
-//             return {
-//                 ...state,
-//                 loading: false,
-//                 message: action.message
-//             }
+
+    //CREATE SIZE
+        case ADD_SIZE_REQUEST:
+            return {
+                ...state,
+                loading: true,
+                message: '',
+                sizes: [...state.sizes],
+            }
+        case ADD_SIZE_SUCCESS:
+            return {
+                ...state,
+                loading: false,
+                sizes: [...state.sizes, action.addedSize],
+                message: action.message
+            }
+        case ADD_SIZE_FAILURE:
+            return {
+                ...state,
+                loading: false,
+                message: action.message
+            }
+    // GET SIZE
+        case GET_PRODUCT_SIZES_REQUEST:
+            return {
+                ...state,
+                loading: true,
+                message: '',
+                sizes: []
+            }
+        case GET_PRODUCT_SIZES_SUCCESS:
+            return {
+                ...state,
+                loading: false,
+                sizes: action.getSizes,
+                message: action.message
+            }
+        case GET_PRODUCT_SIZES_FAILURE:
+            return {
+                ...state,
+                loading: false,
+                message: action.message
+            }
+    // REMOVE SIZE
+        case REMOVE_SIZE_REQUEST:
+            return {
+                ...state,
+                loading: true,
+                message: '',
+                categories: [...state.categories]
+            }
+        case REMOVE_SIZE_SUCCESS:
+            let sizesList = []
+            sizesList = state.sizes.filter(i => i.id !== parseInt(action.removeSize.id))
+            return {
+                ...state,
+                loading: false,
+                sizes: sizesList,
+                message: action.message
+            }
+        case REMOVE_SIZE_FAILURE:
+            return {
+                ...state,
+                loading: false,
+                message: action.message
+            }
+
     // DEFAULT
         default:
             return state

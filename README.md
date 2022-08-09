@@ -53,10 +53,10 @@ My Store
 - Ability to see total earnings for each product.
 
 Admin
-- Colors CRUD
-- Sizes CRUD
++ Categories CRUD
++ Sizes CRUD
 + Users crud.
 + Products crud.
 + Must see all orders.
-- Category CRUD (categories can have subcategories)
+- sCategory CRUD (categories can have subcategories)
 - Have a seed to import default categories with their subcategories.

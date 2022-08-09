@@ -18,6 +18,7 @@ const rootReducer = combineReducers({
     adminProducts: adminDashboardReducer,
     adminOrders: adminOrdersReducer,
     adminUsers: adminUsersReducer,
-    categories: adminProductParametersReducer
+    categories: adminProductParametersReducer,
+    sizes: adminProductParametersReducer
 })
 export default rootReducer

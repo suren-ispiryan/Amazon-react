@@ -11,10 +11,13 @@ import uuid from 'react-uuid';
 const categoryInitial = '';
 
 const Categories = () => {
-    const [category, setCategory] = useState('');
     const dispatch = useDispatch();
+    // create
+    const [category, setCategory] = useState('');
+    // show
     const {categories, loading} = useSelector((state) => state.categories)
     const [getCategories, setGetCategories] = useState([]);
+
 
     // add data
     const handleChange = ({target}) => {
