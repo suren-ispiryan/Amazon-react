@@ -1,10 +1,43 @@
-import { useDispatch } from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
 import Modal from 'react-bootstrap/Modal';
 import Button from 'react-bootstrap/Button';
 import { UPDATE_PRODUCT_REQUEST } from '../../redux/myStore/actions';
 import LoadingSpinner from './../LoadingSpinner';
+import {useEffect, useState} from "react";
+import {GET_PRODUCT_CATEGORIES_REQUEST, GET_PRODUCT_SIZES_REQUEST} from "../../redux/adminProductParameters/actions";
+import uuid from "react-uuid";
 
 const MyStoreUpdate = ({ initialValues, show, setShow, productImage, updatedProduct, setUpdatedProduct }) => {
+    const { categories, loading } = useSelector((state) => state.categories)
+    const [getCategories, setGetCategories] = useState([])
+    const [getProductSizes, setGetProductSizes] = useState([]);
+    const { sizes } = useSelector((state) => state.sizes)
+
+    //show categories
+    useEffect(() => {
+        dispatch({
+            type: GET_PRODUCT_CATEGORIES_REQUEST
+        })
+    }, [])
+
+    useEffect(() => {
+        if (!loading) {
+            setGetCategories(categories)
+        }
+    }, [loading])
+
+    //show sizes
+    useEffect(() => {
+        dispatch({
+            type: GET_PRODUCT_SIZES_REQUEST
+        })
+    }, [])
+
+    useEffect(() => {
+        if (!loading) {
+            setGetProductSizes(sizes)
+        }
+    }, [sizes])
 
     const dispatch = useDispatch();
 
@@ -38,7 +71,7 @@ const MyStoreUpdate = ({ initialValues, show, setShow, productImage, updatedProd
         dataUpdate.append('size', updatedProduct.size);
         dataUpdate.append('category', updatedProduct.category);
         dataUpdate.append('picture', updatedProduct.picture);
-        dataUpdate.append('inStock', updatedProduct.inStock);
+        dataUpdate.append('in_stock', updatedProduct.in_stock);
         productImage.current.value = ''
         dispatch({
             type: UPDATE_PRODUCT_REQUEST,
@@ -94,11 +127,12 @@ const MyStoreUpdate = ({ initialValues, show, setShow, productImage, updatedProd
 
                         <input
                             type="number"
-                            name="inStock"
+                            name="in_stock"
                             className="form-control my-3"
                             placeholder="In stock"
+                            min="0"
                             onChange={handleChangeUpdate}
-                            value={updatedProduct.inStock}
+                            value={updatedProduct.in_stock}
                         />
 
                         <input
@@ -117,9 +151,11 @@ const MyStoreUpdate = ({ initialValues, show, setShow, productImage, updatedProd
                                 value={updatedProduct.size}
                         >
                             <option defaultValue>Select size</option>
-                            <option value="small">small</option>
-                            <option value="medium">medium</option>
-                            <option value="big">big</option>
+                            {
+                                getProductSizes && getProductSizes.map((item) => {
+                                    return (<option key={uuid()} value={item.size}>{item.size}</option>)
+                                })
+                            }
                         </select>
 
                         <select onChange={handleChangeUpdate}
@@ -129,11 +165,11 @@ const MyStoreUpdate = ({ initialValues, show, setShow, productImage, updatedProd
                                 value={updatedProduct.category}
                         >
                             <option defaultValue>Select category</option>
-                            <option value="toys">toys</option>
-                            <option value="clothes">clothes</option>
-                            <option value="furniture">furniture</option>
-                            <option value="phones">phones</option>
-                            <option value="food">food</option>
+                            {
+                                getCategories && getCategories.map((item) => {
+                                    return (<option key={uuid()} value={item.category}>{item.category}</option>)
+                                })
+                            }
                         </select>
 
                         <div className="form-group">

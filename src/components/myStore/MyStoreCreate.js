@@ -70,7 +70,7 @@ const MyStoreCreate = ({ productImage, initialValues }) => {
             data.append('size', productAttributes.size);
             data.append('category', productAttributes.category);
             data.append('picture', productAttributes.picture);
-            data.append('inStock', productAttributes.inStock);
+            data.append('in_stock', productAttributes.in_stock);
             productImage.current.value = ''
             setProductAttributes(initialValues)
             dispatch({
@@ -106,8 +106,8 @@ const MyStoreCreate = ({ productImage, initialValues }) => {
         if (!values.picture) {
             errors.picture = 'picture is required';
         }
-        if (!values.inStock) {
-            errors.inStock = 'inStock is required';
+        if (!values.in_stock) {
+            errors.in_stock = 'inStock is required';
         }
         return errors;
     }
@@ -161,14 +161,14 @@ const MyStoreCreate = ({ productImage, initialValues }) => {
 
                     <input
                         type="number"
-                        name="inStock"
+                        name="in_stock"
                         className="form-control my-2"
-                        placeholder="InStock"
+                        placeholder="In stock"
                         min="0"
                         onChange={handleChange}
-                        value={productAttributes.inStock || ''}
+                        value={productAttributes.in_stock || ''}
                     />
-                    <h6 className="errors text-danger">{formErrors.inStock}</h6>
+                    <h6 className="errors text-danger">{formErrors.in_stock}</h6>
 
                     <input
                         type="color"

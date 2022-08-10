@@ -11,6 +11,10 @@ import uuid from 'react-uuid';
 import { GetColorName } from 'hex-color-to-color-name';
 import Modal from 'react-bootstrap/Modal';
 import Button from 'react-bootstrap/Button';
+import {
+    GET_PRODUCT_CATEGORIES_REQUEST,
+    GET_PRODUCT_SIZES_REQUEST
+} from "../../redux/adminProductParameters/actions";
 
 const updateInitialValues = {
     name: '',
@@ -32,6 +36,36 @@ const AdminDashboard = () => {
     const [updateProductItem, setUpdateProductItem] = useState({})
     const [show, setShow] = useState(false);
     const [id, setId] = useState();
+    const { categories } = useSelector((state) => state.categories)
+    const [getCategories, setGetCategories] = useState([])
+    const [getProductSizes, setGetProductSizes] = useState([]);
+    const { sizes } = useSelector((state) => state.sizes)
+
+    //show categories
+    useEffect(() => {
+        dispatch({
+            type: GET_PRODUCT_CATEGORIES_REQUEST
+        })
+    }, [])
+
+    useEffect(() => {
+        if (!loading) {
+            setGetCategories(categories)
+        }
+    }, [loading])
+
+    //show sizes
+    useEffect(() => {
+        dispatch({
+            type: GET_PRODUCT_SIZES_REQUEST
+        })
+    }, [])
+
+    useEffect(() => {
+        if (!loading) {
+            setGetProductSizes(sizes)
+        }
+    }, [loading])
 
     useEffect(() => {
         dispatch({
@@ -313,9 +347,11 @@ const AdminDashboard = () => {
                                         value={updateProductItem.size ? updateProductItem.size : updatedProduct.size}
                                 >
                                     <option defaultValue>Select size</option>
-                                    <option value="small">small</option>
-                                    <option value="medium">medium</option>
-                                    <option value="big">big</option>
+                                    {
+                                        getProductSizes && getProductSizes.map((item) => {
+                                            return (<option key={uuid()} value={item.size}>{item.size}</option>)
+                                        })
+                                    }
                                 </select>
 
                                 <select
@@ -326,11 +362,11 @@ const AdminDashboard = () => {
                                         value={updateProductItem.category ? updateProductItem.category : updatedProduct.category}
                                 >
                                     <option defaultValue>Select category</option>
-                                    <option value="toys">toys</option>
-                                    <option value="clothes">clothes</option>
-                                    <option value="furniture">furniture</option>
-                                    <option value="phones">phones</option>
-                                    <option value="food">food</option>
+                                    {
+                                        getCategories && getCategories.map((item) => {
+                                            return (<option key={uuid()} value={item.category}>{item.category}</option>)
+                                        })
+                                    }
                                 </select>
 
                                 <div className="form-group">
