@@ -20,7 +20,7 @@ const Register = () => {
         axiosInstance.post('/register', { registerInfo, guestCardProducts })
             .then(function (response) {
                 if(response.status === 200) {
-                    navigate('/login')
+                    // navigate('/login')
                     localStorage.removeItem('addedToCart');
                 }
             })
