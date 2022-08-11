@@ -7,9 +7,10 @@ import { Link, useNavigate } from 'react-router-dom';
 
 const Login = () => {
     const dispatch = useDispatch();
-    const {login, loading} = useSelector((state) => state.login)
+    const {login, loading, message} = useSelector((state) => state.login)
     const navigate = useNavigate();
     const [loginInfo, setLoginInfo] = useState({});
+    const [msg, setMsg] = useState('');
 
     const handleChange = ({target}) => {
         setLoginInfo({
@@ -23,13 +24,16 @@ const Login = () => {
             type: LOGIN_USER_REQUEST,
             payload: loginInfo
         })
+        setMsg(message)
     }
 
     useEffect(() => {
-        if(loading === true) {
-            localStorage.setItem('token', login);
-            navigate('/user-profile')
-            window.location.reload()
+        if(loading === true && msg === 'Successfully logged in') {
+            if (login !== null && login !== undefined && login !== '') {
+                localStorage.setItem('token', login);
+                navigate('/user-profile')
+                window.location.reload()
+            }
         }
     }, [loading])
 
