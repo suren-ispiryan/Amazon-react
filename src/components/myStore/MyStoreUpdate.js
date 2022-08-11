@@ -12,6 +12,7 @@ const MyStoreUpdate = ({ initialValues, show, setShow, productImage, updatedProd
     const [getCategories, setGetCategories] = useState([])
     const [getProductSizes, setGetProductSizes] = useState([]);
     const { sizes } = useSelector((state) => state.sizes)
+    const dispatch = useDispatch();
 
     //show categories
     useEffect(() => {
@@ -25,7 +26,6 @@ const MyStoreUpdate = ({ initialValues, show, setShow, productImage, updatedProd
             setGetCategories(categories)
         }
     }, [loading])
-
     //show sizes
     useEffect(() => {
         dispatch({
@@ -38,9 +38,7 @@ const MyStoreUpdate = ({ initialValues, show, setShow, productImage, updatedProd
             setGetProductSizes(sizes)
         }
     }, [sizes])
-
-    const dispatch = useDispatch();
-
+    //change product
     const handleChangeUpdate = ({target}) => {
         setUpdatedProduct({
             ...updatedProduct,
@@ -52,11 +50,6 @@ const MyStoreUpdate = ({ initialValues, show, setShow, productImage, updatedProd
                 [target.name]: target.files[0],
             })
         }
-    }
-
-    const handleClose = () => {
-        setShow(false);
-        setUpdatedProduct(initialValues)
     }
 
     const update = (event, id) => {
@@ -78,18 +71,25 @@ const MyStoreUpdate = ({ initialValues, show, setShow, productImage, updatedProd
             payload: dataUpdate
         })
     }
+    // close modal
+    const handleClose = () => {
+        setShow(false);
+        setUpdatedProduct(initialValues)
+    }
 
     return (
         <Modal show={show} onHide={handleClose}>
             <Modal.Header closeButton>
-                <Modal.Title>Update post</Modal.Title>
+                <Modal.Title>Update product</Modal.Title>
             </Modal.Header>
             <Modal.Body>
                 {!updatedProduct.name
                     ?
                         <LoadingSpinner /> :
                     (<>
+                        <label htmlFor="name" className="labels">Name</label>
                         <input
+                            id="name"
                             type="text"
                             name="name"
                             className="form-control my-3"
@@ -97,8 +97,9 @@ const MyStoreUpdate = ({ initialValues, show, setShow, productImage, updatedProd
                             onChange={handleChangeUpdate}
                             value={updatedProduct.name}
                         />
-
+                        <label htmlFor="description" className="labels">Description</label>
                         <input
+                            id="description"
                             type="text"
                             name="description"
                             className="form-control my-3"
@@ -106,8 +107,9 @@ const MyStoreUpdate = ({ initialValues, show, setShow, productImage, updatedProd
                             onChange={handleChangeUpdate}
                             value={updatedProduct.description}
                         />
-
+                        <label htmlFor="bread" className="labels">Brand</label>
                         <input
+                            id="brand"
                             type="text"
                             name="brand"
                             className="form-control my-3"
@@ -115,8 +117,9 @@ const MyStoreUpdate = ({ initialValues, show, setShow, productImage, updatedProd
                             onChange={handleChangeUpdate}
                             value={updatedProduct.brand}
                         />
-
+                        <label htmlFor="price" className="labels">Price</label>
                         <input
+                            id="price"
                             type="number"
                             name="price"
                             className="form-control my-3"
@@ -124,8 +127,9 @@ const MyStoreUpdate = ({ initialValues, show, setShow, productImage, updatedProd
                             onChange={handleChangeUpdate}
                             value={updatedProduct.price}
                         />
-
+                        <label htmlFor="in_stock" className="labels">In stock</label>
                         <input
+                            id="in_stock"
                             type="number"
                             name="in_stock"
                             className="form-control my-3"
@@ -134,8 +138,9 @@ const MyStoreUpdate = ({ initialValues, show, setShow, productImage, updatedProd
                             onChange={handleChangeUpdate}
                             value={updatedProduct.in_stock}
                         />
-
+                        <label htmlFor="color" className="labels">Color</label>
                         <input
+                            id="color"
                             type="color"
                             name="color"
                             className="form-control my-3"
@@ -143,8 +148,10 @@ const MyStoreUpdate = ({ initialValues, show, setShow, productImage, updatedProd
                             onChange={handleChangeUpdate}
                             value={updatedProduct.color}
                         />
-
-                        <select onChange={handleChangeUpdate}
+                        <label htmlFor="size" className="labels">Size</label>
+                        <select
+                                id="size"
+                                onChange={handleChangeUpdate}
                                 className="form-select my-3"
                                 name="size"
                                 aria-label="Default select example"
@@ -157,8 +164,10 @@ const MyStoreUpdate = ({ initialValues, show, setShow, productImage, updatedProd
                                 })
                             }
                         </select>
-
-                        <select onChange={handleChangeUpdate}
+                            <label htmlFor="category" className="labels">Category</label>
+                        <select
+                                id="category"
+                                onChange={handleChangeUpdate}
                                 className="form-select my-3"
                                 name="category"
                                 aria-label="Default select example"

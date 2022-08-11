@@ -29,7 +29,6 @@ const MyStoreCreate = ({ productImage, initialValues }) => {
             setGetCategories(categories)
         }
     }, [loading])
-
     //show sizes
     useEffect(() => {
         dispatch({
@@ -42,7 +41,6 @@ const MyStoreCreate = ({ productImage, initialValues }) => {
             setGetProductSizes(sizes)
         }
     }, [sizes])
-
     //create product
     const handleChange = ({target}) => {
         setProductAttributes({

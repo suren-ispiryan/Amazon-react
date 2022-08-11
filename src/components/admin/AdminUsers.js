@@ -23,9 +23,9 @@ const AdminUsers = () => {
     const [users, setUsers] = useState([]);
     const { adminUsers, loading } = useSelector((state) => state.adminUsers);
     const [show, setShow] = useState(false);
-    const [updateUserData, setUpdateUserData] = useState({});
     const [updatedUser, setUpdatedUser] = useState(updateInitialValues);
     const [id, setId] = useState();
+    const [formErrors, setFormErrors] = useState({})
 
     useEffect(() => {
         dispatch({
@@ -51,22 +51,44 @@ const AdminUsers = () => {
     }
 
     const handleChangeUpdateUserData = ({target}) => {
-        setUpdateUserData({
-            ...updateUserData,
+        setUpdatedUser({
+            ...updatedUser,
             [target.name]: target.value,
         })
     }
 
     const update = () => {
-        let data = {
-            id: id,
-            updateUserData: updateUserData
+        setFormErrors(validate(updatedUser))
+        if (Object.keys(validate(updatedUser)).length === 0) {
+            let data = {
+                id: id,
+                name: updatedUser.name,
+                surname: updatedUser.surname,
+                email: updatedUser.email,
+                role: updatedUser.role
+            }
+            dispatch({
+                type: UPDATE_USER_REQUEST,
+                payload: data
+            })
+            setShow(false)
         }
-        dispatch({
-            type: UPDATE_USER_REQUEST,
-            payload: data
-        })
-        setShow(false)
+    }
+
+    //validation errors
+    const validate = (values) => {
+        const errors = {};
+        const regex = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}/i;
+        if (values.name.length < 2 || values.name.length > 15) {
+            errors.name = 'name must be min 2, max 15 symbols';
+        }
+        if (values.surname.length < 2 || values.name.length > 15) {
+            errors.surname = 'surname must be min 2, max 15 symbols';
+        }
+        if (!regex.test(values.email)) {
+            errors.email = 'email in invalid';
+        }
+        return errors;
     }
 
     const handleClose = () => {
@@ -142,45 +164,59 @@ const AdminUsers = () => {
                 onHide={handleClose}
             >
                 <Modal.Header closeButton>
-                    <Modal.Title>Update product</Modal.Title>
+                    <Modal.Title>Update user data</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
-                    {!updatedUser.name
+                    {!updatedUser
                         ?
                         <LoadingSpinner /> :
                         (<>
+                                <label htmlFor="name" className="labels">Name</label>
+                                <h6 className="errors text-danger labels">{formErrors.name}</h6>
                                 <input
+                                    id="name"
                                     type="text"
                                     name="name"
                                     className="form-control my-3"
                                     placeholder="Name"
                                     onChange={handleChangeUpdateUserData}
-                                    value={updateUserData.name ? updateUserData.name : updatedUser.name}
+                                    value={updatedUser.name}
                                 />
+                                <label htmlFor="surname" className="labels">Surname</label>
+                                <h6 className="errors text-danger labels">{formErrors.surname}</h6>
                                 <input
+                                    id="surname"
                                     type="text"
                                     name="surname"
                                     className="form-control my-3"
                                     placeholder="Surname"
                                     onChange={handleChangeUpdateUserData}
-                                    value={updateUserData.surname ? updateUserData.surname : updatedUser.surname}
+                                    value={updatedUser.surname}
                                 />
+                                <label htmlFor="email" className="labels">Email</label>
+                                <h6 className="errors text-danger labels">{formErrors.email}</h6>
                                 <input
+                                    id="email"
                                     type="email"
                                     name="email"
                                     className="form-control my-3"
                                     placeholder="Email"
                                     onChange={handleChangeUpdateUserData}
-                                    value={updateUserData.email ? updateUserData.email : updatedUser.email}
+                                    value={updatedUser.email}
                                 />
-                                <input
-                                    type="text"
-                                    name="role"
-                                    className="form-control my-3"
-                                    placeholder="Role"
+                                <label htmlFor="role" className="labels">Role</label>
+                                <select
+                                    id="role"
                                     onChange={handleChangeUpdateUserData}
-                                    value={updateUserData.role ? updateUserData.role : updatedUser.role}
-                                />
+                                    className="form-select my-3"
+                                    name="role"
+                                    aria-label="Default select example"
+                                    value={updatedUser.role}
+                                >
+                                    <option value="superAdmin">superAdmin</option>
+                                    <option value="admin">admin</option>
+                                    <option value="user">user</option>
+                                </select>
                             </>
                         )}
 

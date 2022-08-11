@@ -16,30 +16,29 @@ import {
     GET_PRODUCT_SIZES_REQUEST
 } from "../../redux/adminProductParameters/actions";
 
-const updateInitialValues = {
+const initialValidationValues = {
     name: '',
     description: '',
     brand: '',
     price: '',
-    color: '#000000',
-    size: '',
-    category: '',
-    inStock: 0
+    color: '',
+    inStock: ''
 }
 
 const AdminDashboard = () => {
-    const {adminProducts, loading} = useSelector((state) => state.adminProducts)
     const dispatch = useDispatch();
+    const {adminProducts, loading, message} = useSelector((state) => state.adminProducts)
     const [ownersProducts, setOwnersProducts] = useState([]);
-    const [updatedProduct, setUpdatedProduct] = useState(updateInitialValues);
     const productImage = useRef('');
-    const [updateProductItem, setUpdateProductItem] = useState({})
     const [show, setShow] = useState(false);
     const [id, setId] = useState();
     const { categories } = useSelector((state) => state.categories)
     const [getCategories, setGetCategories] = useState([])
     const [getProductSizes, setGetProductSizes] = useState([]);
-    const { sizes } = useSelector((state) => state.sizes)
+    const { sizes } = useSelector((state) => state.sizes);
+    // validation
+    const [updatedProduct, setUpdatedProduct] = useState(initialValidationValues);
+    const [formErrors, setFormErrors] = useState({})
 
     //show categories
     useEffect(() => {
@@ -53,7 +52,6 @@ const AdminDashboard = () => {
             setGetCategories(categories)
         }
     }, [loading])
-
     //show sizes
     useEffect(() => {
         dispatch({
@@ -78,7 +76,7 @@ const AdminDashboard = () => {
             setOwnersProducts(adminProducts)
         }
     }, [loading])
-
+    // update product
     const changeProduct = (event, id, item) => {
         setId(id)
         setUpdatedProduct({
@@ -93,45 +91,62 @@ const AdminDashboard = () => {
         })
         setShow(true)
     }
-
-    const adminHandleChangeUpdate = ({target}) => {
-        setUpdateProductItem({
-            ...updateProductItem,
-            [target.name]: target.value,
-        })
-        if (target.name === 'picture') {
-            setUpdateProductItem({
-                ...updateProductItem,
-                [target.name]: target.files[0],
+            // submit
+    const update = () => {
+        setFormErrors(validate(updatedProduct))
+        if (Object.keys(validate(updatedProduct)).length === 0) {
+            const dataUpdate = new FormData();
+            dataUpdate.append('id', id);
+            dataUpdate.append('name', updatedProduct.name);
+            dataUpdate.append('description', updatedProduct.description);
+            dataUpdate.append('brand', updatedProduct.brand);
+            dataUpdate.append('price', updatedProduct.price);
+            dataUpdate.append('color', updatedProduct.color);
+            dataUpdate.append('size', updatedProduct.size);
+            dataUpdate.append('category', updatedProduct.category);
+            dataUpdate.append('picture', updatedProduct.picture);
+            dataUpdate.append('inStock', updatedProduct.inStock);
+            dispatch({
+                type: UPDATE_USER_PRODUCT_REQUEST,
+                payload: dataUpdate
             })
+            setShow(false)
         }
     }
-
-    const update = () => {
-        const dataUpdate = new FormData();
-        dataUpdate.append('id', id);
-        dataUpdate.append('name', updateProductItem.name);
-        dataUpdate.append('description', updateProductItem.description);
-        dataUpdate.append('brand', updateProductItem.brand);
-        dataUpdate.append('price', updateProductItem.price);
-        dataUpdate.append('color', updateProductItem.color);
-        dataUpdate.append('size', updateProductItem.size);
-        dataUpdate.append('category', updateProductItem.category);
-        dataUpdate.append('picture', updateProductItem.picture);
-        dataUpdate.append('inStock', updateProductItem.inStock);
-        productImage.current.value = ''
-        dispatch({
-            type: UPDATE_USER_PRODUCT_REQUEST,
-            payload: dataUpdate
-        })
-        setShow(false)
+            // onChange
+    const adminHandleChangeUpdate = ({target}) => {
+        setUpdatedProduct({
+            ...updatedProduct, [target.name]: target.value
+        });
     }
-
+            //validation errors
+    const validate = (values) => {
+        const errors = {};
+        if (values.name.length < 2 || values.name.length > 15) {
+            errors.name = 'name must be min 2, max 15 symbols';
+        }
+        if (values.description.length < 10 || values.description.length > 255) {
+            errors.description = 'description must be min 10, max 255 symbols';
+        }
+        if (values.brand.length < 2 || values.brand.length > 25) {
+            errors.brand = 'brand must be min 2, amx 25 symbols';
+        }
+        if (values.price.length < 1 || values.price.length > 5) {
+            errors.price = 'price must be min 1, max 99999 symbols';
+        }
+        if (values.color.length < 2 || values.color.length > 15) {
+            errors.color = 'color must be min 2, max 15 symbols';
+        }
+        if (values.inStock.length < 1 || values.inStock.length > 5) {
+            errors.inStock = 'inStock must be min 1, max 99999 symbols';
+        }
+        return errors;
+    }
+    //close modal
     const handleClose = () => {
         setShow(false)
-        setUpdateProductItem(updateInitialValues)
     }
-
+    // delete product
     const deleteProduct = (event, id) => {
         dispatch({
             type: DELETE_USER_PRODUCT_REQUEST,
@@ -281,70 +296,90 @@ const AdminDashboard = () => {
                     <Modal.Title>Update product</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
-                    {!updatedProduct.name
+                    {!updatedProduct
                         ?
                         <LoadingSpinner /> :
                         (<>
+                                <label htmlFor="name" className="labels">Name</label>
+                                 <h6 className="errors text-danger labels">{formErrors.name}</h6>
                                 <input
+                                    id="name"
                                     type="text"
                                     name="name"
                                     className="form-control my-3"
                                     placeholder="Name"
                                     onChange={adminHandleChangeUpdate}
-                                    value={updateProductItem.name ? updateProductItem.name : updatedProduct.name}
+                                    value={updatedProduct.name}
                                 />
 
+                                <label htmlFor="description" className="labels">Description</label>
+                                <h6 className="errors text-danger labels">{formErrors.description}</h6>
                                 <input
+                                    id="description"
                                     type="text"
                                     name="description"
                                     className="form-control my-3"
                                     placeholder="Description"
                                     onChange={adminHandleChangeUpdate}
-                                    value={updateProductItem.description ? updateProductItem.description : updatedProduct.description}
+                                    value={updatedProduct.description}
                                 />
 
+                                <label htmlFor="brand" className="labels">Brand</label>
+                                <h6 className="errors text-danger labels">{formErrors.brand}</h6>
                                 <input
+                                    id="brand"
                                     type="text"
                                     name="brand"
                                     className="form-control my-3"
                                     placeholder="Brand"
                                     onChange={adminHandleChangeUpdate}
-                                    value={updateProductItem.brand ? updateProductItem.brand : updatedProduct.brand}
+                                    value={updatedProduct.brand}
                                 />
 
+                                <label htmlFor="price" className="labels">Price</label>
+                                <h6 className="errors text-danger labels">{formErrors.price}</h6>
                                 <input
+                                    id="price"
                                     type="number"
                                     name="price"
                                     className="form-control my-3"
                                     placeholder="Price"
                                     onChange={adminHandleChangeUpdate}
-                                    value={updateProductItem.price ? updateProductItem.price : updatedProduct.price}
+                                    value={updatedProduct.price}
                                 />
 
+                                <label htmlFor="in-stock" className="labels">In stock</label>
+                                <h6 className="errors text-danger labels">{formErrors.inStock}</h6>
                                 <input
+                                    id="in-stock"
                                     type="number"
                                     name="inStock"
                                     className="form-control my-3"
                                     placeholder="In stock"
                                     onChange={adminHandleChangeUpdate}
-                                    value={updateProductItem.inStock ? updateProductItem.inStock : updatedProduct.inStock}
+                                    value={updatedProduct.inStock}
                                 />
 
+                                <label htmlFor="color" className="labels">Color</label>
+                                <h6 className="errors text-danger labels">{formErrors.color}</h6>
                                 <input
+                                    id="color"
                                     type="color"
                                     name="color"
                                     className="form-control my-3"
                                     placeholder="Color"
                                     onChange={adminHandleChangeUpdate}
-                                    value={updateProductItem.color ? updateProductItem.color : updatedProduct.color}
+                                    value={updatedProduct.color}
                                 />
 
+                                <label htmlFor="size" className="labels">Size</label>
                                 <select
-                                    onChange={adminHandleChangeUpdate}
+                                        id="size"
+                                        onChange={adminHandleChangeUpdate}
                                         className="form-select my-3"
                                         name="size"
                                         aria-label="Default select example"
-                                        value={updateProductItem.size ? updateProductItem.size : updatedProduct.size}
+                                        value={updatedProduct.size}
                                 >
                                     <option defaultValue>Select size</option>
                                     {
@@ -354,12 +389,14 @@ const AdminDashboard = () => {
                                     }
                                 </select>
 
+                                <label htmlFor="category" className="labels">Category</label>
                                 <select
+                                        id="category"
                                         onChange={adminHandleChangeUpdate}
                                         className="form-select my-3"
                                         name="category"
                                         aria-label="Default select example"
-                                        value={updateProductItem.category ? updateProductItem.category : updatedProduct.category}
+                                        value={updatedProduct.category}
                                 >
                                     <option defaultValue>Select category</option>
                                     {

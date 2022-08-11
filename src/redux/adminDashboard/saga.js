@@ -50,10 +50,9 @@ function* deleteUsersProduct(action) {
 function* updateUsersProduct(action) {
     try {
         const response = yield axiosInstance.post('/update-user-product', action.payload)
-        console.log(response.data)
         yield put({
             type: UPDATE_USER_PRODUCT_SUCCESS,
-            message: 'Success fetching data',
+            message: 'success',
             adminProducts: response.data
         });
     } catch (e) {

@@ -237,3 +237,8 @@ li {
   justify-content: center;
   align-items: center;
 }
+
+.labels {
+  color: #5b7fde;
+  margin-left: 10px;
+}
