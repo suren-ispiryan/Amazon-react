@@ -26,7 +26,7 @@ const App = () => {
             <Routes>
                 <Route path="/" element={<AllProducts />} />
                 <Route path="login" element={<Login />} />
-                <Route path="verify/:email" element={<Verify />} />
+                <Route path="verify/:token" element={<Verify />} />
                 <Route path="register" element={<Register />} />
                 <Route path="my-store" element={<MyStore />} />
                 <Route path="my-cart" element={<MyCart />} />

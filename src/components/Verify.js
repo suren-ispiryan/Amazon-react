@@ -4,17 +4,18 @@ import { useNavigate, useParams } from 'react-router-dom';
 
 const Verify = () => {
     const navigate = useNavigate();
-    let email = useParams();
+    let token = useParams();
 
     useEffect(() => {
-        axiosInstance.get('verify/'+email.email)
+        console.log(token)
+        axiosInstance.get('verify/'+token.token)
                      .then(function (response) {
                             if(response.status === 200) {
                                 navigate('/login')
                             }
                      })
                      .catch(function (error) {console.log(error)});
-    }, [email])
+    }, [token])
 
     return (
         <div className="user-profile">
