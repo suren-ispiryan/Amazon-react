@@ -7,10 +7,11 @@ import { Link, useNavigate } from 'react-router-dom';
 
 const Login = () => {
     const dispatch = useDispatch();
-    const {login, loading, message} = useSelector((state) => state.login)
+    const {login, loading, status, message} = useSelector((state) => state.login)
     const navigate = useNavigate();
     const [loginInfo, setLoginInfo] = useState({});
     const [msg, setMsg] = useState('');
+    const [logMessage, setLogMessage] = useState('');
 
     const handleChange = ({target}) => {
         setLoginInfo({
@@ -24,6 +25,9 @@ const Login = () => {
             type: LOGIN_USER_REQUEST,
             payload: loginInfo
         })
+        if (status !== 200) {
+            setLogMessage('Verify your account please')
+        }
         setMsg(message)
     }
 
@@ -43,6 +47,8 @@ const Login = () => {
                 <div className="col-md-12 sign-parent">
                     <div className="sign-form">
                         <h2>Login</h2>
+
+                        <h6 className="text-danger">{logMessage}</h6>
 
                         <input
                             type="email"

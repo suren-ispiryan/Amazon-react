@@ -1,10 +1,19 @@
 import { useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import axiosInstance from './../config/axiosInstance';
 
+const initialStateRegister = {
+    name: '',
+    surname: '',
+    email: '',
+    password: '',
+    confirmation: ''
+}
+
 const Register = () => {
-    const navigate = useNavigate();
-    const [registerInfo, setRegisterInfo] = useState({});
+    const [registerInfo, setRegisterInfo] = useState(initialStateRegister);
+    const [registerMessage, setRegisterMessage] = useState('');
+    const [registerErrorMessage, setRegisterErrorMessage] = useState(initialStateRegister);
 
     const handleChange = ({target}) => {
         setRegisterInfo({
@@ -16,15 +25,23 @@ const Register = () => {
     const registerUser = () => {
         let guestCardProducts;
         guestCardProducts = JSON.parse(localStorage.getItem('addedToCart'))
-
-        axiosInstance.post('/register', { registerInfo, guestCardProducts })
-            .then(function (response) {
-                if(response.status === 200) {
-                    // navigate('/login')
-                    localStorage.removeItem('addedToCart');
-                }
-            })
-            .catch(function (error) {console.log(error)});
+        axiosInstance.post('register', registerInfo, guestCardProducts)
+                     .then(function (response) {
+                         if(response.status === 200) {
+                             setRegisterMessage('For completing registration process please check your male.')
+                             localStorage.removeItem('addedToCart');
+                         }
+                     })
+                     .catch(function (error) {
+                         setRegisterErrorMessage({
+                             ...initialStateRegister,
+                             'name': error.response.data.errors.name ? error.response.data.errors.name : '',
+                             'surname': error.response.data.errors.surname ? error.response.data.errors.surname : '',
+                             'email': error.response.data.errors.email ? error.response.data.errors.email : '',
+                             'password': error.response.data.errors.password ? error.response.data.errors.password : '',
+                             'confirmation': error.response.data.errors.confirmation ? error.response.data.errors.confirmation : ''
+                         })
+                     });
     }
 
     return (
@@ -34,6 +51,8 @@ const Register = () => {
                     <div className="sign-form">
                         <h2>Register</h2>
 
+                        <h6 className="mt-3 text-success"> { registerMessage } </h6>
+                        <h6 className="mt-3 text-danger"> { registerErrorMessage.name } </h6>
                         <input
                             type="text"
                             name="name"
@@ -42,7 +61,7 @@ const Register = () => {
                             onChange={handleChange}
                             value={registerInfo.name || ''}
                         />
-
+                        <h6 className="mt-3 text-danger"> { registerErrorMessage.surname } </h6>
                         <input
                             type="text"
                             name="surname"
@@ -51,7 +70,7 @@ const Register = () => {
                             onChange={handleChange}
                             value={registerInfo.surname  || ''}
                         />
-
+                        <h6 className="mt-3 text-danger"> { registerErrorMessage.email } </h6>
                         <input
                             type="email"
                             name="email"
@@ -60,7 +79,7 @@ const Register = () => {
                             onChange={handleChange}
                             value={registerInfo.email  || ''}
                         />
-
+                        <h6 className="mt-3 text-danger"> { registerErrorMessage.password } </h6>
                         <input
                             type="password"
                             name="password"
@@ -69,7 +88,7 @@ const Register = () => {
                             onChange={handleChange}
                             value={registerInfo.password || ''}
                         />
-
+                        <h6 className="mt-3 text-danger"> { registerErrorMessage.confirmation } </h6>
                         <input
                             type="password"
                             name="confirmation"
