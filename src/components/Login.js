@@ -10,7 +10,6 @@ const Login = () => {
     const {login, loading, status, message} = useSelector((state) => state.login)
     const navigate = useNavigate();
     const [loginInfo, setLoginInfo] = useState({});
-    const [msg, setMsg] = useState('');
     const [logMessage, setLogMessage] = useState('');
 
     const handleChange = ({target}) => {
@@ -25,15 +24,14 @@ const Login = () => {
             type: LOGIN_USER_REQUEST,
             payload: loginInfo
         })
-        if (status !== 200) {
+        if (message === 'Something went wrong' || message === null) {
             setLogMessage('Verify your account please')
         }
-        setMsg(message)
     }
 
     useEffect(() => {
-        if(loading === true && msg === 'Successfully logged in') {
-            if (login !== null && login !== undefined && login !== '') {
+        if(loading === true) {
+            if (login !== '') {
                 localStorage.setItem('token', login);
                 navigate('/user-profile')
                 window.location.reload()

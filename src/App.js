@@ -8,6 +8,7 @@ import Register from './components/Register';
 import UserProfile from './components/UserProfile';
 import MyStore from './components/MyStore';
 import MyCart from './components/MyCart';
+import SavedForLater from './components/SavedForLater';
 import BuyDetails from './components/BuyDetails';
 import GuestCart from './components/GuestCart';
 import Orders from './components/Orders';
@@ -29,6 +30,7 @@ const App = () => {
                 <Route path="verify/:token" element={<Verify />} />
                 <Route path="register" element={<Register />} />
                 <Route path="my-store" element={<MyStore />} />
+                <Route path="saved-for-later" element={<SavedForLater />} />
                 <Route path="my-cart" element={<MyCart />} />
                 <Route path="guest-cart" element={<GuestCart />} />
                 <Route path="user-profile" element={<UserProfile />} />

@@ -57,9 +57,11 @@ const NavigationBar = () => {
                                             <li className="nav-item active">
                                                 <Link className="nav-link" to="user-profile">Profile</Link>
                                             </li>
-
                                             <li className="nav-item active">
                                                 <Link className="nav-link" to="my-store">My store</Link>
+                                            </li>
+                                            <li className="nav-item active">
+                                                <Link className="nav-link" to="saved-for-later">Saved for later</Link>
                                             </li>
                                             <li className="nav-item active">
                                                 <Link className="nav-link" to="my-cart">My cart</Link>

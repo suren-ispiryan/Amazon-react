@@ -7,6 +7,7 @@ import { Link } from 'react-router-dom';
 import LoadingSpinner from './LoadingSpinner';
 import { GetColorName } from 'hex-color-to-color-name';
 import { Modal, Button } from 'react-bootstrap';
+import {SAVE_PRODUCT_FOR_LATER_REQUEST} from "../redux/saveForLater/actions";
 
 const AllProducts = () => {
     const {allProducts, loading} = useSelector((state) => state.allProducts)
@@ -17,7 +18,6 @@ const AllProducts = () => {
     const [productCount, setProductCount] = useState(null);
     const [show, setShow] = useState(false);
     const [stock, setStock] = useState();
-
 
     const handleClose = () => setShow(false);
 
@@ -84,6 +84,14 @@ const AllProducts = () => {
             }
         }
         setShow(false);
+    }
+
+    // saved for later
+    const saveForLater = (event, id) => {
+        dispatch({
+            type: SAVE_PRODUCT_FOR_LATER_REQUEST,
+            payload: id
+        })
     }
 
     return (
@@ -181,6 +189,13 @@ const AllProducts = () => {
                                                         See details
                                                     </button>
                                                 </Link>
+
+                                                <button
+                                                    className="btn btn-warning"
+                                                    onClick={event => saveForLater(event, product.id)}
+                                                >
+                                                    <img src="../../../assets/icons/saveForLater.svg" />
+                                                </button>
 
                                                 <button
                                                     className="btn btn-success"
