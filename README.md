@@ -1,4 +1,11 @@
 Amazon
+
+Project setup
+1) clone
+2) npm install
+3) npm start
+4) install in browser react redux extention
+
 Description
 
 All users
