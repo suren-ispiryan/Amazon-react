@@ -12,6 +12,7 @@ import {
 
 const initialStata = {
     allProducts: [],
+    searchedCategories: [],
     productDetail: [],
     loading: false,
     message: '',
@@ -24,13 +25,15 @@ const userReducer = (state = initialStata, action) => {
                ...state,
                 loading: true,
                 message: '',
-                allProducts: []
+                allProducts: [],
+                searchedCategories: []
             }
         case GET_ALLPRODUCTS_SUCCESS:
             return {
                 ...state,
                 loading: false,
-                allProducts: action.products,
+                allProducts: action.products.allProducts,
+                searchedCategories: action.products.categories,
                 message: action.message
             }
         case GET_ALLPRODUCTS_FAILURE:

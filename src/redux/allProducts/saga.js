@@ -50,6 +50,7 @@ function* getProductDetails(action) {
 function* getSearchForProduct(action) {
     try {
         const response = yield axiosInstance.post('/get-searched-product', action.payload)
+        console.log(response.data)
         yield put({
             type: GET_SEARCH_FOR_PRODUCT_SUCCESS,
             message: 'Success fetching data',

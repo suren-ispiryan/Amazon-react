@@ -9,11 +9,13 @@ import adminUsersReducer from './adminUsers/reducer';
 import adminProductParametersReducer from './adminProductParameters/reducer';
 import loginReducer from './login/reducer';
 import savedForLaterReducer from './saveForLater/reducer';
+import searchedCategories from './allProducts/reducer';
 
 const rootReducer = combineReducers({
     products: myStore,
     addresses: userProfile,
     allProducts: allProducts,
+    searchedCategories: searchedCategories,
     addedToCart: userCart,
     orders: userCart,
     orderedProducts: userCart,

@@ -7,13 +7,15 @@ import { Link } from 'react-router-dom';
 import LoadingSpinner from './LoadingSpinner';
 import { GetColorName } from 'hex-color-to-color-name';
 import { Modal, Button } from 'react-bootstrap';
-import {SAVE_PRODUCT_FOR_LATER_REQUEST} from "../redux/saveForLater/actions";
+import { SAVE_PRODUCT_FOR_LATER_REQUEST } from "../redux/saveForLater/actions";
 
 const AllProducts = () => {
     const {allProducts, loading} = useSelector((state) => state.allProducts)
+    const {searchedCategories} = useSelector((state) => state.searchedCategories)
     const dispatch = useDispatch();
     const [allUsersProducts, setAllUsersProducts] = useState([]);
     const [searchParameter, setSearchParameter] = useState('');
+    const [searchCategory, setSearchCategory] = useState('');
     const [chosenId, setChosenId] = useState(null);
     const [productCount, setProductCount] = useState(null);
     const [show, setShow] = useState(false);
@@ -40,13 +42,20 @@ const AllProducts = () => {
     }, [loading])
 
     const handleChange = ({ target }) => {
-            setSearchParameter(target.value)
+        setSearchParameter(target.value)
+    }
+
+    const searchedCategory = ({ target }) => {
+        setSearchCategory(target.value)
     }
 
     const searchProduct = () => {
         dispatch({
             type: GET_SEARCH_FOR_PRODUCT_REQUEST,
-            payload: {searchParameter: searchParameter}
+            payload: {
+                searchParameter: searchParameter,
+                searchCategory: searchCategory
+            }
         })
         setSearchParameter('')
     }
@@ -115,6 +124,24 @@ const AllProducts = () => {
                             />
                         </div>
 
+                        <div className="col-md-2">
+                            <select
+                                id="categories"
+                                onChange={searchedCategory}
+                                className="form-select"
+                                name="categories"
+                                aria-label="Default select example"
+                                value={searchCategory}
+                            >
+                                <option value="all">Select category</option>
+                                     {
+                                         searchedCategories && searchedCategories.map((item) => {
+                                             return (<option key={uuid()} value={item.category}>{item.category}</option>)
+                                         })
+                                     }
+                            </select>
+                        </div>
+
                         <div className="col-md-1">
                             <button
                                 className="btn btn-primary form-control"
@@ -128,7 +155,7 @@ const AllProducts = () => {
 
                     <div className="row my-store-parent-row">
                         {
-                            allUsersProducts.map((product) => {
+                            allUsersProducts.length > 0 ? allUsersProducts.map((product) => {
                                 return (
                                     <div className="col-md-2 users-products" key={uuid()}>
                                         <div className="row">
@@ -208,6 +235,8 @@ const AllProducts = () => {
                                     </div>
                                 )
                             })
+                                :
+                            (<div className="no-item text-danger">No product</div>)
                         }
                     </div>
 

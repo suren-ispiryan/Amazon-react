@@ -1,4 +1,12 @@
 Amazon
+
+Project setup
+1) clone
+2) npm install
+3) npm start
+4) install in browser react redux extention
+
+
 Description
 
 All users
@@ -9,8 +17,8 @@ All users
 + Add products to cart.
 + Remove products from cart.
 
-Guests
-- Can filter the list by product categories.
+Guests  
++ Can filter the list by product categories.
 + Can add the product to the cart.(localStorage).
 + Can remove the product from the cart.
 - Can save the product from the cart into the “Save for later” list.
@@ -61,4 +69,4 @@ Admin
 + Products crud.
 + Must see all orders.
 - Category CRUD (categories can have subcategories).
-- Have a seed to import default categories with their subcategories.
++ Have a seed to import default categories with their subcategories, users, categories and sizes.

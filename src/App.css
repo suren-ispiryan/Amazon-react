@@ -35,6 +35,10 @@
   border-radius: 5px;
 }
 
+.no-item {
+  font-size: 25px;
+}
+
 .auth-user-posts-action {
   display: flex;
   justify-content: center;
