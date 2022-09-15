@@ -5,6 +5,7 @@ Project setup
 2) npm install
 3) npm start
 4) install in browser react redux extention
+5) for admin login from (login-admin) page, for user from (login) page
 
 Description
 
