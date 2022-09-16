@@ -5,6 +5,7 @@ import uuid from 'react-uuid';
 import { GET_ORDERS_REQUEST } from '../redux/userCart/actions';
 import { GetColorName } from 'hex-color-to-color-name';
 import LoadingSpinner from "./LoadingSpinner";
+import NoImage from "../assets/No-Image.jpg";
 
 const Orders = () => {
   const dispatch = useDispatch();
@@ -35,19 +36,19 @@ const Orders = () => {
               (<>
                 <Table striped bordered hover>
                   <thead>
-                  <tr>
-                    <th>#</th>
-                    <th>Picture</th>
-                    <th>Name</th>
-                    <th>Description</th>
-                    <th>Brand</th>
-                    <th>Color</th>
-                    <th>Size</th>
-                    <th>Category</th>
-                    <th>Count</th>
-                    <th>Price</th>
-                    <th>Ordered</th>
-                  </tr>
+                    <tr>
+                      <th>#</th>
+                      <th>Picture</th>
+                      <th>Name</th>
+                      <th>Description</th>
+                      <th>Brand</th>
+                      <th>Color</th>
+                      <th>Size</th>
+                      <th>Category</th>
+                      <th>Count</th>
+                      <th>Price</th>
+                      <th>Ordered</th>
+                    </tr>
                   </thead>
                   <tbody>
                   {/* Product */}
@@ -57,11 +58,20 @@ const Orders = () => {
                           <tr key={uuid()}>
                             <th className="pt-4">{index + 1}</th>
                             <th className="product-images">
-                              <img
-                                  className="img-fluid buy-product-image"
-                                  alt="product-images"
-                                  src={`http://localhost:8000/assets/product_images/${item.cart.product.picture}`}
-                              />
+                               {item.cart.product.picture
+                                  ?
+                                   <img
+                                       className="img-fluid buy-product-image"
+                                       alt="product-images"
+                                       src={`http://localhost:8000/assets/product_images/${item.cart.product.picture}`}
+                                   />
+                                   :
+                                  <img
+                                      className="img-fluid admin-products-image"
+                                      alt="product-images"
+                                      src={NoImage}
+                                  />
+                              }
                             </th>
                             <th className="pt-4">{item.cart.product.name}</th>
                             <th className="pt-4">{item.cart.product.description}</th>

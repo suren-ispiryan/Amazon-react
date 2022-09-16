@@ -7,6 +7,7 @@ import uuid from 'react-uuid';
 import { useNavigate } from "react-router-dom";
 import { GetColorName } from 'hex-color-to-color-name';
 import axiosInstance from "../config/axiosInstance";
+import NoImage from "../assets/No-Image.jpg";
 
 const BuyDetails = () => {
     const {addedToCart, loading} = useSelector((state) => state.addedToCart)
@@ -92,11 +93,20 @@ const BuyDetails = () => {
                             <tr key={uuid()}>
                                 <th className="pt-4">{index + 1}</th>
                                 <th className="product-images">
-                                    <img
-                                        className="img-fluid buy-product-image"
-                                        alt="product-images"
-                                        src={`http://localhost:8000/assets/product_images/${item.product.picture}`}
-                                    />
+                                    {item.product.picture
+                                        ?
+                                        <img
+                                            className="img-fluid buy-product-image"
+                                            alt="product-images"
+                                            src={`http://localhost:8000/assets/product_images/${item.product.picture}`}
+                                        />
+                                        :
+                                        <img
+                                            className="img-fluid admin-products-image"
+                                            alt="product-images"
+                                            src={NoImage}
+                                        />
+                                    }
                                 </th>
                                 <th className="pt-4">{item.product.name}</th>
                                 <th className="pt-4">{item.product.description}</th>

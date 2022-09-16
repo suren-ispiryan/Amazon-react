@@ -6,6 +6,7 @@ import uuid from 'react-uuid';
 import LoadingSpinner from './LoadingSpinner';
 import { ADD_TO_CART_REQUEST } from '../redux/userCart/actions';
 import { Button, Modal } from 'react-bootstrap';
+import NoImage from "../assets/No-Image.jpg";
 
 const ProductDetails = () => {
     let { id } = useParams();
@@ -87,12 +88,21 @@ const ProductDetails = () => {
                                     <div className="row py-5">
                                         <div className="col-md-6">
                                             <div className="product-details-image-box">
-                                                <img
-                                                    className="img-fluid "
-                                                    alt="product-images"
-                                                    width="80%"
-                                                    src={`http://localhost:8000/assets/product_images/${productDetailItem.picture}`}
-                                                />
+                                                {productDetailItem.picture
+                                                ?
+                                                    <img
+                                                        className="img-fluid "
+                                                        alt="product-images"
+                                                        width="80%"
+                                                        src={`http://localhost:8000/assets/product_images/${productDetailItem.picture}`}
+                                                    />
+                                                :
+                                                    <img
+                                                        className="img-fluid admin-products-image"
+                                                        alt="product-images"
+                                                        src={NoImage}
+                                                    />
+                                                }
                                             </div>
 
                                             <div className="product-owner-columns">Owner:

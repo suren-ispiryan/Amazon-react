@@ -8,6 +8,7 @@ import LoadingSpinner from './LoadingSpinner';
 import uuid from 'react-uuid';
 import { GetColorName } from 'hex-color-to-color-name';
 import { Link } from 'react-router-dom';
+import NoImage from "../assets/No-Image.jpg";
 
 const SavedForLater = () => {
     const {savedForLater, loading} = useSelector((state) => state.savedForLater)
@@ -61,11 +62,20 @@ const SavedForLater = () => {
                                         <hr />
 
                                         <div className="product-images">
-                                            <img
-                                                className="img-fluid product-image"
-                                                alt="product-images"
-                                                src={`http://localhost:8000/assets/product_images/${product.picture}`}
-                                            />
+                                            {product.picture
+                                                ?
+                                                <img
+                                                    className="img-fluid product-image"
+                                                    alt="product-images"
+                                                    src={`http://localhost:8000/assets/product_images/${product.picture}`}
+                                                />
+                                                :
+                                                <img
+                                                    className="img-fluid admin-products-image"
+                                                    alt="product-images"
+                                                    src={NoImage}
+                                                />
+                                            }
                                         </div>
                                         <hr/>
 

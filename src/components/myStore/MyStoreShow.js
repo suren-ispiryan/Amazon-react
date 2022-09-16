@@ -1,7 +1,8 @@
 import uuid from 'react-uuid';
-import { DELETE_PRODUCTS_REQUEST } from '../../redux/myStore/actions';
+import {DELETE_PRODUCTS_REQUEST, PUBLISH_PRODUCT_REQUEST} from '../../redux/myStore/actions';
 import { useDispatch } from 'react-redux';
 import axiosInstance from '../../config/axiosInstance';
+import NoImage from "../../assets/No-Image.jpg";
 
 const MyStoreShow = ({allProducts, setShow, setUpdatedProduct}) => {
     const dispatch = useDispatch();
@@ -23,6 +24,12 @@ const MyStoreShow = ({allProducts, setShow, setUpdatedProduct}) => {
         })
     }
 
+    const publishProduct = (target, id) => {
+        dispatch({
+            type: PUBLISH_PRODUCT_REQUEST,
+            payload: id
+        })
+    }
 
     return (
         <div className="col-md-8 product-create-user px-5">
@@ -32,15 +39,51 @@ const MyStoreShow = ({allProducts, setShow, setUpdatedProduct}) => {
                     allProducts.map((product) => {
                         return (
                             <div className="col-xl-3 col-lg-5 col-md-8 col-sm-8 users-products" key={uuid()}>
-                                <div className="text-success">{product.name}</div>
+                                <div className="text-success d-flex justify-content-between px-3">
+                                    <span>{product.name}</span>
+                                    <span className="form-switch">
+                                        {product.published === 1
+                                            ?
+                                                <input
+                                                    className="form-check-input cursor-pointer"
+                                                    type="checkbox"
+                                                    defaultChecked
+                                                    id="flexSwitchCheckDefault"
+                                                    onClick={event => publishProduct(event, product.id)}
+                                                />
+                                            :
+                                                <input
+                                                    className="form-check-input cursor-pointer"
+                                                    type="checkbox"
+                                                    id="flexSwitchCheckDefault"
+                                                    onClick={event => publishProduct(event, product.id)}
+                                                />
+                                        }
+                                            <label
+                                                className="form-check-label mx-1"
+                                                htmlFor="flexSwitchCheckDefault"
+                                            >
+                                                publish
+                                            </label>
+                                    </span>
+                                </div>
                                 <hr />
 
                                 <div className="product-images">
-                                    <img
-                                        className="img-fluid product-image"
-                                        alt="product-images"
-                                        src={`http://localhost:8000/assets/product_images/${product.picture}`}
-                                    />
+                                    {product.picture
+                                    ?
+                                        <img
+                                            className="img-fluid product-image"
+                                            alt="product-images"
+                                            src={`http://localhost:8000/assets/product_images/${product.picture}`}
+                                        />
+                                    :
+                                        <img
+                                            className="img-fluid admin-products-image"
+                                            alt="product-images"
+                                            src={NoImage}
+                                        />
+                                    }
                                 </div>
                                 <hr/>
 
@@ -55,7 +98,7 @@ const MyStoreShow = ({allProducts, setShow, setUpdatedProduct}) => {
                                     </div>
                                     <div className="col-md-5">
                                         <div className="text-danger centering-objects">color:</div>
-                                        <div className="centering-objects product-color-box" style={{backgroundColor: `${product.color}`}}></div>
+                                        <div className="centering-objects product-color-box" style={{backgroundColor: `${product.color}`}}/>
                                     </div>
                                 </div>
                                 <hr/>

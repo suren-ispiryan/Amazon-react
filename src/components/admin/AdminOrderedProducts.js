@@ -6,6 +6,7 @@ import Table from 'react-bootstrap/Table';
 import uuid from 'react-uuid';
 import { GetColorName } from 'hex-color-to-color-name';
 import axiosInstance from '../../config/axiosInstance';
+import NoImage from "../../assets/No-Image.jpg";
 
 const AdminOrderedProducts = () => {
     const { adminOrders, loading } = useSelector((state) => state.adminOrders);
@@ -61,11 +62,20 @@ const AdminOrderedProducts = () => {
                                             <tr key={uuid()}>
                                                 <th className="pt-4">{index + 1}</th>
                                                 <th className="product-images">
-                                                    <img
-                                                        className="img-fluid admin-products-image"
-                                                        alt="product-images"
-                                                        src={`http://localhost:8000/assets/product_images/${item.cart.product.picture}`}
-                                                    />
+                                                    {item.cart.product.picture
+                                                        ?
+                                                        <img
+                                                            className="img-fluid admin-products-image"
+                                                            alt="product-images"
+                                                            src={`http://localhost:8000/assets/product_images/${item.cart.product.picture}`}
+                                                        />
+                                                        :
+                                                        <img
+                                                            className="img-fluid admin-products-image"
+                                                            alt="product-images"
+                                                            src={NoImage}
+                                                        />
+                                                    }
                                                 </th>
                                                 <th className="pt-4"><h6>{item.cart.product.name}</h6></th>
                                                 <th className="pt-4"><h6>{item.cart.product.description}</h6></th>

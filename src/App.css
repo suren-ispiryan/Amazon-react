@@ -45,6 +45,10 @@
   text-align: left;
 }
 
+.cursor-pointer {
+  cursor: pointer;
+}
+
 .auth-user-posts-action-btn {
   display: flex;
   justify-content: space-around;
@@ -211,11 +215,10 @@ li {
 .admin-product-color-box {
   height: 25px;
   padding: 5px;
-  display: unset;
   color: white;
   font-size: 14px;
   text-align: center;
-  width: 10%;
+  width: 100%;
 }
 
 .admin-products-image {

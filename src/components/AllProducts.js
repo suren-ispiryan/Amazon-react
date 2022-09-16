@@ -8,6 +8,7 @@ import LoadingSpinner from './LoadingSpinner';
 import { GetColorName } from 'hex-color-to-color-name';
 import { Modal, Button } from 'react-bootstrap';
 import { SAVE_PRODUCT_FOR_LATER_REQUEST } from "../redux/saveForLater/actions";
+import NoImage from "../assets/No-Image.jpg";
 
 const AllProducts = () => {
     const {allProducts, loading} = useSelector((state) => state.allProducts)
@@ -157,84 +158,94 @@ const AllProducts = () => {
                         {
                             allUsersProducts.length > 0 ? allUsersProducts.map((product) => {
                                 return (
-                                    <div className="col-md-2 users-products" key={uuid()}>
-                                        <div className="row">
-                                            <div className="text-success col-md-6 px-4 text-start">
-                                                <span className="text-danger">Name: </span>
-                                                {product.name}
+                                    product.published === 1 &&
+                                        <div className="col-md-2 users-products" key={uuid()}>
+                                            <div className="row">
+                                                <div className="text-success col-md-6 px-4 text-start">
+                                                    <span className="text-danger">Name: </span>
+                                                    {product.name}
+                                                </div>
+                                                <div className="text-success col-md-6">
+                                                    <i className="products-count p-2">{product.in_stock} pcs left</i>
+                                                </div>
                                             </div>
-                                            <div className="text-success col-md-6">
-                                                <i className="products-count p-2">{product.in_stock} pcs left</i>
+                                            <hr />
+
+                                            <div className="product-images">
+                                                {product.picture
+                                                    ?
+                                                    <img
+                                                        className="img-fluid product-image"
+                                                        alt="product-images"
+                                                        src={`http://localhost:8000/assets/product_images/${product.picture}`}
+                                                    />
+                                                    :
+                                                    <img
+                                                        className="img-fluid admin-products-image"
+                                                        alt="product-images"
+                                                        src={NoImage}
+                                                    />
+                                                }
                                             </div>
-                                        </div>
-                                        <hr />
+                                            <hr/>
 
-                                        <div className="product-images">
-                                            <img
-                                                className="img-fluid product-image"
-                                                alt="product-images"
-                                                src={`http://localhost:8000/assets/product_images/${product.picture}`}
-                                            />
-                                        </div>
-                                        <hr/>
+                                            <div className="text-danger">description:</div>
+                                            <div>{product.description}</div>
+                                            <hr/>
 
-                                        <div className="text-danger">description:</div>
-                                        <div>{product.description}</div>
-                                        <hr/>
-
-                                        <div className="row auth-user-posts-action">
-                                            <div className="col-md-5">
-                                                <div className="text-danger centering-objects">size:</div>
-                                                <div className="centering-objects">{product.size}</div>
+                                            <div className="row auth-user-posts-action">
+                                                <div className="col-md-5">
+                                                    <div className="text-danger centering-objects">size:</div>
+                                                    <div className="centering-objects">{product.size}</div>
+                                                </div>
+                                                <div className="col-md-5">
+                                                    <div className="text-danger centering-objects">color:</div>
+                                                    <div className="centering-objects product-color-box" style={{backgroundColor: `${product.color}`}}>
+                                                        {GetColorName(product.color)}
+                                                    </div>
+                                                </div>
                                             </div>
-                                            <div className="col-md-5">
-                                                <div className="text-danger centering-objects">color:</div>
-                                                <div className="centering-objects product-color-box" style={{backgroundColor: `${product.color}`}}>
-                                                    {GetColorName(product.color)}
+                                            <hr/>
+                                            <div className="row auth-user-posts-action">
+                                                <div className="col-md-5">
+                                                    <div className="text-danger centering-objects">owner:</div>
+                                                    <div className="centering-objects">{product.user && product.user.name}</div>
+                                                </div>
+                                                <div className="col-md-5">
+                                                    <div className="text-danger centering-objects">price:</div>
+                                                    <div className="centering-objects">{product.price}$</div>
+                                                </div>
+                                            </div>
+
+                                            <hr/>
+                                            <div className="row">
+                                                <div className="col-md-12 auth-user-posts-action-btn">
+                                                    <Link to={"/product-details/"+product.id}>
+                                                        <button
+                                                            className="btn btn-primary"
+                                                        >
+                                                            See details
+                                                        </button>
+                                                    </Link>
+
+                                                    <button
+                                                        className="btn btn-warning"
+                                                        onClick={event => saveForLater(event, product.id)}
+                                                    >
+                                                        <img src="../../../assets/icons/saveForLater.svg" />
+                                                    </button>
+
+                                                    <button
+                                                        className="btn btn-success"
+                                                        onClick={event => handleShow(event, product.id, product.in_stock)}
+                                                    >
+                                                        Add to cart
+                                                    </button>
                                                 </div>
                                             </div>
                                         </div>
-                                        <hr/>
-                                        <div className="row auth-user-posts-action">
-                                            <div className="col-md-5">
-                                                <div className="text-danger centering-objects">owner:</div>
-                                                <div className="centering-objects">{product.user && product.user.name}</div>
-                                            </div>
-                                            <div className="col-md-5">
-                                                <div className="text-danger centering-objects">price:</div>
-                                                <div className="centering-objects">{product.price}$</div>
-                                            </div>
-                                        </div>
-
-                                        <hr/>
-                                        <div className="row">
-                                            <div className="col-md-12 auth-user-posts-action-btn">
-                                                <Link to={"/product-details/"+product.id}>
-                                                    <button
-                                                        className="btn btn-primary"
-                                                    >
-                                                        See details
-                                                    </button>
-                                                </Link>
-
-                                                <button
-                                                    className="btn btn-warning"
-                                                    onClick={event => saveForLater(event, product.id)}
-                                                >
-                                                    <img src="../../../assets/icons/saveForLater.svg" />
-                                                </button>
-
-                                                <button
-                                                    className="btn btn-success"
-                                                    onClick={event => handleShow(event, product.id, product.in_stock)}
-                                                >
-                                                    Add to cart
-                                                </button>
-                                            </div>
-                                        </div>
-                                    </div>
-                                )
-                            })
+                                        )
+                                    })
                                 :
                             (<div className="no-item text-danger">No product</div>)
                         }

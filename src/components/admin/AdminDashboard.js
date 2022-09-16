@@ -11,6 +11,7 @@ import uuid from 'react-uuid';
 import { GetColorName } from 'hex-color-to-color-name';
 import Modal from 'react-bootstrap/Modal';
 import Button from 'react-bootstrap/Button';
+import NoImage from './../../assets/No-Image.jpg';
 import {
     GET_PRODUCT_CATEGORIES_REQUEST,
     GET_PRODUCT_SIZES_REQUEST
@@ -175,6 +176,7 @@ const AdminDashboard = () => {
                                 <th>Details</th>
                                 <th>Info</th>
                                 <th>Owner info</th>
+                                <th>Published</th>
                                 <th>Modify product</th>
                             </tr>
                             </thead>
@@ -186,11 +188,20 @@ const AdminDashboard = () => {
                                         <tr key={uuid()}>
                                             <th className="pt-4">{index + 1}</th>
                                             <th className="product-images">
-                                                <img
-                                                    className="img-fluid admin-products-image"
-                                                    alt="product-images"
-                                                    src={`http://localhost:8000/assets/product_images/${item.picture}`}
-                                                />
+                                                {item.picture
+                                                ?
+                                                    <img
+                                                        className="img-fluid admin-products-image"
+                                                        alt="product-images"
+                                                        src={`http://localhost:8000/assets/product_images/${item.picture}`}
+                                                    />
+                                                :
+                                                    <img
+                                                        className="img-fluid admin-products-image"
+                                                        alt="product-images"
+                                                        src={NoImage}
+                                                    />
+                                                }
                                             </th>
                                             <th className="pt-4"><h6>{item.name}</h6></th>
                                             <th className="pt-4"><h6>{item.description}</h6></th>
@@ -198,26 +209,27 @@ const AdminDashboard = () => {
 
                                             <th className="pt-4">
                                                 <ul>
-                                                <h6>
-                                                    <li>
-                                                        <span className="text-danger">Color: </span>
-                                                        <span className="centering-objects admin-product-color-box"
-                                                             style={{backgroundColor: `${item.color}`}}>
-                                                            {GetColorName(item.color)}
-                                                        </span>
-                                                    </li>
-                                                    <li className="pt-2">
-                                                        <span className="text-danger">Size: </span>
-                                                        {item.size}
-                                                    </li>
-                                                    <li className="pt-2">
-                                                        <span className="text-danger">Category: </span>
-                                                        {item.category}
-                                                    </li>
-                                                </h6>
+                                                    <h6>
+                                                        <li>
+                                                            <span className="text-danger">Color:<br /></span>
+                                                            <span
+                                                                className="centering-objects admin-product-color-box"
+                                                                style={{backgroundColor: `${item.color}`}}
+                                                            >
+                                                                {GetColorName(item.color)}
+                                                            </span>
+                                                        </li>
+                                                        <li className="pt-2">
+                                                            <span className="text-danger">Size: </span>
+                                                            {item.size}
+                                                        </li>
+                                                        <li className="pt-2">
+                                                            <span className="text-danger">Category: </span>
+                                                            {item.category}
+                                                        </li>
+                                                    </h6>
                                                 </ul>
                                             </th>
-
 
                                             <th className="pt-4">
                                                 <ul>
@@ -255,6 +267,17 @@ const AdminDashboard = () => {
                                                         </li>
                                                     </h6>
                                                 </ul>
+                                            </th>
+
+                                            <th className="pt-4">
+                                                <h6>
+                                                    {item.published === 1
+                                                    ?
+                                                        <span className="text-success">Published</span>
+                                                    :
+                                                        <span className="text-danger">Unpublished</span>
+                                                    }
+                                                </h6>
                                             </th>
 
                                             <th className="pt-4">

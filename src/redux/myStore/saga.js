@@ -12,7 +12,11 @@ import {
     DELETE_PRODUCTS_FAILURE,
     UPDATE_PRODUCT_REQUEST,
     UPDATE_PRODUCT_SUCCESS,
-    UPDATE_PRODUCT_FAILURE
+    UPDATE_PRODUCT_FAILURE,
+    PUBLISH_PRODUCT_REQUEST,
+    PUBLISH_PRODUCT_SUCCESS,
+    PUBLISH_PRODUCT_FAILURE
+
 } from './actions'
 
 //CREATE
@@ -83,9 +87,27 @@ function* updateProducts(action) {
     }
 }
 
+//PUBLISH
+function*  publishProducts(action) {
+    try {
+        const response = yield axiosInstance.get('/publish-product/'+action.payload)
+        yield put({
+            type: PUBLISH_PRODUCT_SUCCESS,
+            message: 'product successfully published',
+            products: response.data
+        });
+    } catch (e) {
+        yield put({
+            type: PUBLISH_PRODUCT_FAILURE,
+            message: 'Something went wrong'
+        });
+    }
+}
+
 export default function* () {
     yield takeLatest(CREATE_PRODUCT_REQUEST, createProduct);
     yield takeLatest(GET_PRODUCTS_REQUEST, getProducts);
     yield takeLatest(DELETE_PRODUCTS_REQUEST, deleteProducts);
     yield takeLatest(UPDATE_PRODUCT_REQUEST, updateProducts);
+    yield takeLatest(PUBLISH_PRODUCT_REQUEST, publishProducts);
 }
