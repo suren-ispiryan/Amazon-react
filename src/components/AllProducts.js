@@ -9,6 +9,7 @@ import { GetColorName } from 'hex-color-to-color-name';
 import { Modal, Button } from 'react-bootstrap';
 import { SAVE_PRODUCT_FOR_LATER_REQUEST } from "../redux/saveForLater/actions";
 import NoImage from "../assets/No-Image.jpg";
+import {forEach} from "react-bootstrap/ElementChildren";
 
 const AllProducts = () => {
     const {allProducts, loading} = useSelector((state) => state.allProducts)
@@ -102,6 +103,28 @@ const AllProducts = () => {
             type: SAVE_PRODUCT_FOR_LATER_REQUEST,
             payload: id
         })
+    }
+
+    const guestSaveForLater = (event, id) => {
+        let savedForLater = [];
+
+        if (!JSON.parse(localStorage.getItem('savedForLater'))) {
+            savedForLater.push(id);
+            localStorage.setItem('savedForLater', JSON.stringify(savedForLater));
+        } else {
+            let exist = false
+            savedForLater = JSON.parse(localStorage.getItem('savedForLater'));
+            savedForLater.forEach(myFunction)
+            function myFunction (item) {
+                if (item === id) {
+                    exist = true
+                }
+            }
+            if (exist === false){
+                savedForLater.push(id);
+                localStorage.setItem('savedForLater', JSON.stringify(savedForLater));
+            }
+        }
     }
 
     return (
@@ -228,12 +251,22 @@ const AllProducts = () => {
                                                         </button>
                                                     </Link>
 
-                                                    <button
-                                                        className="btn btn-warning"
-                                                        onClick={event => saveForLater(event, product.id)}
-                                                    >
-                                                        <img src="../../../assets/icons/saveForLater.svg" />
-                                                    </button>
+                                                    {localStorage.getItem('token')
+                                                     ?
+                                                         <button
+                                                             className="btn btn-warning"
+                                                             onClick={event => saveForLater(event, product.id)}
+                                                         >
+                                                             <img src="../../../assets/icons/saveForLater.svg"/>
+                                                         </button>
+                                                     :
+                                                         <button
+                                                             className="btn btn-warning"
+                                                             onClick={event => guestSaveForLater(event, product.id)}
+                                                         >
+                                                             <img src="../../../assets/icons/saveForLater.svg"/>
+                                                         </button>
+                                                    }
 
                                                     <button
                                                         className="btn btn-success"
