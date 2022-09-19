@@ -13,7 +13,10 @@ import {
     UPDATE_PRODUCT_FAILURE,
     PUBLISH_PRODUCT_REQUEST,
     PUBLISH_PRODUCT_SUCCESS,
-    PUBLISH_PRODUCT_FAILURE
+    PUBLISH_PRODUCT_FAILURE,
+    DELETE_PRODUCT_IMAGE_REQUEST,
+    DELETE_PRODUCT_IMAGE_SUCCESS,
+    DELETE_PRODUCT_IMAGE_FAILURE,
 } from "./actions"
 
 const initialStata = {
@@ -116,7 +119,7 @@ const userReducer = (state = initialStata, action) => {
                 loading: false,
                 message: action.message
             }
-        // UPDATE PUBLISHED
+    // UPDATE PUBLISHED
         case PUBLISH_PRODUCT_REQUEST:
             return {
                 ...state,
@@ -140,6 +143,35 @@ const userReducer = (state = initialStata, action) => {
                 message: action.message
             }
         case PUBLISH_PRODUCT_FAILURE:
+            return {
+                ...state,
+                loading: false,
+                message: action.message
+            }
+    // DELETE Product Image
+        case DELETE_PRODUCT_IMAGE_REQUEST:
+            return {
+                ...state,
+                loading: true,
+                message: '',
+                products: [...state.products]
+            }
+        case DELETE_PRODUCT_IMAGE_SUCCESS:
+            const newProducts2 = [];
+            state.products.map(i => {
+                if(i.id !== parseInt(action.products.id)) {
+                    newProducts2.push(i)
+                } else {
+                    newProducts2.push(action.products)
+                }
+            })
+            return {
+                ...state,
+                loading: false,
+                products: newProducts2,
+                message: action.message
+            }
+        case DELETE_PRODUCT_IMAGE_FAILURE:
             return {
                 ...state,
                 loading: false,

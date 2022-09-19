@@ -56,9 +56,10 @@ My Store
 + Choose sizes.
 + Choose Category.
 + Images.
++ Delete product image
 - Ability to choose a main image.
 + Publish/Unpublish Product (not available in products for guests if unpublished).
-- Ability to see how many times users bought each product.
++ Ability to see how many times users bought each product.
 - Ability to see total earnings for each product.
 
 Admin

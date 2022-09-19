@@ -1,5 +1,5 @@
 import uuid from 'react-uuid';
-import {DELETE_PRODUCTS_REQUEST, PUBLISH_PRODUCT_REQUEST} from '../../redux/myStore/actions';
+import {DELETE_PRODUCTS_REQUEST, PUBLISH_PRODUCT_REQUEST, DELETE_PRODUCT_IMAGE_REQUEST} from '../../redux/myStore/actions';
 import { useDispatch } from 'react-redux';
 import axiosInstance from '../../config/axiosInstance';
 import NoImage from "../../assets/No-Image.jpg";
@@ -27,6 +27,13 @@ const MyStoreShow = ({allProducts, setShow, setUpdatedProduct}) => {
     const publishProduct = (target, id) => {
         dispatch({
             type: PUBLISH_PRODUCT_REQUEST,
+            payload: id
+        })
+    }
+
+    const deleteImage = (event, id) => {
+        dispatch({
+            type: DELETE_PRODUCT_IMAGE_REQUEST,
             payload: id
         })
     }
@@ -72,11 +79,20 @@ const MyStoreShow = ({allProducts, setShow, setUpdatedProduct}) => {
                                 <div className="product-images">
                                     {product.picture
                                     ?
-                                        <img
-                                            className="img-fluid product-image"
-                                            alt="product-images"
-                                            src={`http://localhost:8000/assets/product_images/${product.picture}`}
-                                        />
+                                        <div style={{position: "relative"}}>
+                                            <button
+                                                style={{position: "absolute"}}
+                                                className="btn btn-danger"
+                                                onClick={event => deleteImage(event, product.id)}
+                                            >
+                                                Delete
+                                            </button>
+                                            <img
+                                                className="img-fluid product-image"
+                                                alt="product-images"
+                                                src={`http://localhost:8000/assets/product_images/${product.picture}`}
+                                            />
+                                        </div>
                                     :
                                         <img
                                             className="img-fluid admin-products-image"
@@ -129,6 +145,21 @@ const MyStoreShow = ({allProducts, setShow, setUpdatedProduct}) => {
                                         >
                                             Delete
                                         </button>
+                                    </div>
+                                </div>
+                                <hr/>
+
+                                <div className="row">
+                                    <div className="col-md-12 auth-user-posts-action-btn">
+                                        {product.orders.map((item) => {
+                                            if (product.id === item.product_id) {
+                                                return (
+                                                    <h5 className="text-success" key={uuid()}>
+                                                        Bought: {item.product_count} pcs
+                                                    </h5>
+                                                )
+                                            }
+                                        })}
                                     </div>
                                 </div>
                             </div>

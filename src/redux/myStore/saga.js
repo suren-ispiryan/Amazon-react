@@ -15,8 +15,10 @@ import {
     UPDATE_PRODUCT_FAILURE,
     PUBLISH_PRODUCT_REQUEST,
     PUBLISH_PRODUCT_SUCCESS,
-    PUBLISH_PRODUCT_FAILURE
-
+    PUBLISH_PRODUCT_FAILURE,
+    DELETE_PRODUCT_IMAGE_REQUEST,
+    DELETE_PRODUCT_IMAGE_SUCCESS,
+    DELETE_PRODUCT_IMAGE_FAILURE,
 } from './actions'
 
 //CREATE
@@ -70,6 +72,23 @@ function* deleteProducts(action) {
     }
 }
 
+//DELETE PRODUCT IMAGE
+function* deleteProductImage(action) {
+    try {
+        const response = yield axiosInstance.delete('/delete-product-image/'+action.payload)
+        yield put({
+            type: DELETE_PRODUCT_IMAGE_SUCCESS,
+            message: 'Product successfully deleted',
+            products: response.data
+        });
+    } catch (e) {
+        yield put({
+            type: DELETE_PRODUCT_IMAGE_FAILURE,
+            message: 'Something went wrong'
+        });
+    }
+}
+
 //UPDATE
 function* updateProducts(action) {
     try {
@@ -110,4 +129,5 @@ export default function* () {
     yield takeLatest(DELETE_PRODUCTS_REQUEST, deleteProducts);
     yield takeLatest(UPDATE_PRODUCT_REQUEST, updateProducts);
     yield takeLatest(PUBLISH_PRODUCT_REQUEST, publishProducts);
+    yield takeLatest(DELETE_PRODUCT_IMAGE_REQUEST, deleteProductImage);
 }
