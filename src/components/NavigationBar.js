@@ -31,8 +31,14 @@ const NavigationBar = () => {
                 <nav className="px-5 navbar navbar-expand-lg navbar-dark bg-dark">
                     <div className="col-md-2">
                         <a className="navbar-brand" href="/">Amazon</a>
-                        <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
-                                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                        <button
+                            className="navbar-toggler"
+                            type="button"
+                            data-toggle="collapse"
+                            data-target="#navbarNav"
+                            aria-controls="navbarNav"
+                            aria-expanded="false"
+                            aria-label="Toggle navigation">
                             <span className="navbar-toggler-icon"/>
                         </button>
                     </div>

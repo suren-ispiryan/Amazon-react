@@ -59,7 +59,7 @@ const GuestSavedForLater = () => {
                             allSavedProducts.length > 0 ? allSavedProducts.map((product) => {
                                 return (
                                     product.published === 1 &&
-                                    <div className="col-md-3 users-products" key={uuid()}>
+                                    <div className="col-md-4 col-xl-2 users-products" key={uuid()}>
                                         <div className="row">
                                             <div className="text-success col-md-6 px-4 text-start">
                                                 <span className="text-danger">Name: </span>

@@ -57,10 +57,10 @@ My Store
 + Choose Category.
 + Images.
 + Delete product image
-- Ability to choose a main image.
 + Publish/Unpublish Product (not available in products for guests if unpublished).
 + Ability to see how many times users bought each product.
 - Ability to see total earnings for each product.
+- Ability to choose a main image.
 
 Admin
 + Form validations.
@@ -69,5 +69,5 @@ Admin
 + Users crud.
 + Products crud.
 + Must see all orders.
-- Category CRUD (categories can have subcategories).
 + Have a seed to import default categories with their subcategories, users, categories and sizes.
+- Category CRUD (categories can have subcategories).

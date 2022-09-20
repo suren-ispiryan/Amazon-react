@@ -137,7 +137,7 @@ const AllProducts = () => {
                     <h4 className="my-4">All products</h4>
 
                     <div className="row search-parent-row">
-                        <div className="col-md-2">
+                        <div className="col-md-2 mt-1">
                             <input
                                 type="text"
                                 name="search"
@@ -148,7 +148,7 @@ const AllProducts = () => {
                             />
                         </div>
 
-                        <div className="col-md-2">
+                        <div className="col-md-2 mt-1">
                             <select
                                 id="categories"
                                 onChange={searchedCategory}
@@ -166,7 +166,7 @@ const AllProducts = () => {
                             </select>
                         </div>
 
-                        <div className="col-md-1">
+                        <div className="col-md-2 col-xl-1 mt-1">
                             <button
                                 className="btn btn-primary form-control"
                                 type="submit"
@@ -182,7 +182,7 @@ const AllProducts = () => {
                             allUsersProducts.length > 0 ? allUsersProducts.map((product) => {
                                 return (
                                     product.published === 1 &&
-                                        <div className="col-md-2 users-products" key={uuid()}>
+                                        <div className="col-md-4 col-xl-2 users-products" key={uuid()}>
                                             <div className="row">
                                                 <div className="text-success col-md-6 px-4 text-start">
                                                     <span className="text-danger">Name: </span>
