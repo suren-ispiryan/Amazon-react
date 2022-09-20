@@ -29,7 +29,7 @@ const NavigationBar = () => {
         <div className="all-products container-fluid">
             <div className="row">
                 <nav className="px-5 navbar navbar-expand-lg navbar-dark bg-dark">
-                    <div className="col-md-2">
+                    <div className="col-lg-2 col-sm-12">
                         <a className="navbar-brand" href="/">Amazon</a>
                         <button
                             className="navbar-toggler"
@@ -43,7 +43,7 @@ const NavigationBar = () => {
                         </button>
                     </div>
 
-                    <div className="col-md-9">
+                    <div className="col-lg-9 col-sm-12">
                         <div className="mx-5 collapse navbar-collapse" id="navbarNav">
                             <ul className="navbar-nav">
                                 {(role !== 'superAdmin' && role !== 'admin')
@@ -107,7 +107,7 @@ const NavigationBar = () => {
                         </div>
                     </div>
 
-                    <div className="col-md-1">
+                    <div className="col-lg-1 col-sm-12">
                         {localStorage.getItem('token')
                         ?
                             <button
