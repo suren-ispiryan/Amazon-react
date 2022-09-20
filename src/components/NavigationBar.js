@@ -88,9 +88,14 @@ const NavigationBar = () => {
                                         </>
                                 :
                                     // guest
-                                    <li className="nav-item active">
-                                        <Link className="nav-link" to="guest-cart">GuestCart</Link>
-                                    </li>
+                                    <>
+                                        <li className="nav-item active">
+                                            <Link className="nav-link" to="guest-cart">Guest-Cart</Link>
+                                        </li>
+                                        <li className="nav-item active">
+                                            <Link className="nav-link" to="guest-saved-for-later">Saved-For-Later</Link>
+                                        </li>
+                                    </>
                                 }
                             </ul>
                         </div>

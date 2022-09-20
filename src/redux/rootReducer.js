@@ -10,6 +10,7 @@ import adminProductParametersReducer from './adminProductParameters/reducer';
 import loginReducer from './login/reducer';
 import savedForLaterReducer from './saveForLater/reducer';
 import searchedCategories from './allProducts/reducer';
+import guestSavedForLaterReducer from './guestSavedForLater/reducer';
 
 const rootReducer = combineReducers({
     products: myStore,
@@ -25,6 +26,7 @@ const rootReducer = combineReducers({
     categories: adminProductParametersReducer,
     sizes: adminProductParametersReducer,
     login: loginReducer,
-    savedForLater: savedForLaterReducer
+    savedForLater: savedForLaterReducer,
+    guestSavedForLaterProducts: guestSavedForLaterReducer
 })
 export default rootReducer

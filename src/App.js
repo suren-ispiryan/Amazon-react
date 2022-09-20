@@ -17,6 +17,7 @@ import AdminDashboard from './components/admin/AdminDashboard';
 import AdminUsers from './components/admin/AdminUsers';
 import AdminSetCategories from './components/admin/AdminSetCategories';
 import AdminOrderedProducts from './components/admin/AdminOrderedProducts';
+import GuestSavedForLater from './components/GuestSavedForLater';
 import './App.css';
 
 const App = () => {
@@ -29,10 +30,11 @@ const App = () => {
                 <Route path="login" element={<Login />} />
                 <Route path="verify/:token" element={<Verify />} />
                 <Route path="register" element={<Register />} />
+                <Route path="guest-cart" element={<GuestCart />} />
+                <Route path="guest-saved-for-later" element={<GuestSavedForLater />} />
                 <Route path="my-store" element={<MyStore />} />
                 <Route path="saved-for-later" element={<SavedForLater />} />
                 <Route path="my-cart" element={<MyCart />} />
-                <Route path="guest-cart" element={<GuestCart />} />
                 <Route path="user-profile" element={<UserProfile />} />
                 <Route path="product-details/:id" element={<ProductDetails />} />
                 <Route path="buy-details" element={<BuyDetails />} />
