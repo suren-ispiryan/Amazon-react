@@ -24,9 +24,11 @@ const rootReducer = combineReducers({
     adminOrders: adminOrdersReducer,
     adminUsers: adminUsersReducer,
     categories: adminProductParametersReducer,
+    subCategories: adminProductParametersReducer,
     sizes: adminProductParametersReducer,
     login: loginReducer,
     savedForLater: savedForLaterReducer,
-    guestSavedForLaterProducts: guestSavedForLaterReducer
+    guestSavedForLaterProducts: guestSavedForLaterReducer,
+    productSubCategories: myStore
 })
 export default rootReducer

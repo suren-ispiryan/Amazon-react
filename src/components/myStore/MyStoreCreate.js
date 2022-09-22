@@ -1,9 +1,12 @@
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { CREATE_PRODUCT_REQUEST } from '../../redux/myStore/actions';
+import {
+    CREATE_PRODUCT_REQUEST,
+    GET_SUBCATEGORIES_REQUEST
+} from '../../redux/myStore/actions';
 import {
     GET_PRODUCT_CATEGORIES_REQUEST,
-    GET_PRODUCT_SIZES_REQUEST
+    GET_PRODUCT_SIZES_REQUEST,
 } from '../../redux/adminProductParameters/actions';
 import uuid from 'react-uuid';
 
@@ -16,6 +19,7 @@ const MyStoreCreate = ({ productImage, initialValues }) => {
     const [getCategories, setGetCategories] = useState([])
     const [getProductSizes, setGetProductSizes] = useState([]);
     const { sizes } = useSelector((state) => state.sizes)
+    const { productSubCategories } = useSelector((state) => state.productSubCategories)
 
     //show categories
     useEffect(() => {
@@ -55,6 +59,17 @@ const MyStoreCreate = ({ productImage, initialValues }) => {
         }
     }
 
+    const handleChangeCategory = (event) => {
+        setProductAttributes({
+            ...productAttributes,
+            [event.target.name]: event.target.value,
+        })
+        dispatch({
+            type: GET_SUBCATEGORIES_REQUEST,
+            payload: event.target.value
+        })
+    }
+
     const createProduct = () => {
         setFormErrors(validate(productAttributes));
         setIsSubmited(true);
@@ -67,6 +82,7 @@ const MyStoreCreate = ({ productImage, initialValues }) => {
             data.append('color', productAttributes.color);
             data.append('size', productAttributes.size);
             data.append('category', productAttributes.category);
+            data.append('subcategory', productAttributes.subcategory);
             data.append('picture', productAttributes.picture);
             data.append('in_stock', productAttributes.in_stock);
             productImage.current.value = ''
@@ -193,12 +209,11 @@ const MyStoreCreate = ({ productImage, initialValues }) => {
                         }
                     </select>
                     <h6 className="errors text-danger">{formErrors.size}</h6>
-
                     <select
                             className="form-select my-2"
                             name="category"
                             aria-label="Default select example"
-                            onChange={handleChange}
+                            onChange={handleChangeCategory}
                             value={productAttributes.category || ''}
                     >
                         <option defaultValue>Select category</option>
@@ -209,6 +224,21 @@ const MyStoreCreate = ({ productImage, initialValues }) => {
                         }
                     </select>
                     <h6 className="errors text-danger">{formErrors.category}</h6>
+
+                    <select
+                        className="form-select my-2"
+                        name="subcategory"
+                        aria-label="Default select example"
+                        onChange={handleChange}
+                        value={productAttributes.subcategory || ''}
+                    >
+                        <option defaultValue>Select subcategory</option>
+                        {
+                            productSubCategories && productSubCategories.map((item) => {
+                                return (<option key={uuid()} value={item.subcategory}>{item.subcategory}</option>)
+                            })
+                        }
+                    </select>
 
                     <div className="form-group">
                         <input

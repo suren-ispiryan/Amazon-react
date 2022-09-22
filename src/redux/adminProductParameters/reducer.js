@@ -16,13 +16,24 @@ import {
     GET_PRODUCT_SIZES_FAILURE,
     REMOVE_SIZE_REQUEST,
     REMOVE_SIZE_SUCCESS,
-    REMOVE_SIZE_FAILURE
+    REMOVE_SIZE_FAILURE,
+    ADD_SUBCATEGORY_REQUEST,
+    ADD_SUBCATEGORY_SUCCESS,
+    ADD_SUBCATEGORY_FAILURE,
+    GET_PRODUCT_SUBCATEGORIES_REQUEST,
+    GET_PRODUCT_SUBCATEGORIES_SUCCESS,
+    GET_PRODUCT_SUBCATEGORIES_FAILURE,
+    REMOVE_SUBCATEGORY_REQUEST,
+    REMOVE_SUBCATEGORY_SUCCESS,
+    REMOVE_SUBCATEGORY_FAILURE
 } from "./actions"
 
 const initialStata = {
     categories: [],
     sizes: [],
+    subCategories: [],
     loading: false,
+    loadingSub: false,
     message: '',
 }
 
@@ -159,9 +170,73 @@ const adminProductParametersReducer = (state = initialStata, action) => {
                 loading: false,
                 message: action.message
             }
-
-    // DEFAULT
+    //CREATE SUBCATEGORY
+        case ADD_SUBCATEGORY_REQUEST:
+            return {
+                ...state,
+                loadingSub: true,
+                message: '',
+                subCategories: [...state.subCategories],
+            }
+        case ADD_SUBCATEGORY_SUCCESS:
+            return {
+                ...state,
+                loadingSub: false,
+                subCategories: [...state.subCategories, action.addSubCategories],
+                message: action.message
+            }
+        case ADD_SUBCATEGORY_FAILURE:
+            return {
+                ...state,
+                loadingSub: false,
+                message: action.message
+            }
+    // GET SUBCATEGORY
+        case GET_PRODUCT_SUBCATEGORIES_REQUEST:
+            return {
+                ...state,
+                loadingSub: true,
+                message: '',
+                subCategories: []
+            }
+        case GET_PRODUCT_SUBCATEGORIES_SUCCESS:
+            return {
+                ...state,
+                loadingSub: false,
+                subCategories: action.getSubCategories,
+                message: action.message
+            }
+        case GET_PRODUCT_SUBCATEGORIES_FAILURE:
+            return {
+                ...state,
+                loadingSub: false,
+                message: action.message
+            }
+    // REMOVE SUBCATEGORIES
+        case REMOVE_SUBCATEGORY_REQUEST:
+            return {
+                ...state,
+                loadingSub: true,
+                message: '',
+                subCategories: [...state.subCategories]
+            }
+        case REMOVE_SUBCATEGORY_SUCCESS:
+            let newSubCategory = []
+            newSubCategory = state.subCategories.filter(i => i.id !== parseInt(action.removeSubCategories.id))
+            return {
+                ...state,
+                loadingSub: false,
+                subCategories: newSubCategory,
+                message: action.message
+            }
+        case REMOVE_SUBCATEGORY_FAILURE:
+            return {
+                ...state,
+                loadingSub: false,
+                message: action.message
+            }
         default:
+            // DEFAULT
             return state
     }
 }

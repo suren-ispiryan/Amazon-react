@@ -18,7 +18,16 @@ import {
     GET_PRODUCT_SIZES_FAILURE,
     REMOVE_SIZE_REQUEST,
     REMOVE_SIZE_SUCCESS,
-    REMOVE_SIZE_FAILURE
+    REMOVE_SIZE_FAILURE,
+    ADD_SUBCATEGORY_REQUEST,
+    ADD_SUBCATEGORY_SUCCESS,
+    ADD_SUBCATEGORY_FAILURE,
+    GET_PRODUCT_SUBCATEGORIES_REQUEST,
+    GET_PRODUCT_SUBCATEGORIES_SUCCESS,
+    GET_PRODUCT_SUBCATEGORIES_FAILURE,
+    REMOVE_SUBCATEGORY_REQUEST,
+    REMOVE_SUBCATEGORY_SUCCESS,
+    REMOVE_SUBCATEGORY_FAILURE
 } from './actions'
 
 //ADD CATEGORY
@@ -124,6 +133,59 @@ function* removeSizes(action) {
     }
 }
 
+
+//ADD SUBCATEGORY
+function* addSubCategory(action) {
+    try {
+        const response = yield axiosInstance.post('add-subcategory', action.payload)
+        yield put({
+            type: ADD_SUBCATEGORY_SUCCESS,
+            message: 'product successfully created',
+           addSubCategories: response.data
+        });
+    } catch (e) {
+        yield put({
+            type: ADD_SUBCATEGORY_FAILURE,
+            message: 'Something went wrong'
+        });
+    }
+}
+
+//GET SUBCATEGORIES
+function* getProductSubCategories(action) {
+    try {
+        const response = yield axiosInstance.get('get-product-subcategories')
+        yield put({
+            type: GET_PRODUCT_SUBCATEGORIES_SUCCESS,
+            message: 'product successfully created',
+            getSubCategories: response.data
+        });
+    } catch (e) {
+        yield put({
+            type: GET_PRODUCT_SUBCATEGORIES_FAILURE,
+            message: 'Something went wrong'
+        });
+    }
+}
+
+//REMOVE SUBCATEGORY
+function* removeSubCategory(action) {
+    try {
+        const response = yield axiosInstance.get('/remove-subcategory/'+action.payload)
+        yield put({
+            type: REMOVE_SUBCATEGORY_SUCCESS,
+            message: 'product successfully created',
+            removeSubCategories: response.data
+        });
+    } catch (e) {
+        yield put({
+            type: REMOVE_SUBCATEGORY_FAILURE,
+            message: 'Something went wrong'
+        });
+    }
+}
+
+
 export default function* () {
     yield takeLatest(ADD_CATEGORY_REQUEST, addCategory);
     yield takeLatest(GET_PRODUCT_CATEGORIES_REQUEST, getProductCategories);
@@ -131,4 +193,7 @@ export default function* () {
     yield takeLatest(ADD_SIZE_REQUEST, addSize);
     yield takeLatest(GET_PRODUCT_SIZES_REQUEST, getProductSizes);
     yield takeLatest(REMOVE_SIZE_REQUEST, removeSizes);
+    yield takeLatest(ADD_SUBCATEGORY_REQUEST, addSubCategory);
+    yield takeLatest(GET_PRODUCT_SUBCATEGORIES_REQUEST, getProductSubCategories);
+    yield takeLatest(REMOVE_SUBCATEGORY_REQUEST, removeSubCategory);
 }

@@ -76,7 +76,7 @@ const Sizes = () => {
                         className="form-control btn btn-primary"
                         onClick={addSize}
                     >
-                        Add size
+                        Add
                     </button>
                 </div>
             </div>

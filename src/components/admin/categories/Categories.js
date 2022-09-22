@@ -76,7 +76,7 @@ const Categories = () => {
                         className="form-control btn btn-primary"
                         onClick={addCategory}
                     >
-                        Add category
+                        Add
                     </button>
                 </div>
             </div>

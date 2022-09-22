@@ -1,4 +1,5 @@
 import Categories from './categories/Categories';
+import SubCategories from './categories/SubCategories';
 import Sizes from './categories/Sizes';
 
 const AdminSetCategories = () => {
@@ -13,9 +14,14 @@ const AdminSetCategories = () => {
                     <Categories />
                 </div>
 
-                <div className="col-md-6">
+                <div className="col-md-6 mb-5">
                     <Sizes />
                 </div>
+
+                <div className="col-md-6 mt-5">
+                    <SubCategories />
+                </div>
+
             </div>
         </div>
     )

@@ -17,10 +17,14 @@ import {
     DELETE_PRODUCT_IMAGE_REQUEST,
     DELETE_PRODUCT_IMAGE_SUCCESS,
     DELETE_PRODUCT_IMAGE_FAILURE,
+    GET_SUBCATEGORIES_REQUEST,
+    GET_SUBCATEGORIES_SUCCESS,
+    GET_SUBCATEGORIES_FAILURE
 } from "./actions"
 
 const initialStata = {
     products: [],
+    productSubCategories: [],
     loading: false,
     message: '',
 }
@@ -172,6 +176,27 @@ const userReducer = (state = initialStata, action) => {
                 message: action.message
             }
         case DELETE_PRODUCT_IMAGE_FAILURE:
+            return {
+                ...state,
+                loading: false,
+                message: action.message
+            }
+    // GETSUBCATEGORIES
+        case GET_SUBCATEGORIES_REQUEST:
+            return {
+                ...state,
+                loading: true,
+                message: '',
+                productSubCategories: []
+            }
+        case GET_SUBCATEGORIES_SUCCESS:
+            return {
+                ...state,
+                loading: false,
+                productSubCategories: action.productSubCategories,
+                message: action.message
+            }
+        case GET_SUBCATEGORIES_FAILURE:
             return {
                 ...state,
                 loading: false,

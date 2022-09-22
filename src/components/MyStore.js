@@ -13,6 +13,7 @@ const initialValues = {
     color: '#000000',
     size: '',
     category: '',
+    subcategory: '',
     inStock: 0
 }
 

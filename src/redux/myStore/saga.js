@@ -19,6 +19,9 @@ import {
     DELETE_PRODUCT_IMAGE_REQUEST,
     DELETE_PRODUCT_IMAGE_SUCCESS,
     DELETE_PRODUCT_IMAGE_FAILURE,
+    GET_SUBCATEGORIES_REQUEST,
+    GET_SUBCATEGORIES_SUCCESS,
+    GET_SUBCATEGORIES_FAILURE
 } from './actions'
 
 //CREATE
@@ -123,6 +126,23 @@ function*  publishProducts(action) {
     }
 }
 
+//GET SUBCATEGORIES
+function* getProductSubcategories(action) {
+    try {
+        const response = yield axiosInstance.get('/get-product-subcategories/'+action.payload)
+        yield put({
+            type: GET_SUBCATEGORIES_SUCCESS,
+            message: 'Success fetching data',
+            productSubCategories: response.data
+        });
+    } catch (e) {
+        yield put({
+            type: GET_SUBCATEGORIES_FAILURE,
+            message: 'Something went wrong'
+        });
+    }
+}
+
 export default function* () {
     yield takeLatest(CREATE_PRODUCT_REQUEST, createProduct);
     yield takeLatest(GET_PRODUCTS_REQUEST, getProducts);
@@ -130,4 +150,5 @@ export default function* () {
     yield takeLatest(UPDATE_PRODUCT_REQUEST, updateProducts);
     yield takeLatest(PUBLISH_PRODUCT_REQUEST, publishProducts);
     yield takeLatest(DELETE_PRODUCT_IMAGE_REQUEST, deleteProductImage);
+    yield takeLatest(GET_SUBCATEGORIES_REQUEST, getProductSubcategories);
 }
