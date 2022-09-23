@@ -19,6 +19,7 @@ const SubCategories = () => {
     //get subcategories
     const {subCategories, loadingSub} = useSelector((state) => state.subCategories)
     const [getCategories, setGetCategories] = useState([])
+    const [createSubcategory, setCreateSubcategory] = useState('')
 
     //create
     const adminHandleChangeCategory = ({target}) => {
@@ -30,15 +31,20 @@ const SubCategories = () => {
     }
 
     const addSubCategory = () => {
-        dispatch({
-            type: ADD_SUBCATEGORY_REQUEST,
-            payload: {
-                subCategory: subCategory,
-                parentCategory: parentCategory
-            }
-        })
-        setSubCategory(categoryInitial)
-        setParentCategory(categoryInitial)
+        if (subCategory && parentCategory) {
+            dispatch({
+                type: ADD_SUBCATEGORY_REQUEST,
+                payload: {
+                    subCategory: subCategory,
+                    parentCategory: parentCategory
+                }
+            })
+            setSubCategory(categoryInitial)
+            setParentCategory(categoryInitial)
+            setCreateSubcategory('')
+        } else {
+            setCreateSubcategory('Category and subcategory are required')
+        }
     }
 
     //show
@@ -62,11 +68,16 @@ const SubCategories = () => {
         })
     }
 
+    const clearError = () => {
+        setCreateSubcategory('')
+    }
+
     return(
         <>
             <h5 className="text-primary">subcategories</h5>
 
             <div className="row">
+                <div className="text-danger mb-2">{ createSubcategory ? createSubcategory : '' }</div>
                 <div className="col-md-4">
                     <select
                         id="categories"
@@ -101,13 +112,15 @@ const SubCategories = () => {
                     <button
                         className="form-control btn btn-primary"
                         onClick={addSubCategory}
+                        onBlur={clearError}
                     >
                         Add
                     </button>
                 </div>
             </div>
 
-            <hr/>
+
+                <hr/>
 
             <div className="row mt-3">
                 <div className="col-md-12">

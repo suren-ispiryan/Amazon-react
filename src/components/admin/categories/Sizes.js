@@ -16,8 +16,8 @@ const Sizes = () => {
     const [size, setSize] = useState('');
     // show
     const [getProductSizes, setGetProductSizes] = useState([]);
+    const [createSize, setCreateSize] = useState('');
     const {sizes, loading} = useSelector((state) => state.sizes)
-
 
     // CREATE
     const handleChange = ({target}) => {
@@ -25,13 +25,18 @@ const Sizes = () => {
     }
 
     const addSize = () => {
-        dispatch({
-            type: ADD_SIZE_REQUEST,
-            payload: {
-                size: size
-            }
-        })
-        setSize(sizeInitial)
+        if (size) {
+            dispatch({
+                type: ADD_SIZE_REQUEST,
+                payload: {
+                    size: size
+                }
+            })
+            setSize(sizeInitial)
+            setCreateSize('')
+        } else {
+            setCreateSize('Size is required')
+        }
     }
 
     // SHOW
@@ -55,11 +60,16 @@ const Sizes = () => {
         })
     }
 
+    const clearError = () => {
+        setCreateSize('')
+    }
+
     return(
         <>
             <h5 className="text-primary">sizes</h5>
 
             <div className="row">
+                <div className="text-danger mb-2">{ createSize ? createSize : '' }</div>
                 <div className="col-md-9">
                     <input
                         type="text"
@@ -75,6 +85,7 @@ const Sizes = () => {
                     <button
                         className="form-control btn btn-primary"
                         onClick={addSize}
+                        onBlur={clearError}
                     >
                         Add
                     </button>

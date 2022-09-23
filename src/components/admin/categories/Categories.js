@@ -17,7 +17,7 @@ const Categories = () => {
     // show
     const {categories, loading} = useSelector((state) => state.categories)
     const [getCategories, setGetCategories] = useState([]);
-
+    const [createCategory, setCreateCategory] = useState('');
 
     // add data
     const handleChange = ({target}) => {
@@ -25,13 +25,18 @@ const Categories = () => {
     }
 
     const addCategory = () => {
-        dispatch({
-            type: ADD_CATEGORY_REQUEST,
-            payload: {
-                category: category
-            }
-        })
-        setCategory(categoryInitial)
+        if (category) {
+            dispatch({
+                type: ADD_CATEGORY_REQUEST,
+                payload: {
+                    category: category
+                }
+            })
+            setCategory(categoryInitial)
+            setCreateCategory('')
+        } else {
+            setCreateCategory('Category is required')
+        }
     }
 
     // show data
@@ -55,11 +60,16 @@ const Categories = () => {
         })
     }
 
+    const clearError = () => {
+        setCreateCategory('')
+    }
+
     return(
         <>
             <h5 className="text-primary">categories</h5>
 
             <div className="row">
+                <div className="text-danger mb-2">{ createCategory ? createCategory : '' }</div>
                 <div className="col-md-9">
                     <input
                         type="text"
@@ -75,6 +85,7 @@ const Categories = () => {
                     <button
                         className="form-control btn btn-primary"
                         onClick={addCategory}
+                        onBlur={clearError}
                     >
                         Add
                     </button>
