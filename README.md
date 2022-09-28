@@ -44,6 +44,7 @@ Logged In User
 + Ability set default one from available addresses before buying products.
 + Show ordered list.
 + Adding and reducing product count form cart-products and ready-to-buy pages.
++ Automatically send emails to users about added products in past 24 hours
 
 My Store
 + Product CRUD.
