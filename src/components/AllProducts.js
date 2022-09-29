@@ -189,7 +189,7 @@ const AllProducts = () => {
                                                     {product.name}
                                                 </div>
                                                 <div className="text-success col-md-6">
-                                                    <i className="products-count p-2">{product.in_stock} pcs left</i>
+                                                    <p className="products-count p-2 mx-3">{product.in_stock} pcs left</p>
                                                 </div>
                                             </div>
                                             <hr />
@@ -245,7 +245,7 @@ const AllProducts = () => {
                                                 <div className="col-md-12 auth-user-posts-action-btn">
                                                     <Link to={"/product-details/"+product.id}>
                                                         <button
-                                                            className="btn btn-primary"
+                                                            className="mx-1 btn btn-primary"
                                                         >
                                                             See details
                                                         </button>
@@ -254,14 +254,14 @@ const AllProducts = () => {
                                                     {localStorage.getItem('token')
                                                      ?
                                                          <button
-                                                             className="btn btn-warning"
+                                                             className="mx-1 btn btn-warning"
                                                              onClick={event => saveForLater(event, product.id)}
                                                          >
                                                              <img src="../../../assets/icons/saveForLater.svg"/>
                                                          </button>
                                                      :
                                                          <button
-                                                             className="btn btn-warning"
+                                                             className="mx-1 btn btn-warning"
                                                              onClick={event => guestSaveForLater(event, product.id)}
                                                          >
                                                              <img src="../../../assets/icons/saveForLater.svg"/>
@@ -269,7 +269,7 @@ const AllProducts = () => {
                                                     }
 
                                                     <button
-                                                        className="btn btn-success"
+                                                        className="mx-1 btn btn-success"
                                                         onClick={event => handleShow(event, product.id, product.in_stock)}
                                                     >
                                                         Add to cart

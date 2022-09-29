@@ -6,6 +6,7 @@ import uuid from 'react-uuid';
 import LoadingSpinner from './LoadingSpinner';
 import { GetColorName } from 'hex-color-to-color-name';
 import axiosInstance from './../config/axiosInstance';
+import NoImage from "../assets/No-Image.jpg";
 
 const MyCart = () => {
     const {addedToCart, loading} = useSelector((state) => state.addedToCart)
@@ -63,7 +64,7 @@ const MyCart = () => {
                         {
                             allInCardProducts.map((item) => {
                                 return (
-                                    <div className="col-md-2 users-products" key={uuid()}>
+                                    <div className="col-md-4 col-lg-3 users-products" key={uuid()}>
                                         <div className="row">
                                             <div className="text-success col-md-6">
                                                 <span className="text-danger">Name: </span>
@@ -89,11 +90,20 @@ const MyCart = () => {
                                         <hr />
 
                                         <div className="product-images">
-                                            <img
-                                                className="img-fluid product-image"
-                                                alt="product-images"
-                                                src={`http://localhost:8000/assets/product_images/${item.product.picture}`}
-                                            />
+                                            {item.product.picture
+                                                ?
+                                                <img
+                                                    className="img-fluid product-image"
+                                                    alt="product-images"
+                                                    src={`http://localhost:8000/assets/product_images/${item.product.picture}`}
+                                                />
+                                                :
+                                                <img
+                                                    className="img-fluid admin-products-image"
+                                                    alt="product-images"
+                                                    src={NoImage}
+                                                />
+                                            }
                                         </div>
                                         <hr/>
 
@@ -130,13 +140,13 @@ const MyCart = () => {
                                             <div className="col-md-12 auth-user-posts-action-btn">
                                                 <Link to={"/product-details/"+item.product.id}>
                                                     <button
-                                                        className="btn btn-primary"
+                                                        className="mx-2 p-2 btn btn-primary"
                                                     >
                                                         See details
                                                     </button>
                                                 </Link>
                                                 <button
-                                                    className="btn btn-danger"
+                                                    className="mx-2 p-2 btn btn-danger"
                                                     onClick={event => removeFromCart(event, item.product.id)}
                                                 >
                                                     Remove from cart

@@ -56,7 +56,7 @@ const SavedForLater = () => {
                                                 {product.name}
                                             </div>
                                             <div className="text-success col-md-6">
-                                                <i className="products-count p-2">{product.in_stock} pcs left</i>
+                                                <p className="products-count p-2 mx-2">{product.in_stock} pcs left</p>
                                             </div>
                                         </div>
                                         <hr />

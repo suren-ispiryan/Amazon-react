@@ -5,6 +5,7 @@ import { GUEST_PRODUCT_GET_REQUEST } from '../redux/userCart/actions';
 import LoadingSpinner from "./LoadingSpinner";
 import {Link} from "react-router-dom";
 import axiosInstance from './../config/axiosInstance';
+import NoImage from "../assets/No-Image.jpg";
 
 const GuestCart = () => {
     const dispatch = useDispatch();
@@ -52,7 +53,7 @@ const GuestCart = () => {
                         {
                             allGuestProducts.map((item) => {
                                 return (
-                                    <div className="col-md-2 users-products" key={uuid()}>
+                                    <div className="col-md-4 col-lg-3 users-products" key={uuid()}>
                                         <div className="row">
                                             <div className="text-success col-md-6">
                                                 <span className="text-danger">Name: </span>
@@ -62,11 +63,19 @@ const GuestCart = () => {
                                         <hr />
 
                                         <div className="product-images">
-                                            <img
-                                                className="img-fluid product-image"
-                                                alt="product-images"
-                                                src={`http://localhost:8000/assets/product_images/${item.picture}`}
-                                            />
+                                            { item.picture ?
+                                                <img
+                                                    className="img-fluid product-image"
+                                                    alt="product-images"
+                                                    src={`http://localhost:8000/assets/product_images/${item.picture}`}
+                                                />
+                                                :
+                                                <img
+                                                    className="img-fluid admin-products-image"
+                                                    alt="product-images"
+                                                    src={NoImage}
+                                                />
+                                            }
                                         </div>
                                         <hr/>
 
@@ -101,13 +110,13 @@ const GuestCart = () => {
                                             <div className="col-md-12 auth-user-posts-action-btn">
                                                 <Link to={"/product-details/"+item.id}>
                                                     <button
-                                                        className="btn btn-primary"
+                                                        className="mx-2 btn btn-primary"
                                                     >
                                                         See details
                                                     </button>
                                                 </Link>
                                                 <button
-                                                    className="btn btn-danger"
+                                                    className="mx-2 btn btn-danger"
                                                     onClick={event => removeFromGuestCart(event, item.id)}
                                                 >
                                                     Remove from cart
