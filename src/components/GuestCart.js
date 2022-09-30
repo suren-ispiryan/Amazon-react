@@ -4,7 +4,6 @@ import {useEffect, useState} from 'react';
 import { GUEST_PRODUCT_GET_REQUEST } from '../redux/userCart/actions';
 import LoadingSpinner from "./LoadingSpinner";
 import {Link} from "react-router-dom";
-import axiosInstance from './../config/axiosInstance';
 import NoImage from "../assets/No-Image.jpg";
 
 const GuestCart = () => {

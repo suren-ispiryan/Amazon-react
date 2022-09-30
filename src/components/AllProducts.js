@@ -9,7 +9,6 @@ import { GetColorName } from 'hex-color-to-color-name';
 import { Modal, Button } from 'react-bootstrap';
 import { SAVE_PRODUCT_FOR_LATER_REQUEST } from "../redux/saveForLater/actions";
 import NoImage from "../assets/No-Image.jpg";
-import {forEach} from "react-bootstrap/ElementChildren";
 
 const AllProducts = () => {
     const {allProducts, loading} = useSelector((state) => state.allProducts)
@@ -19,7 +18,7 @@ const AllProducts = () => {
     const [searchParameter, setSearchParameter] = useState('');
     const [searchCategory, setSearchCategory] = useState('');
     const [chosenId, setChosenId] = useState(null);
-    const [productCount, setProductCount] = useState(null);
+    const [productCount, setProductCount] = useState(1);
     const [show, setShow] = useState(false);
     const [stock, setStock] = useState();
 
@@ -27,6 +26,7 @@ const AllProducts = () => {
 
     const handleShow = (event, id, inStock) => {
         setShow(true);
+        setProductCount(1)
         setStock(inStock)
         setChosenId(id)
     }
@@ -294,7 +294,7 @@ const AllProducts = () => {
                                 type="number"
                                 name="count"
                                 className="form-control"
-                                defaultValue="1"
+                                value={productCount}
                                 max={stock}
                                 placeholder={"Count of product, max" + stock}
                                 onChange={handleCount}
@@ -304,7 +304,7 @@ const AllProducts = () => {
                             <Button variant="secondary" onClick={handleClose}>
                                 Close
                             </Button>
-                            <Button variant= "primary" onClick={addToCart}>
+                            <Button variant="primary" onClick={addToCart}>
                                 Add to cart
                             </Button>
                         </Modal.Footer>
