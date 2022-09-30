@@ -30,7 +30,7 @@ const GuestCart = () => {
         let productIds;
         productIds = JSON.parse(localStorage.getItem('addedToCart'));
         for(let i=0; i < productIds.length; i++){
-            if(productIds[i] === id){
+            if(productIds[i].id === id){
                 productIds.splice(i, 1);
             }
         }
