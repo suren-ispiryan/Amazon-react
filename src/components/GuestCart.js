@@ -38,7 +38,6 @@ const GuestCart = () => {
         setProductNewIds(productIds);
     }
 
-
     return (
         <div className="col-md-12 px-5">
             {loading

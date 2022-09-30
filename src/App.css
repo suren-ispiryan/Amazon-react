@@ -142,8 +142,8 @@ li {
 
 .product-details-columns {
   text-align: left;
-  padding: 5px 15px;
-  font-size: 25px;
+  padding: 1px 15px;
+  font-size: 20px;
 }
 
 .details-color {
@@ -248,4 +248,16 @@ li {
 .labels {
   color: #5b7fde;
   margin-left: 10px;
+}
+
+/*comments*/
+.comments-show {
+  padding: 10px;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center !important;
+}
+
+.comment-text {
+  margin: 0 0 0 14px !important;
 }

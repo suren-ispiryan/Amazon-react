@@ -7,6 +7,12 @@ import LoadingSpinner from './LoadingSpinner';
 import { ADD_TO_CART_REQUEST } from '../redux/userCart/actions';
 import { Button, Modal } from 'react-bootstrap';
 import NoImage from "../assets/No-Image.jpg";
+import {
+    CREATE_PRODUCT_COMMENT_REQUEST,
+    GET_PRODUCTS_COMMENT_REQUEST
+} from "../redux/productComments/actions";
+import Like from './Like';
+import Dislike from './Dislike';
 
 const ProductDetails = () => {
     let { id } = useParams();
@@ -17,6 +23,11 @@ const ProductDetails = () => {
     const [chosenId, setChosenId] = useState(null);
     const [stock, setStock] = useState();
     const [productCount, setProductCount] = useState(null);
+    //comment
+    const [productComment, setProductComment] = useState({comment: ''});
+    // const [updateComment, setUpdateComment] = useState({})
+    const {productComments, loadingComents} = useSelector((state) => state.productComments)
+    const [allComments, setAllComments] = useState({})
 
     const handleClose = () => setShow(false);
 
@@ -74,6 +85,44 @@ const ProductDetails = () => {
         setShow(false);
     }
 
+// comments
+    useEffect(() => {
+        dispatch({
+            type: GET_PRODUCTS_COMMENT_REQUEST,
+            payload: id
+        })
+    }, [allComments]);
+
+    useEffect(() => {
+        if (!loadingComents) {
+            setAllComments(productComments)
+        }
+    }, [loadingComents])
+
+    const handleChangeComment = (field, value) => {
+        setProductComment(prevState => ({
+            ...prevState,
+            [field]:value
+        }))
+    }
+
+    const addComment = (event, id) => {
+        if (localStorage.getItem('token')) {
+            // registered user
+            dispatch({
+                type: CREATE_PRODUCT_COMMENT_REQUEST,
+                payload: {
+                    productComment: productComment.comment,
+                    id: id
+                }
+            })
+        } else {
+            // not registered user
+            alert('not registered')
+        }
+        setProductComment({comment: ''})
+    }
+
     return (
         <div>
             {loading
@@ -85,7 +134,7 @@ const ProductDetails = () => {
                         {
                             productDetails.map(productDetailItem =>
                                 <div className="container" key={ uuid()}>
-                                    <div className="row py-5">
+                                    <div className="row py-2">
                                         <div className="col-md-6">
                                             <div className="product-details-image-box">
                                                 {productDetailItem.picture
@@ -139,6 +188,65 @@ const ProductDetails = () => {
                                 </div>
                             )
                         }
+
+                        <div className="container py-1 px-5">
+                            <div className="row">
+                                <div className="col-md-12">
+                                    <h4 className="my-3">Comments</h4>
+                                </div>
+
+                                <div className="col-md-10">
+                                    <input
+                                        className="form-control"
+                                        type="text"
+                                        placeholder="Comment"
+                                        value={productComment['comment']}
+                                        onChange={(e)=> handleChangeComment('comment', e.target.value)}
+                                    />
+                                </div>
+
+                                <div className="col-md-2">
+                                    <button
+                                        className="form-control btn btn-primary"
+                                        onClick={event => addComment(event, productDetails[0].id)}
+                                    >
+                                        Add comment
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div className="container py-3 px-5">
+                            {
+                                allComments.length > 0 ? allComments.map((item) => {
+                                    return (
+                                        <div className="row" key={uuid()}>
+                                            <div className="col-md-12 comments-show">
+                                                <h6 className='text-info comment-text'>
+                                                    {item.user.name}:
+                                                </h6>
+                                                <h6 className='comment-text'>
+                                                    {item.comment}
+                                                </h6>
+                                            </div>
+
+                                            <div className="col-md-12 comments-show">
+                                                <button className='mx-2 btn btn-primary'>
+                                                    <Like />
+                                                </button>
+
+                                                <button className='mx-2 btn btn-danger'>
+                                                    <Dislike />
+                                                </button>
+                                            </div>
+                                            <hr />
+                                        </div>
+                                    )
+                                })
+                                :
+                                <div>No comments</div>
+                            }
+                        </div>
 
                         {/* MODAL */}
                         <Modal show={show} onHide={handleClose}>
