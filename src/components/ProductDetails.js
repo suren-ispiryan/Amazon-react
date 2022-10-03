@@ -8,7 +8,7 @@ import { ADD_TO_CART_REQUEST } from '../redux/userCart/actions';
 import { Button, Modal } from 'react-bootstrap';
 import NoImage from "../assets/No-Image.jpg";
 import {
-    CREATE_PRODUCT_COMMENT_REQUEST,
+    CREATE_PRODUCT_COMMENT_REQUEST, DELETE_PRODUCTS_COMMENT_REQUEST,
     GET_PRODUCTS_COMMENT_REQUEST
 } from "../redux/productComments/actions";
 import Like from './Like';
@@ -86,19 +86,20 @@ const ProductDetails = () => {
     }
 
 // comments
+    // get
     useEffect(() => {
         dispatch({
             type: GET_PRODUCTS_COMMENT_REQUEST,
             payload: id
         })
-    }, [allComments]);
+    }, []);
 
     useEffect(() => {
         if (!loadingComents) {
             setAllComments(productComments)
         }
     }, [loadingComents])
-
+    // add
     const handleChangeComment = (field, value) => {
         setProductComment(prevState => ({
             ...prevState,
@@ -122,6 +123,21 @@ const ProductDetails = () => {
         }
         setProductComment({comment: ''})
     }
+    // delete
+    const deleteComment = (event, productId) => {
+        dispatch({
+            type: DELETE_PRODUCTS_COMMENT_REQUEST,
+            payload: productId
+        })
+    }
+    // like / dislike
+    const likeComment = (event, productId) => {
+        console.log(productId)
+    }
+
+    const dislikeComment = (event, productId) => {
+        console.log(productId)
+    }
 
     return (
         <div>
@@ -130,6 +146,7 @@ const ProductDetails = () => {
                     <LoadingSpinner />
                 :
                     (<>
+{/*product details*/}
                         <h3 className="mt-3">Product Number {id}</h3>
                         {
                             productDetails.map(productDetailItem =>
@@ -188,7 +205,7 @@ const ProductDetails = () => {
                                 </div>
                             )
                         }
-
+{/*comments*/}
                         <div className="container py-1 px-5">
                             <div className="row">
                                 <div className="col-md-12">
@@ -201,7 +218,7 @@ const ProductDetails = () => {
                                         type="text"
                                         placeholder="Comment"
                                         value={productComment['comment']}
-                                        onChange={(e)=> handleChangeComment('comment', e.target.value)}
+                                        onChange={(e) => handleChangeComment('comment', e.target.value)}
                                     />
                                 </div>
 
@@ -231,12 +248,25 @@ const ProductDetails = () => {
                                             </div>
 
                                             <div className="col-md-12 comments-show">
-                                                <button className='mx-2 btn btn-primary'>
+                                                <button
+                                                    className='mx-2 btn btn-primary'
+                                                    onClick={event => likeComment(event, item.id)}
+                                                >
                                                     <Like />
                                                 </button>
 
-                                                <button className='mx-2 btn btn-danger'>
+                                                <button
+                                                    className='mx-2 btn btn-danger'
+                                                    onClick={event => dislikeComment(event, item.id)}
+                                                >
                                                     <Dislike />
+                                                </button>
+
+                                                <button
+                                                    className='mx-2 btn btn-secondary delete-comment'
+                                                    onClick={event => deleteComment(event, item.id)}
+                                                >
+                                                    Delete
                                                 </button>
                                             </div>
                                             <hr />

@@ -261,3 +261,7 @@ li {
 .comment-text {
   margin: 0 0 0 14px !important;
 }
+
+.delete-comment{
+  font-size: 12px;
+}

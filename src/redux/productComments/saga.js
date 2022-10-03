@@ -45,25 +45,27 @@ function* getProductComments(action) {
         });
     }
 }
-//
-// //DELETE
-// function* deleteProducts(action) {
-//     try {
-//         const response = yield axiosInstance.delete('/delete-auth-user-products/'+action.payload)
-//         yield put({
-//             type: DELETE_PRODUCTS_SUCCESS,
-//             message: 'Product successfully deleted',
-//             products: response.data
-//         });
-//     } catch (e) {
-//         yield put({
-//             type: DELETE_PRODUCTS_FAILURE,
-//             message: 'Something went wrong'
-//         });
-//     }
-// }
+
+//DELETE
+function* deleteProductComments(action) {
+    try {
+        const response = yield axiosInstance.delete('/delete-product-comment/'+action.payload)
+        console.log(response.data)
+        yield put({
+            type: DELETE_PRODUCTS_COMMENT_SUCCESS,
+            message: 'Product successfully deleted',
+            productComments: response.data
+        });
+    } catch (e) {
+        yield put({
+            type: DELETE_PRODUCTS_COMMENT_FAILURE,
+            message: 'Something went wrong'
+        });
+    }
+}
 
 export default function* () {
     yield takeLatest(CREATE_PRODUCT_COMMENT_REQUEST, createProductComment);
     yield takeLatest(GET_PRODUCTS_COMMENT_REQUEST, getProductComments);
+    yield takeLatest(DELETE_PRODUCTS_COMMENT_REQUEST, deleteProductComments);
 }

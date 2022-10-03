@@ -59,28 +59,28 @@ const productCommentsReducer = (state = initialStata, action) => {
                 loadingComents: false,
                 message: action.message
             }
-    // // DELETE
-    //     case DELETE_PRODUCTS_REQUEST:
-    //         return {
-    //             ...state,
-    //             loading: true,
-    //             message: '',
-    //             products: [...state.products]
-    //         }
-    //     case DELETE_PRODUCTS_SUCCESS:
-    //         const removedProduct = state.products.filter(i => i.id !== parseInt(action.products))
-    //         return {
-    //             ...state,
-    //             loading: false,
-    //             products: removedProduct,
-    //             message: action.message
-    //         }
-    //     case DELETE_PRODUCTS_FAILURE:
-    //         return {
-    //             ...state,
-    //             loading: false,
-    //             message: action.message
-    //         }
+    // DELETE
+        case DELETE_PRODUCTS_COMMENT_REQUEST:
+            return {
+                ...state,
+                loadingComents: true,
+                message: '',
+                productComments: [...state.productComments]
+            }
+        case DELETE_PRODUCTS_COMMENT_SUCCESS:
+            const removedComment = state.productComments.filter(i => i.id !== parseInt(action.productComments))
+            return {
+                ...state,
+                loadingComents: false,
+                productComments: removedComment,
+                message: action.message
+            }
+        case DELETE_PRODUCTS_COMMENT_FAILURE:
+            return {
+                ...state,
+                loadingComents: false,
+                message: action.message
+            }
     // DEFAULT
         default:
             return state
