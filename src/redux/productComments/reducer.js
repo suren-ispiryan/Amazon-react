@@ -131,7 +131,7 @@ const productCommentsReducer = (state = initialStata, action) => {
         case DISLIKE_PRODUCTS_COMMENT_SUCCESS:
             const removed = cloneDeep(state.productComments)
             removed.map((item) => {
-                item.likes = [item.likes.filter(i => +i.id !== +action.dislikeProductComments.id)];
+                item.likes = cloneDeep(item.likes.filter(i => +i.id !== +action.dislikeProductComments.id));
                 return item
             })
             return {

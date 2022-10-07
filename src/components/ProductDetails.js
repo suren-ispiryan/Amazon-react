@@ -31,9 +31,7 @@ const ProductDetails = () => {
     //comment
     const [productComment, setProductComment] = useState({comment: ''});
     const {productComments, authUserId, loadingComents} = useSelector((state) => state.productComments)
-    const [allComments, setAllComments] = useState({})
     const [authId, setAuthId] = useState(null)
-    const [productHalf, setProductHalf] = useState(false);
 
     const handleClose = () => setShow(false);
 
@@ -109,9 +107,7 @@ const ProductDetails = () => {
 
     useEffect(() => {
         if (!loadingComents) {
-            setAllComments(productComments)
             setAuthId(authUserId)
-            setProductHalf(true)
         }
     }, [loadingComents])
     // add
@@ -151,7 +147,6 @@ const ProductDetails = () => {
             type: LIKE_PRODUCTS_COMMENT_REQUEST,
             payload: productId
         })
-        setProductHalf(false)
     }
 
     const unLikeComment = (event, productId) => {
@@ -159,7 +154,6 @@ const ProductDetails = () => {
             type: DISLIKE_PRODUCTS_COMMENT_REQUEST,
             payload: productId
         })
-        setProductHalf(false)
     }
 
     return (
