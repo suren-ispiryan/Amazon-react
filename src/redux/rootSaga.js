@@ -11,6 +11,7 @@ import login from './login/saga';
 import savedForLater from './saveForLater/saga';
 import guestSavedForLater from './guestSavedForLater/saga';
 import productComment from './productComments/saga';
+import productLikes from './productLikes/saga';
 
 function* rootSaga() {
     yield all([
@@ -25,7 +26,8 @@ function* rootSaga() {
         login(),
         savedForLater(),
         guestSavedForLater(),
-        productComment()
+        productComment(),
+        productLikes()
     ])
 }
 export default rootSaga

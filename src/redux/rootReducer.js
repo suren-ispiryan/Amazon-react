@@ -12,6 +12,7 @@ import savedForLaterReducer from './saveForLater/reducer';
 import searchedCategories from './allProducts/reducer';
 import guestSavedForLaterReducer from './guestSavedForLater/reducer';
 import productCommentsReducer from './productComments/reducer';
+import productLikesReducer from "./productLikes/reducer";
 
 const rootReducer = combineReducers({
     products: myStore,
@@ -32,7 +33,8 @@ const rootReducer = combineReducers({
     guestSavedForLaterProducts: guestSavedForLaterReducer,
     productSubCategories: myStore,
     productComments: productCommentsReducer,
-    authUserId: productCommentsReducer
+    authUserId: productCommentsReducer,
+    productLikes: productLikesReducer
 })
 
 export default rootReducer

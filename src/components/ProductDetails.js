@@ -18,6 +18,7 @@ import {
 } from "../redux/productComments/actions";
 import Like from './Like';
 import Dislike from './Dislike';
+import {GET_PRODUCTS_LIKE_REQUEST, LIKE_PRODUCTS_REQUEST, UNLIKE_PRODUCTS_REQUEST} from "../redux/productLikes/actions";
 
 const ProductDetails = () => {
     let { id } = useParams();
@@ -28,11 +29,14 @@ const ProductDetails = () => {
     const [chosenId, setChosenId] = useState(null);
     const [stock, setStock] = useState();
     const [productCount, setProductCount] = useState(null);
+    //product comment
+    const { productLikes, loadingLikes } = useSelector((state) => state.productLikes)
     //comment
     const [productComment, setProductComment] = useState({comment: ''});
     const {productComments, authUserId, loadingComents} = useSelector((state) => state.productComments)
     const [authId, setAuthId] = useState(null)
 
+// product details
     const handleClose = () => setShow(false);
 
     const handleShow = (event, id, inStock) => {
@@ -48,6 +52,10 @@ const ProductDetails = () => {
     useEffect(() => {
         dispatch({
             type: GET_PRODUCTDETAILS_REQUEST,
+            payload: id
+        })
+        dispatch({
+            type: GET_PRODUCTS_LIKE_REQUEST,
             payload: id
         })
     }, []);
@@ -88,16 +96,22 @@ const ProductDetails = () => {
         }
         setShow(false);
     }
-
+    // like product
     const likeProduct = (event, productId) => {
-        alert(1)
+        dispatch({
+            type: LIKE_PRODUCTS_REQUEST,
+            payload: productId
+        })
     }
-
+    // unlike product
     const dislikeProduct = (event, productId) => {
-        alert(1)
+        dispatch({
+            type: UNLIKE_PRODUCTS_REQUEST,
+            payload: productId
+        })
     }
 // comments
-    // get
+    // get comments
     useEffect(() => {
         dispatch({
             type: GET_PRODUCTS_COMMENT_REQUEST,
@@ -110,7 +124,7 @@ const ProductDetails = () => {
             setAuthId(authUserId)
         }
     }, [loadingComents])
-    // add
+    // add comments
     const handleChangeComment = (field, value) => {
         setProductComment(prevState => ({
             ...prevState,
@@ -134,21 +148,21 @@ const ProductDetails = () => {
         }
         setProductComment({comment: ''})
     }
-    // delete
+    // delete comments
     const deleteComment = (event, productId) => {
         dispatch({
             type: DELETE_PRODUCTS_COMMENT_REQUEST,
             payload: productId
         })
     }
-    // like / dislike
+    // like comment
     const likeComment = (event, productId) => {
         dispatch({
             type: LIKE_PRODUCTS_COMMENT_REQUEST,
             payload: productId
         })
     }
-
+    // unlike comment
     const unLikeComment = (event, productId) => {
         dispatch({
             type: DISLIKE_PRODUCTS_COMMENT_REQUEST,
@@ -195,7 +209,6 @@ const ProductDetails = () => {
 
                                         <div className="col-md-6">
                                             <h4 className="mt-3">Detailed description</h4>
-
                                             <div className="product-details-columns pt-4">Name: {productDetailItem.name}</div><hr/>
                                             <div className="product-details-columns">Brand: {productDetailItem.brand}</div><hr/>
                                             <div className="product-details-columns">Description: {productDetailItem.description}</div><hr/>
