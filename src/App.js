@@ -45,7 +45,7 @@ const App = () => {
                 <Route path="admin-product-categories" element={<AdminSetCategories />} />
                 <Route path="admin-product-ordered" element={<AdminOrderedProducts />} />
             </Routes>
-            </BrowserRouter>
+        </BrowserRouter>
     </div>
   );
 }

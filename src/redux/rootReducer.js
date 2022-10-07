@@ -31,6 +31,8 @@ const rootReducer = combineReducers({
     savedForLater: savedForLaterReducer,
     guestSavedForLaterProducts: guestSavedForLaterReducer,
     productSubCategories: myStore,
-    productComments: productCommentsReducer
+    productComments: productCommentsReducer,
+    authUserId: productCommentsReducer
 })
+
 export default rootReducer

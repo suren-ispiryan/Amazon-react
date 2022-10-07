@@ -9,7 +9,13 @@ import {
     GET_PRODUCTS_COMMENT_FAILURE,
     DELETE_PRODUCTS_COMMENT_REQUEST,
     DELETE_PRODUCTS_COMMENT_SUCCESS,
-    DELETE_PRODUCTS_COMMENT_FAILURE
+    DELETE_PRODUCTS_COMMENT_FAILURE,
+    LIKE_PRODUCTS_COMMENT_REQUEST,
+    LIKE_PRODUCTS_COMMENT_SUCCESS,
+    LIKE_PRODUCTS_COMMENT_FAILURE,
+    DISLIKE_PRODUCTS_COMMENT_REQUEST,
+    DISLIKE_PRODUCTS_COMMENT_SUCCESS,
+    DISLIKE_PRODUCTS_COMMENT_FAILURE
 } from './actions'
 
 //CREATE
@@ -50,7 +56,6 @@ function* getProductComments(action) {
 function* deleteProductComments(action) {
     try {
         const response = yield axiosInstance.delete('/delete-product-comment/'+action.payload)
-        console.log(response.data)
         yield put({
             type: DELETE_PRODUCTS_COMMENT_SUCCESS,
             message: 'Product successfully deleted',
@@ -64,8 +69,44 @@ function* deleteProductComments(action) {
     }
 }
 
+//LIKE
+function* likeProductComments(action) {
+    try {
+        const response = yield axiosInstance.get('/like-products-comments/'+action.payload)
+        yield put({
+            type: LIKE_PRODUCTS_COMMENT_SUCCESS,
+            message: 'Success fetching data',
+            likeProductComments: response.data
+        });
+    } catch (e) {
+        yield put({
+            type: LIKE_PRODUCTS_COMMENT_FAILURE,
+            message: 'Something went wrong'
+        });
+    }
+}
+
+//DISLIKE
+function* dislikeProductComments(action) {
+    try {
+        const response = yield axiosInstance.get('/dislike-products-comments/'+action.payload)
+        yield put({
+            type: DISLIKE_PRODUCTS_COMMENT_SUCCESS,
+            message: 'Success fetching data',
+            dislikeProductComments: response.data
+        });
+    } catch (e) {
+        yield put({
+            type: DISLIKE_PRODUCTS_COMMENT_FAILURE,
+            message: 'Something went wrong'
+        });
+    }
+}
+
 export default function* () {
     yield takeLatest(CREATE_PRODUCT_COMMENT_REQUEST, createProductComment);
     yield takeLatest(GET_PRODUCTS_COMMENT_REQUEST, getProductComments);
     yield takeLatest(DELETE_PRODUCTS_COMMENT_REQUEST, deleteProductComments);
+    yield takeLatest(LIKE_PRODUCTS_COMMENT_REQUEST, likeProductComments);
+    yield takeLatest(DISLIKE_PRODUCTS_COMMENT_REQUEST, dislikeProductComments);
 }

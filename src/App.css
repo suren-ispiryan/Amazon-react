@@ -177,6 +177,17 @@ li {
   height: 50px;
 }
 
+.likeDislikeProduct {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: nowrap;
+}
+
+.like-dislike-finger {
+  margin: 0 0 0 5px !important;
+}
+
 /* all product*/
 .count-control {
   border-radius: 100%;
