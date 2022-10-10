@@ -225,25 +225,30 @@ const ProductDetails = () => {
                                     </div>
 
                                     <div className="product-details-columns-add-to-cart">
-                                        <button
-                                            className='mx-2 btn btn-primary likeDislikeProduct'
-                                            onClick={event => likeProduct(event, productDetailItem.id)}
-                                        >
-                                            <Like/>
-                                            <p className='like-dislike-finger'>Like product</p>
-                                        </button>
+                                        {productLikes.length && (
+                                                productLikes.find(({ user_id }) => user_id === authId) ? (
+                                                    <button
+                                                        className='mx-2 btn btn-danger likeDislikeProduct'
+                                                        onClick={event => dislikeProduct(event, productDetailItem.id)}
+                                                    >
+                                                        <Like/>
+                                                        <p className="like-dislike-finger">Dislike product</p>
+                                                    </button>
+                                                ):(
+                                                    <button
+                                                        className='mx-2 btn btn-primary likeDislikeProduct'
+                                                        onClick={event => likeProduct(event, productDetailItem.id)}
+                                                    >
+                                                        <Like/>
+                                                        <p className='like-dislike-finger'>Like product</p>
+                                                    </button>
+                                                )
+                                            )
+                                        }
 
                                         <div className="badge bg-secondary product-like-count-badge p-3">
                                             {productLikes.length} Likes
                                         </div>
-
-                                        <button
-                                            className='mx-2 btn btn-danger likeDislikeProduct'
-                                            onClick={event => dislikeProduct(event, productDetailItem.id)}
-                                        >
-                                            <Dislike/>
-                                            <p className="like-dislike-finger">Dislike product</p>
-                                        </button>
 
                                         <button
                                             className="mx-2 btn btn-success"
