@@ -4,7 +4,10 @@ import {
     LIKE_PRODUCTS_FAILURE,
     UNLIKE_PRODUCTS_REQUEST,
     UNLIKE_PRODUCTS_SUCCESS,
-    UNLIKE_PRODUCTS_FAILURE
+    UNLIKE_PRODUCTS_FAILURE,
+    GET_PRODUCTS_LIKE_REQUEST,
+    GET_PRODUCTS_LIKE_SUCCESS,
+    GET_PRODUCTS_LIKE_FAILURE
 } from "./actions"
 import cloneDeep from "clone-deep";
 
@@ -12,10 +15,32 @@ const initialStata = {
     productLikes: [],
     loadingLikes: false,
     message: '',
+    authUsersId: null
 }
 const productLikesReducer = (state = initialStata, action) => {
     switch (action.type) {
-    // LIKE
+        // GET
+        case GET_PRODUCTS_LIKE_REQUEST:
+            return {
+                ...state,
+                loadingLikes: true,
+                message: '',
+                productLikes: []
+            }
+        case GET_PRODUCTS_LIKE_SUCCESS:
+            return {
+                ...state,
+                loadingLikes: false,
+                productLikes: action.productLikes,
+                message: action.message
+            }
+        case GET_PRODUCTS_LIKE_FAILURE:
+            return {
+                ...state,
+                loadingLikes: false,
+                message: action.message
+            }
+        // LIKE
         case LIKE_PRODUCTS_REQUEST:
             return {
                 ...state,
@@ -24,13 +49,8 @@ const productLikesReducer = (state = initialStata, action) => {
                 productLikes: [...state.productLikes]
             }
         case LIKE_PRODUCTS_SUCCESS:
-            const productLikesCopy = cloneDeep(state.productLikes)
-               productLikesCopy.map((item) => {
-                   if (item.id === +action.productLikes.likeable_id) {
-                       item.likes = [...item.likes, action.productLikes];
-                       return item
-                   }
-                })
+            let productLikesCopy = cloneDeep(state.productLikes)
+            productLikesCopy = [...productLikesCopy, action.productLikes]
             return {
                 ...state,
                 loadingLikes: false,
@@ -52,15 +72,12 @@ const productLikesReducer = (state = initialStata, action) => {
                 productLikes: [...state.productLikes]
             }
         case UNLIKE_PRODUCTS_SUCCESS:
-            const removed = cloneDeep(state.productLikes)
-            removed.map((item) => {
-                item.likes = cloneDeep(item.likes.filter(i => +i.id !== +action.productLikes.id));
-                return item
-            })
+            const filteredProductLikesCopy = cloneDeep(state.productLikes)
+            let deletedArray = filteredProductLikesCopy.filter(i => +i.id !== +action.dislikeProductComments.id)
             return {
                 ...state,
                 loadingLikes: false,
-                productLikes: removed,
+                productLikes: deletedArray,
                 message: action.message
             }
         case UNLIKE_PRODUCTS_FAILURE:

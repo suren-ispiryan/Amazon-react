@@ -188,6 +188,13 @@ li {
   margin: 0 0 0 5px !important;
 }
 
+.product-like-count-badge{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 16px;
+}
+
 /* all product*/
 .count-control {
   border-radius: 100%;

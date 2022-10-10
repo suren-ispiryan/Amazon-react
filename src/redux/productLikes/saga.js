@@ -16,11 +16,10 @@ import {
 function* getProductLikes(action) {
     try {
         const response = yield axiosInstance.get('/get-products-likes/'+action.payload)
-        console.log(response.data)
         yield put({
             type: GET_PRODUCTS_LIKE_SUCCESS,
             message: 'Success fetching data',
-            likeProductComments: response.data
+            productLikes: response.data
         });
     } catch (e) {
         yield put({
@@ -34,11 +33,10 @@ function* getProductLikes(action) {
 function* likeProduct(action) {
     try {
         const response = yield axiosInstance.get('/like-products/'+action.payload)
-        console.log(response.data)
         yield put({
             type: LIKE_PRODUCTS_SUCCESS,
             message: 'Success fetching data',
-            likeProductComments: response.data
+            productLikes: response.data
         });
     } catch (e) {
         yield put({
@@ -52,7 +50,6 @@ function* likeProduct(action) {
 function* unlikeProduct(action) {
     try {
         const response = yield axiosInstance.get('/unlike-products/'+action.payload)
-        console.log(response.data)
         yield put({
             type: UNLIKE_PRODUCTS_SUCCESS,
             message: 'Success fetching data',

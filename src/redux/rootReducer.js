@@ -34,7 +34,8 @@ const rootReducer = combineReducers({
     productSubCategories: myStore,
     productComments: productCommentsReducer,
     authUserId: productCommentsReducer,
-    productLikes: productLikesReducer
+    productLikes: productLikesReducer,
+    authUsersId: productCommentsReducer
 })
 
 export default rootReducer

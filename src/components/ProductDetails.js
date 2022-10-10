@@ -233,6 +233,10 @@ const ProductDetails = () => {
                                             <p className='like-dislike-finger'>Like product</p>
                                         </button>
 
+                                        <div className="badge bg-secondary product-like-count-badge p-3">
+                                            {productLikes.length} Likes
+                                        </div>
+
                                         <button
                                             className='mx-2 btn btn-danger likeDislikeProduct'
                                             onClick={event => dislikeProduct(event, productDetailItem.id)}
