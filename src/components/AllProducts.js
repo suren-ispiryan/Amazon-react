@@ -35,13 +35,13 @@ const AllProducts = () => {
         dispatch({
             type: GET_ALLPRODUCTS_REQUEST
         })
-    }, []);
+    }, [dispatch]);
 
     useEffect(() => {
         if (!loading) {
             setAllUsersProducts(allProducts)
         }
-    }, [loading])
+    }, [loading, allProducts])
 
     const handleChange = ({ target }) => {
         setSearchParameter(target.value)
@@ -96,7 +96,6 @@ const AllProducts = () => {
         }
         setShow(false);
     }
-
     // saved for later
     const saveForLater = (event, id) => {
         dispatch({
@@ -257,14 +256,14 @@ const AllProducts = () => {
                                                              className="mx-1 btn btn-warning"
                                                              onClick={event => saveForLater(event, product.id)}
                                                          >
-                                                             <img src="../../../assets/icons/saveForLater.svg"/>
+                                                             <img src="../../../assets/icons/saveForLater.svg" alt="save for later"/>
                                                          </button>
                                                      :
                                                          <button
                                                              className="mx-1 btn btn-warning"
                                                              onClick={event => guestSaveForLater(event, product.id)}
                                                          >
-                                                             <img src="../../../assets/icons/saveForLater.svg"/>
+                                                             <img src="../../../assets/icons/saveForLater.svg" alt="save for later"/>
                                                          </button>
                                                     }
 

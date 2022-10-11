@@ -60,7 +60,6 @@ function* removeProduct(action) {
     }
 }
 
-
 export default function* saveForLater() {
     yield takeLatest(SAVE_PRODUCT_FOR_LATER_REQUEST, saveProduct);
     yield takeLatest(GET_PRODUCTS_FOR_LATER_REQUEST, getProducts);

@@ -38,20 +38,18 @@ const Sizes = () => {
             setCreateSize('Size is required')
         }
     }
-
     // SHOW
     useEffect(() => {
         dispatch({
             type: GET_PRODUCT_SIZES_REQUEST
         })
-    }, [])
+    }, [dispatch])
 
     useEffect(() => {
         if (!loading) {
             setGetProductSizes(sizes)
         }
-    }, [sizes])
-
+    }, [sizes, loading])
     // REMOVE
     const removeSizes = (event, id) => {
         dispatch({

@@ -3,8 +3,6 @@ import SubCategories from './categories/SubCategories';
 import Sizes from './categories/Sizes';
 
 const AdminSetCategories = () => {
-
-
     return (
         <div className="container">
             <h4 className="m-4">Set product parameters</h4>

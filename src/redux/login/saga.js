@@ -6,7 +6,6 @@ import {
     LOGIN_USER_FAILURE
 } from './actions'
 
-
 function* login(action) {
     try {
         const response = yield axiosInstance.post('/login', action.payload)
@@ -23,6 +22,6 @@ function* login(action) {
     }
 }
 
-export default function* () {
+export default function* loginSaga() {
     yield takeLatest(LOGIN_USER_REQUEST, login);
 }

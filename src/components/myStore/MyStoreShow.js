@@ -42,9 +42,8 @@ const MyStoreShow = ({allProducts, setShow, setUpdatedProduct, message}) => {
         <div className="col-md-8 product-create-user px-5">
             <h4 className="my-4">My products</h4>
             <div className="row my-store-parent-row">
-                {
-                    allProducts ? (
-                    allProducts.map((product) => {
+                {allProducts ?
+                    (allProducts.map((product) => {
                         return (
                             <div className="col-xl-3 col-lg-5 col-md-8 col-sm-8 users-products" key={uuid()}>
                                 <div className="text-success d-flex justify-content-between px-3">
@@ -152,21 +151,19 @@ const MyStoreShow = ({allProducts, setShow, setUpdatedProduct, message}) => {
                                 <div className="row">
                                     <div className="col-md-12 auth-user-posts-action-btn">
                                         {product.orders.map((item) => {
-                                            return(
-                                                product.id === item.product_id &&
-                                                    <h5 className="text-success" key={uuid()}>
-                                                        Bought: {item.product_count} pcs
-                                                    </h5>)
-                                            })
-                                        }
+                                            return(product.id === item.product_id &&
+                                                <h5 className="text-success" key={uuid()}>
+                                                    Bought: {item.product_count} pcs
+                                                </h5>
+                                            )
+                                        })}
                                     </div>
                                 </div>
                             </div>
-                        )
-                    })
-                ) : (
-                    <h4 className="text-danger mt-5">{message}</h4>
-                )
+                        )})
+                    ) : (
+                        <h4 className="text-danger mt-5">{message}</h4>
+                    )
                 }
             </div>
         </div>

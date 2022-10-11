@@ -74,7 +74,6 @@ const AdminUsers = () => {
             setShow(false)
         }
     }
-
     //validation errors
     const validate = (values) => {
         const errors = {};

@@ -25,13 +25,13 @@ const GuestSavedForLater = () => {
                 savedProducts: savedProducts
             }
         })
-    }, [savedProducts]);
+    }, [savedProducts, dispatch]);
 
     useEffect(() => {
         if (!loading) {
             setAllSavedProducts(guestSavedForLaterProducts)
         }
-    }, [loading])
+    }, [loading, guestSavedForLaterProducts])
 
     const removeFromSaved = (event, productId) => {
         let productIdArr = [];
@@ -50,14 +50,13 @@ const GuestSavedForLater = () => {
 
         productIdArr = JSON.parse(localStorage.getItem('savedForLater'));
         for(let i=0; i<productIdArr.length; i++){
-            if(i == id){
+            if(i === id){
                 productIdArr.splice(i, 1);
             }
         }
         localStorage.setItem('savedForLater', JSON.stringify(productIdArr));
         setLocalstorageData(productIdArr)
     }
-
 
     return (
         <div className="col-md-12 px-5">

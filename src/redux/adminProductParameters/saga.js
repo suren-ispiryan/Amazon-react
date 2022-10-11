@@ -78,7 +78,6 @@ function* removeCategory(action) {
     }
 }
 
-
 function* addSize(action) {
     try {
         const response = yield axiosInstance.post('add-size', action.payload)
@@ -127,7 +126,6 @@ function* removeSizes(action) {
     }
 }
 
-
 function* addSubCategory(action) {
     try {
         const response = yield axiosInstance.post('add-subcategory', action.payload)
@@ -175,7 +173,6 @@ function* removeSubCategory(action) {
         });
     }
 }
-
 
 export default function* adminProductParameters() {
     yield takeLatest(ADD_CATEGORY_REQUEST, addCategory);

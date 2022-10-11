@@ -38,7 +38,6 @@ const Categories = () => {
             setCreateCategory('Category is required')
         }
     }
-
     // show data
     useEffect(() => {
         dispatch({
@@ -51,7 +50,6 @@ const Categories = () => {
             setGetCategories(categories)
         }
     }, [loading, categories])
-
     // remove data
     const removeCategory = (event, id) => {
         dispatch({
