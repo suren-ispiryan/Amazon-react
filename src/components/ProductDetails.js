@@ -225,7 +225,7 @@ const ProductDetails = () => {
                                     </div>
 
                                     <div className="product-details-columns-add-to-cart">
-                                        {productLikes.length && (
+                                        {(
                                                 productLikes.find(({ user_id }) => user_id === authId) ? (
                                                     <button
                                                         className='mx-2 btn btn-danger likeDislikeProduct'
