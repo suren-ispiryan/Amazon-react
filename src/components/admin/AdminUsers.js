@@ -21,7 +21,7 @@ const updateInitialValues = {
 const AdminUsers = () => {
     const dispatch = useDispatch();
     const [users, setUsers] = useState([]);
-    const { adminUsers, loading } = useSelector((state) => state.adminUsers);
+    const { adminUsers, loading, message } = useSelector((state) => state.adminUsers);
     const [show, setShow] = useState(false);
     const [updatedUser, setUpdatedUser] = useState(updateInitialValues);
     const [id, setId] = useState();
@@ -31,13 +31,13 @@ const AdminUsers = () => {
         dispatch({
             type: GET_ALL_USERS_REQUEST
         })
-    }, [])
+    }, [dispatch])
 
     useEffect(() => {
         if (!loading) {
             setUsers(adminUsers)
         }
-    }, [loading])
+    }, [loading, adminUsers])
 
     const changeUserData = (target, item, id) => {
         setId(id)
@@ -110,7 +110,7 @@ const AdminUsers = () => {
 
                 {loading
                     ?
-                    <LoadingSpinner/>
+                        <LoadingSpinner/>
                     :
                     (<>
                         <Table striped bordered hover>
@@ -125,8 +125,8 @@ const AdminUsers = () => {
                             </tr>
                             </thead>
                             <tbody>
-                            {
-                                users.map((item, index) => {
+                            {users.length ?
+                                (users.map((item, index) => {
                                     return (
                                         <tr key={uuid()}>
                                             <th className="pt-4">{index + 1}</th>
@@ -151,6 +151,11 @@ const AdminUsers = () => {
                                         </tr>
                                     )
                                 })
+                                ) : (
+                                    <h4 className="text-danger mt-5">
+                                        {message}
+                                    </h4>
+                                )
                             }
                             </tbody>
                         </Table>

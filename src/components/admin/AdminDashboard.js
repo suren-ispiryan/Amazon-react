@@ -28,7 +28,7 @@ const initialValidationValues = {
 
 const AdminDashboard = () => {
     const dispatch = useDispatch();
-    const {adminProducts, loading, message} = useSelector((state) => state.adminProducts)
+    const {adminProducts, loading} = useSelector((state) => state.adminProducts)
     const [ownersProducts, setOwnersProducts] = useState([]);
     const productImage = useRef('');
     const [show, setShow] = useState(false);
@@ -46,37 +46,37 @@ const AdminDashboard = () => {
         dispatch({
             type: GET_PRODUCT_CATEGORIES_REQUEST
         })
-    }, [])
+    }, [dispatch])
 
     useEffect(() => {
         if (!loading) {
             setGetCategories(categories)
         }
-    }, [loading])
+    }, [loading, categories])
     //show sizes
     useEffect(() => {
         dispatch({
             type: GET_PRODUCT_SIZES_REQUEST
         })
-    }, [])
+    }, [dispatch])
 
     useEffect(() => {
         if (!loading) {
             setGetProductSizes(sizes)
         }
-    }, [loading])
+    }, [loading, sizes])
 
     useEffect(() => {
         dispatch({
             type: GET_ALL_USER_PRODUCTS_REQUEST
         })
-    }, []);
+    }, [dispatch]);
 
     useEffect(() => {
         if (!loading) {
             setOwnersProducts(adminProducts)
         }
-    }, [loading])
+    }, [loading, adminProducts])
     // update product
     const changeProduct = (event, id, item) => {
         setId(id)

@@ -15,7 +15,7 @@ const Categories = () => {
     // create
     const [category, setCategory] = useState('');
     // show
-    const {categories, loading} = useSelector((state) => state.categories)
+    const {categories, loading, message} = useSelector((state) => state.categories)
     const [getCategories, setGetCategories] = useState([]);
     const [createCategory, setCreateCategory] = useState('');
 
@@ -44,13 +44,13 @@ const Categories = () => {
         dispatch({
             type: GET_PRODUCT_CATEGORIES_REQUEST
         })
-    }, [])
+    }, [dispatch])
 
     useEffect(() => {
         if (!loading) {
             setGetCategories(categories)
         }
-    }, [loading])
+    }, [loading, categories])
 
     // remove data
     const removeCategory = (event, id) => {
@@ -97,8 +97,8 @@ const Categories = () => {
             <div className="row mt-3">
                 <div className="col-md-12">
                     <ListGroup horizontal className="d-flex flex-wrap">
-                        {
-                            getCategories.map((item) => {
+                        {getCategories ?
+                            (getCategories.map((item) => {
                                 return (
                                     <ListGroup.Item
                                         key={uuid()}
@@ -113,8 +113,10 @@ const Categories = () => {
                                         </button>
                                     </ListGroup.Item>
                                 )
-                            }
-                        )}
+                            })) : (
+                            <h4 className="text-danger mt-5">{message}</h4>
+                            )
+                        }
                     </ListGroup>
                 </div>
             </div>

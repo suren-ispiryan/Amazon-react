@@ -17,7 +17,7 @@ function* getAllUsers() {
         const response = yield axiosInstance.get('/get-all-users')
         yield put({
             type: GET_ALL_USERS_SUCCESS,
-            message: 'Success fetching data',
+            message: 'Can not find users',
             adminUserList: response.data
         });
     } catch (e) {
@@ -33,7 +33,7 @@ function* deleteUser (action) {
         const response = yield axiosInstance.get(`/delete-users/${action.payload}`)
         yield put({
             type: DELETE_USER_SUCCESS,
-            message: 'Success fetching data',
+            message: 'Can not find users',
             deleteUser: response.data
         });
     } catch (e) {
@@ -60,7 +60,7 @@ function* UpdateUser(action) {
     }
 }
 
-export default function* () {
+export default function* adminUsers() {
     yield takeLatest(GET_ALL_USERS_REQUEST, getAllUsers);
     yield takeLatest(DELETE_USER_REQUEST, deleteUser);
     yield takeLatest(UPDATE_USER_REQUEST, UpdateUser);

@@ -35,7 +35,7 @@ function* addCategory(action) {
         const response = yield axiosInstance.post('add-category', action.payload)
         yield put({
             type: ADD_CATEGORY_SUCCESS,
-            message: 'product successfully created',
+            message: 'Product is not created',
             addedCategory: response.data
         });
     } catch (e) {
@@ -51,7 +51,7 @@ function* getProductCategories() {
         const response = yield axiosInstance.get('get-product-categories')
         yield put({
             type: GET_PRODUCT_CATEGORIES_SUCCESS,
-            message: 'product successfully created',
+            message: 'Can not find product categories',
             getCategories: response.data
         });
     } catch (e) {
@@ -95,12 +95,12 @@ function* addSize(action) {
     }
 }
 
-function* getProductSizes(action) {
+function* getProductSizes() {
     try {
         const response = yield axiosInstance.get('get-product-sizes')
         yield put({
             type: GET_PRODUCT_SIZES_SUCCESS,
-            message: 'product successfully created',
+            message: 'Cant find product sizes',
             getSizes: response.data
         });
     } catch (e) {
@@ -144,12 +144,12 @@ function* addSubCategory(action) {
     }
 }
 
-function* getProductSubCategories(action) {
+function* getProductSubCategories() {
     try {
         const response = yield axiosInstance.get('get-product-subcategories')
         yield put({
             type: GET_PRODUCT_SUBCATEGORIES_SUCCESS,
-            message: 'product successfully created',
+            message: 'cant find product subcategories',
             getSubCategories: response.data
         });
     } catch (e) {
@@ -177,7 +177,7 @@ function* removeSubCategory(action) {
 }
 
 
-export default function* () {
+export default function* adminProductParameters() {
     yield takeLatest(ADD_CATEGORY_REQUEST, addCategory);
     yield takeLatest(GET_PRODUCT_CATEGORIES_REQUEST, getProductCategories);
     yield takeLatest(REMOVE_CATEGORY_REQUEST, removeCategory);
