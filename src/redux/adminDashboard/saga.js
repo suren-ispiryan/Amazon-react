@@ -60,7 +60,7 @@ function* updateUsersProduct(action) {
     }
 }
 
-export default function* () {
+export default function* adminDashboard() {
     yield takeLatest(GET_ALL_USER_PRODUCTS_REQUEST, getAllUsersProducts);
     yield takeLatest(DELETE_USER_PRODUCT_REQUEST, deleteUsersProduct);
     yield takeLatest(UPDATE_USER_PRODUCT_REQUEST, updateUsersProduct);

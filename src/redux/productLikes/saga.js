@@ -60,7 +60,7 @@ function* unlikeProduct(action) {
     }
 }
 
-export default function* () {
+export default function* productLikes() {
     yield takeLatest(LIKE_PRODUCTS_REQUEST, likeProduct);
     yield takeLatest(UNLIKE_PRODUCTS_REQUEST, unlikeProduct);
     yield takeLatest(GET_PRODUCTS_LIKE_REQUEST, getProductLikes);

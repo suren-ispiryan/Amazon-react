@@ -22,6 +22,6 @@ function* getGuestSavedForLaterProducts(action) {
     }
 }
 
-export default function* () {
+export default function* getGuestSavedForLater() {
     yield takeLatest(GET_SAVEDFORLATER_REQUEST, getGuestSavedForLaterProducts);
 }

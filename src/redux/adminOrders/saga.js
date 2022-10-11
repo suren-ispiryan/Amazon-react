@@ -22,6 +22,6 @@ function* getAllOrderedProducts() {
     }
 }
 
-export default function* () {
+export default function* getAllOrdered() {
     yield takeLatest(GET_ALL_ORDERED_PRODUCTS_REQUEST, getAllOrderedProducts);
 }

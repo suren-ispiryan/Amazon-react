@@ -198,7 +198,7 @@ const AllProducts = () => {
                                                     ?
                                                     <img
                                                         className="img-fluid product-image"
-                                                        alt="product-images"
+                                                        alt="product images"
                                                         src={`http://localhost:8000/assets/product_images/${product.picture}`}
                                                     />
                                                     :
