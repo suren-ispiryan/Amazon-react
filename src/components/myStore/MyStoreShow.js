@@ -148,7 +148,6 @@ const MyStoreShow = ({allProducts, setShow, setUpdatedProduct, message}) => {
                                         </button>
                                     </div>
                                 </div>
-                                <hr/>
 
                                 <div className="row">
                                     <div className="col-md-12 auth-user-posts-action-btn">
@@ -159,7 +158,7 @@ const MyStoreShow = ({allProducts, setShow, setUpdatedProduct, message}) => {
                                                         Bought: {item.product_count} pcs
                                                     </h5>)
                                             })
-                                        })}
+                                        }
                                     </div>
                                 </div>
                             </div>
