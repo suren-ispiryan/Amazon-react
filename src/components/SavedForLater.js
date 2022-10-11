@@ -11,7 +11,7 @@ import { Link } from 'react-router-dom';
 import NoImage from "../assets/No-Image.jpg";
 
 const SavedForLater = () => {
-    const {savedForLater, loading} = useSelector((state) => state.savedForLater)
+    const {savedForLater, loading, message} = useSelector((state) => state.savedForLater)
     const [allSavedForLaterProducts, setAllSavedForLaterProducts] = useState([])
     const dispatch = useDispatch();
 
@@ -20,13 +20,13 @@ const SavedForLater = () => {
         dispatch({
             type: GET_PRODUCTS_FOR_LATER_REQUEST
         })
-    }, []);
+    }, [dispatch]);
 
     useEffect(() => {
         if (!loading) {
             setAllSavedForLaterProducts(savedForLater)
         }
-    }, [loading])
+    }, [loading, savedForLater])
 
     //remove product from save for later
     const removeProduct = (event, id) => {
@@ -46,8 +46,8 @@ const SavedForLater = () => {
                     <h4 className="my-4">Favorite products</h4>
 
                     <div className="row my-store-parent-row">
-                        {
-                            allSavedForLaterProducts.map((product) => {
+                        {allSavedForLaterProducts.length ?
+                            (allSavedForLaterProducts.map((product) => {
                                 return (
                                     <div className="col-md-4 col-xl-2 users-products" key={uuid()}>
                                         <div className="row">
@@ -129,6 +129,9 @@ const SavedForLater = () => {
                                     </div>
                                 )
                             })
+                            ) : (
+                                <h4 className="text-danger mt-5">{message}</h4>
+                            )
                         }
                     </div>
                 </>)

@@ -12,8 +12,7 @@ import {
     GET_SEARCH_FOR_PRODUCT_FAILURE
 } from './actions'
 
-//GET ALL
-function* getAllProducts(action) {
+function* getAllProducts() {
     try {
         const response = yield axiosInstance.get('/get-all-user-products')
         yield put({
@@ -29,24 +28,22 @@ function* getAllProducts(action) {
     }
 }
 
-//GET DETAILS
 function* getProductDetails(action) {
     try {
-        const response = yield axiosInstance.get('/get-product-details/'+action.payload)
+        const response = yield axiosInstance.get(`/get-product-details/${action.payload}`)
         yield put({
             type: GET_PRODUCTDETAILS_SUCCESS,
-            message: 'Success fetching data',
+            detailsMessage: 'Can not find product details',
             product: response.data
         });
     } catch (e) {
         yield put({
             type: GET_PRODUCTDETAILS_FAILURE,
-            message: 'Something went wrong'
+            detailsMessage: 'Something went wrong'
         });
     }
 }
 
-//GET SEARCHED
 function* getSearchForProduct(action) {
     try {
         const response = yield axiosInstance.post('/get-searched-product', action.payload)
@@ -64,7 +61,7 @@ function* getSearchForProduct(action) {
     }
 }
 
-export default function* () {
+export default function* allProducts() {
     yield takeLatest(GET_ALLPRODUCTS_REQUEST, getAllProducts);
     yield takeLatest(GET_PRODUCTDETAILS_REQUEST, getProductDetails);
     yield takeLatest(GET_SEARCH_FOR_PRODUCT_REQUEST, getSearchForProduct);

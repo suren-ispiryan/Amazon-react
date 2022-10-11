@@ -11,7 +11,6 @@ const initialStata = {
 }
 const loginReducer = (state = initialStata, action) => {
     switch (action.type) {
-    //LOGIN
         case LOGIN_USER_REQUEST:
             return {
                 ...state,
@@ -32,7 +31,6 @@ const loginReducer = (state = initialStata, action) => {
                 loading: false,
                 message: action.message
             }
-    // DEFAULT
         default:
             return state
     }

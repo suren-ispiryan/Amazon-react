@@ -17,7 +17,6 @@ const initialState = {
 }
 const adminUsersReducer = (state = initialState, action) => {
     switch (action.type) {
-    //GET USERS
         case GET_ALL_USERS_REQUEST:
             return {
                 ...state,
@@ -38,7 +37,6 @@ const adminUsersReducer = (state = initialState, action) => {
                 loading: false,
                 message: action.message
             }
-        //DELETE USER
         case DELETE_USER_REQUEST:
             return {
                 ...state,
@@ -60,7 +58,6 @@ const adminUsersReducer = (state = initialState, action) => {
                 loading: false,
                 message: action.message
             }
-        //UPDATE USER
         case UPDATE_USER_REQUEST:
             return {
                 ...state,
@@ -89,7 +86,6 @@ const adminUsersReducer = (state = initialState, action) => {
                 loading: false,
                 message: action.message
             }
-    // DEFAULT
         default:
             return state
     }

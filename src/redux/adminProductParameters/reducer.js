@@ -39,7 +39,6 @@ const initialStata = {
 
 const adminProductParametersReducer = (state = initialStata, action) => {
     switch (action.type) {
-    //CREATE CATEGORY
         case ADD_CATEGORY_REQUEST:
             return {
                 ...state,
@@ -60,7 +59,6 @@ const adminProductParametersReducer = (state = initialStata, action) => {
                 loading: false,
                 message: action.message
             }
-    // GET CATEGORY
         case GET_PRODUCT_CATEGORIES_REQUEST:
             return {
                ...state,
@@ -81,7 +79,6 @@ const adminProductParametersReducer = (state = initialStata, action) => {
                 loading: false,
                 message: action.message
             }
-    // REMOVE CATEGORY
         case REMOVE_CATEGORY_REQUEST:
             return {
                 ...state,
@@ -104,8 +101,6 @@ const adminProductParametersReducer = (state = initialStata, action) => {
                 loading: false,
                 message: action.message
             }
-
-    //CREATE SIZE
         case ADD_SIZE_REQUEST:
             return {
                 ...state,
@@ -126,7 +121,6 @@ const adminProductParametersReducer = (state = initialStata, action) => {
                 loading: false,
                 message: action.message
             }
-    // GET SIZE
         case GET_PRODUCT_SIZES_REQUEST:
             return {
                 ...state,
@@ -147,7 +141,6 @@ const adminProductParametersReducer = (state = initialStata, action) => {
                 loading: false,
                 message: action.message
             }
-    // REMOVE SIZE
         case REMOVE_SIZE_REQUEST:
             return {
                 ...state,
@@ -170,7 +163,6 @@ const adminProductParametersReducer = (state = initialStata, action) => {
                 loading: false,
                 message: action.message
             }
-    //CREATE SUBCATEGORY
         case ADD_SUBCATEGORY_REQUEST:
             return {
                 ...state,
@@ -191,7 +183,6 @@ const adminProductParametersReducer = (state = initialStata, action) => {
                 loadingSub: false,
                 message: action.message
             }
-    // GET SUBCATEGORY
         case GET_PRODUCT_SUBCATEGORIES_REQUEST:
             return {
                 ...state,
@@ -212,7 +203,6 @@ const adminProductParametersReducer = (state = initialStata, action) => {
                 loadingSub: false,
                 message: action.message
             }
-    // REMOVE SUBCATEGORIES
         case REMOVE_SUBCATEGORY_REQUEST:
             return {
                 ...state,
@@ -236,7 +226,6 @@ const adminProductParametersReducer = (state = initialStata, action) => {
                 message: action.message
             }
         default:
-            // DEFAULT
             return state
     }
 }

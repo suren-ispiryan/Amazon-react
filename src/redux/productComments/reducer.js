@@ -27,7 +27,6 @@ const initialStata = {
 }
 const productCommentsReducer = (state = initialStata, action) => {
     switch (action.type) {
-    //CREATE
         case CREATE_PRODUCT_COMMENT_REQUEST:
             return {
                 ...state,
@@ -48,7 +47,6 @@ const productCommentsReducer = (state = initialStata, action) => {
                 loadingComents: false,
                 message: action.message
             }
-    // GET
         case GET_PRODUCTS_COMMENT_REQUEST:
             return {
                ...state,
@@ -70,7 +68,6 @@ const productCommentsReducer = (state = initialStata, action) => {
                 loadingComents: false,
                 message: action.message
             }
-    // DELETE
         case DELETE_PRODUCTS_COMMENT_REQUEST:
             return {
                 ...state,
@@ -92,7 +89,6 @@ const productCommentsReducer = (state = initialStata, action) => {
                 loadingComents: false,
                 message: action.message
             }
-    // LIKE
         case LIKE_PRODUCTS_COMMENT_REQUEST:
             return {
                 ...state,
@@ -120,7 +116,6 @@ const productCommentsReducer = (state = initialStata, action) => {
                 loadingCommentLikes: false,
                 message: action.message
             }
-        // DISLIKE
         case DISLIKE_PRODUCTS_COMMENT_REQUEST:
             return {
                 ...state,
@@ -146,7 +141,6 @@ const productCommentsReducer = (state = initialStata, action) => {
                 loadingCommentLikes: false,
                 message: action.message
             }
-    // DEFAULT
         default:
             return state
     }

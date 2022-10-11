@@ -21,13 +21,12 @@ import {
     GET_ORDERS_FAILURE
 } from './actions'
 
-//ADD
 function* addToCart(action) {
     try {
-        const response = yield axiosInstance.get('/add-to-cart/'+action.payload+'/'+action.productCount )
+        const response = yield axiosInstance.get(`/add-to-cart/${action.payload}/${action.productCount}`)
         yield put({
             type: ADD_TO_CART_SUCCESS,
-            message: 'product successfully created',
+            message: 'Can not add product',
             addedToCart: response.data
         });
     } catch (e) {
@@ -38,13 +37,12 @@ function* addToCart(action) {
     }
 }
 
-//GET ONCART
-function* getFromCart(action) {
+function* getFromCart() {
     try {
         const response = yield axiosInstance.get('/get-from-cart')
         yield put({
             type: GET_FROM_CART_SUCCESS,
-            message: 'product successfully created',
+            message: 'Can not find products',
             addedToCart: response.data
         });
     } catch (e) {
@@ -55,13 +53,12 @@ function* getFromCart(action) {
     }
 }
 
-//REMOVE
 function* removeFromCart(action) {
     try {
-        const response = yield axiosInstance.get('/remove-from-cart/'+action.payload)
+        const response = yield axiosInstance.get(`/remove-from-cart/${action.payload}`)
         yield put({
             type: REMOVE_FROM_CART_SUCCESS,
-            message: 'product successfully created',
+            message: 'Can not find products on cart',
             addedToCart: response.data
         });
     } catch (e) {
@@ -72,7 +69,6 @@ function* removeFromCart(action) {
     }
 }
 
-//GET GUEST
 function* getGuestProductsFromCart (action) {
     try {
         const response = yield axiosInstance.post('/get-guest-from-cart', action.payload)
@@ -89,8 +85,7 @@ function* getGuestProductsFromCart (action) {
     }
 }
 
-//BUY
-function* buyProductsFromCart (action) {
+function* buyProductsFromCart () {
     try {
         const response = yield axiosInstance.get('/buy-products-from-cart')
         yield put({
@@ -106,8 +101,7 @@ function* buyProductsFromCart (action) {
     }
 }
 
-//GET ORDERED
-function* getOrders (action) {
+function* getOrders () {
     try {
         const response = yield axiosInstance.get('/get-ordered')
         yield put({
@@ -123,7 +117,7 @@ function* getOrders (action) {
     }
 }
 
-export default function* () {
+export default function* userCart() {
     yield takeLatest(ADD_TO_CART_REQUEST, addToCart);
     yield takeLatest(GET_FROM_CART_REQUEST, getFromCart);
     yield takeLatest(REMOVE_FROM_CART_REQUEST, removeFromCart);

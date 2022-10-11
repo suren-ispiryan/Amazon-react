@@ -14,7 +14,6 @@ const MyStoreCreate = ({ productImage, initialValues }) => {
     const dispatch = useDispatch();
     const [productAttributes, setProductAttributes] = useState({});
     const [formErrors, setFormErrors ] = useState({});
-    const [isSubmited, setIsSubmited ] = useState(false);
     const { categories, loading } = useSelector((state) => state.categories)
     const [getCategories, setGetCategories] = useState([])
     const [getProductSizes, setGetProductSizes] = useState([]);
@@ -26,25 +25,25 @@ const MyStoreCreate = ({ productImage, initialValues }) => {
         dispatch({
             type: GET_PRODUCT_CATEGORIES_REQUEST
         })
-    }, [])
+    }, [dispatch])
 
     useEffect(() => {
         if (!loading) {
             setGetCategories(categories)
         }
-    }, [loading])
+    }, [loading, categories])
     //show sizes
     useEffect(() => {
         dispatch({
             type: GET_PRODUCT_SIZES_REQUEST
         })
-    }, [])
+    }, [dispatch])
 
     useEffect(() => {
         if (!loading) {
             setGetProductSizes(sizes)
         }
-    }, [sizes])
+    }, [sizes, loading])
     //create product
     const handleChange = ({target}) => {
         setProductAttributes({
@@ -72,7 +71,6 @@ const MyStoreCreate = ({ productImage, initialValues }) => {
 
     const createProduct = () => {
         setFormErrors(validate(productAttributes));
-        setIsSubmited(true);
         if (Object.keys(formErrors).length === 0) {
             const data = new FormData();
             data.append('name', productAttributes.name);

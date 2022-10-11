@@ -15,7 +15,6 @@ import {
     DEFAULT_ADDRESS_FAILURE
 } from './actions'
 
-//CREATE
 function* createAddress(action) {
     try {
         const response = yield axiosInstance.post('/create-address', action.payload)
@@ -32,13 +31,12 @@ function* createAddress(action) {
     }
 }
 
-//GET
-function* getAddress(action) {
+function* getAddress() {
     try {
         const response = yield axiosInstance.get('/get-user-data')
         yield put({
             type: GET_ADDRESS_SUCCESS,
-            message: 'Success fetching data',
+            message: 'Can not find address',
             address: response.data
         });
     } catch (e) {
@@ -49,13 +47,12 @@ function* getAddress(action) {
     }
 }
 
-//DELETE
 function* deleteAddress(action) {
     try {
-        const response = yield axiosInstance.delete('/delete-address/'+action.payload)
+        const response = yield axiosInstance.delete(`/delete-address/${action.payload}`)
         yield put({
             type: DELETE_ADDRESS_SUCCESS,
-            message: 'Success fetching data',
+            message: 'Can not find address',
             address: response.data
         });
     } catch (e) {
@@ -66,10 +63,9 @@ function* deleteAddress(action) {
     }
 }
 
-//MAKE DEFAULT
 function* defaultAddress(action) {
     try {
-        const response = yield axiosInstance.get('/make-address-default/'+action.payload)
+        const response = yield axiosInstance.get(`/make-address-default/${action.payload}`)
         yield put({
             type: DEFAULT_ADDRESS_SUCCESS,
             message: 'Success fetching data',
@@ -83,7 +79,7 @@ function* defaultAddress(action) {
     }
 }
 
-export default function* () {
+export default function* userProfile() {
     yield takeLatest(CREATE_ADDRESS_REQUEST, createAddress);
     yield takeLatest(GET_ADDRESS_REQUEST, getAddress);
     yield takeLatest(DELETE_ADDRESS_REQUEST, deleteAddress);

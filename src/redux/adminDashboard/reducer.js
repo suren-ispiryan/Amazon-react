@@ -17,7 +17,6 @@ const initialState = {
 }
 const adminDashboardReducer = (state = initialState, action) => {
     switch (action.type) {
-    //GET
         case GET_ALL_USER_PRODUCTS_REQUEST:
             return {
                 ...state,
@@ -38,7 +37,6 @@ const adminDashboardReducer = (state = initialState, action) => {
                 loading: false,
                 message: action.message
             }
-    //DELETE
         case DELETE_USER_PRODUCT_REQUEST:
             return {
                 ...state,
@@ -60,7 +58,6 @@ const adminDashboardReducer = (state = initialState, action) => {
                 loading: false,
                 message: action.message
             }
-    //ADMIN UPDATE
         case UPDATE_USER_PRODUCT_REQUEST:
             return {
                 ...state,
@@ -89,7 +86,6 @@ const adminDashboardReducer = (state = initialState, action) => {
                 loading: false,
                 message: action.message
             }
-    // DEFAULT
         default:
             return state
     }

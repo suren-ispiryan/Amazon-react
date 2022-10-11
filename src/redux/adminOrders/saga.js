@@ -6,8 +6,7 @@ import {
     GET_ALL_ORDERED_PRODUCTS_FAILURE
 } from './actions'
 
-//ADMIN GET
-function* getAllOrderedProducts(action) {
+function* getAllOrderedProducts() {
     try {
         const response = yield axiosInstance.get('/get-all-ordered-products')
         yield put({

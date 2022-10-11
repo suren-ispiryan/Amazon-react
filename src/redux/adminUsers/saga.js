@@ -12,8 +12,7 @@ import {
     UPDATE_USER_FAILURE
 } from './actions'
 
-// ADMIN GET USERS
-function* getAllUsers(action) {
+function* getAllUsers() {
     try {
         const response = yield axiosInstance.get('/get-all-users')
         yield put({
@@ -29,10 +28,9 @@ function* getAllUsers(action) {
     }
 }
 
-// ADMIN DELETE USER
 function* deleteUser (action) {
     try {
-        const response = yield axiosInstance.get('/delete-users/'+action.payload)
+        const response = yield axiosInstance.get(`/delete-users/${action.payload}`)
         yield put({
             type: DELETE_USER_SUCCESS,
             message: 'Success fetching data',
@@ -46,7 +44,6 @@ function* deleteUser (action) {
     }
 }
 
-// ADMIN UPDATE USER
 function* UpdateUser(action) {
     try {
         const response = yield axiosInstance.post('/update-user', action.payload)

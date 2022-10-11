@@ -6,7 +6,6 @@ import {
     GET_SAVEDFORLATER_FAILURE
 } from './actions'
 
-//GET
 function* getGuestSavedForLaterProducts(action) {
     try {
         const response = yield axiosInstance.post('get-guest-saved-for-later-products', action.payload)

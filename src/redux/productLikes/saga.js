@@ -12,10 +12,9 @@ import {
     GET_PRODUCTS_LIKE_FAILURE
 } from './actions'
 
-//GET
 function* getProductLikes(action) {
     try {
-        const response = yield axiosInstance.get('/get-products-likes/'+action.payload)
+        const response = yield axiosInstance.get(`/get-products-likes/${action.payload}`)
         yield put({
             type: GET_PRODUCTS_LIKE_SUCCESS,
             message: 'Success fetching data',
@@ -29,10 +28,9 @@ function* getProductLikes(action) {
     }
 }
 
-//LIKE
 function* likeProduct(action) {
     try {
-        const response = yield axiosInstance.get('/like-products/'+action.payload)
+        const response = yield axiosInstance.get(`/like-products/${action.payload}`)
         yield put({
             type: LIKE_PRODUCTS_SUCCESS,
             message: 'Success fetching data',
@@ -46,10 +44,9 @@ function* likeProduct(action) {
     }
 }
 
-//DISLIKE
 function* unlikeProduct(action) {
     try {
-        const response = yield axiosInstance.get('/unlike-products/'+action.payload)
+        const response = yield axiosInstance.get(`/unlike-products/${action.payload}`)
         yield put({
             type: UNLIKE_PRODUCTS_SUCCESS,
             message: 'Success fetching data',

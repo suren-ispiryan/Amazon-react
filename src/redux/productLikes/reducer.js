@@ -19,7 +19,6 @@ const initialStata = {
 }
 const productLikesReducer = (state = initialStata, action) => {
     switch (action.type) {
-        // GET
         case GET_PRODUCTS_LIKE_REQUEST:
             return {
                 ...state,
@@ -40,7 +39,6 @@ const productLikesReducer = (state = initialStata, action) => {
                 loadingLikes: false,
                 message: action.message
             }
-        // LIKE
         case LIKE_PRODUCTS_REQUEST:
             return {
                 ...state,
@@ -63,13 +61,12 @@ const productLikesReducer = (state = initialStata, action) => {
                 loadingLikes: false,
                 message: action.message
             }
-        // DISLIKE
         case UNLIKE_PRODUCTS_REQUEST:
             return {
                 ...state,
                 loadingLikes: true,
                 message: '',
-                productLikes: [...state.productLikes]
+                // productLikes: [...state.productLikes]
             }
         case UNLIKE_PRODUCTS_SUCCESS:
             const filteredProductLikesCopy = cloneDeep(state.productLikes)
@@ -86,9 +83,9 @@ const productLikesReducer = (state = initialStata, action) => {
                 loadingLikes: false,
                 message: action.message
             }
-    // DEFAULT
         default:
             return state
     }
 }
+
 export default productLikesReducer

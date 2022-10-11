@@ -7,7 +7,6 @@ import {
 } from './actions'
 
 
-//LOGIN
 function* login(action) {
     try {
         const response = yield axiosInstance.post('/login', action.payload)

@@ -17,12 +17,11 @@ import {
     DISLIKE_PRODUCTS_COMMENT_REQUEST
 } from "../redux/productComments/actions";
 import Like from './Like';
-import Dislike from './Dislike';
 import {GET_PRODUCTS_LIKE_REQUEST, LIKE_PRODUCTS_REQUEST, UNLIKE_PRODUCTS_REQUEST} from "../redux/productLikes/actions";
 
 const ProductDetails = () => {
     let { id } = useParams();
-    const { productDetail, loading } = useSelector((state) => state.allProducts)
+    const { productDetail, loading, detailsMessage } = useSelector((state) => state.allProducts)
     const dispatch = useDispatch();
     const [show, setShow] = useState(false);
     const [productDetails, setProductDetails] = useState([]);
@@ -30,10 +29,10 @@ const ProductDetails = () => {
     const [stock, setStock] = useState();
     const [productCount, setProductCount] = useState(null);
     //product comment
-    const { productLikes, loadingLikes } = useSelector((state) => state.productLikes)
+    const { productLikes } = useSelector((state) => state.productLikes)
     //comment
     const [productComment, setProductComment] = useState({comment: ''});
-    const {productComments, authUserId, loadingComents} = useSelector((state) => state.productComments)
+    const {productComments, authUserId, loadingComents, message} = useSelector((state) => state.productComments)
     const [authId, setAuthId] = useState(null)
 
 // product details
@@ -58,13 +57,13 @@ const ProductDetails = () => {
             type: GET_PRODUCTS_LIKE_REQUEST,
             payload: id
         })
-    }, []);
+    }, [dispatch, id]);
 
     useEffect(() => {
         if (!loading) {
             setProductDetails(productDetail)
         }
-    }, [loading])
+    }, [loading, productDetail])
 
     const addToCart = () => {
         if (localStorage.getItem('token')) {
@@ -117,13 +116,13 @@ const ProductDetails = () => {
             type: GET_PRODUCTS_COMMENT_REQUEST,
             payload: id
         })
-    }, []);
+    }, [dispatch, id]);
 
     useEffect(() => {
         if (!loadingComents) {
             setAuthId(authUserId)
         }
-    }, [loadingComents])
+    }, [loadingComents, authUserId])
     // add comments
     const handleChangeComment = (field, value) => {
         setProductComment(prevState => ({
@@ -179,8 +178,8 @@ const ProductDetails = () => {
                     (<>
 {/*product details*/}
                         <h3 className="mt-3">Product Number {id}</h3>
-                        {
-                            productDetails.map(productDetailItem =>
+                        {productDetails.length ?
+                            (productDetails.map(productDetailItem =>
                                 <div className="container" key={ uuid()}>
                                     <div className="row py-2">
                                         <div className="col-md-6">
@@ -203,7 +202,7 @@ const ProductDetails = () => {
                                             </div>
 
                                             <div className="product-owner-columns">Owner:
-                                                 <b> {productDetailItem.user.name} {productDetailItem.user.surname}</b>
+                                                 <b> {productDetailItem.user.name} {productDetailItem.user.surname} </b>
                                             </div>
                                         </div>
 
@@ -257,7 +256,9 @@ const ProductDetails = () => {
                                             Add to cart
                                         </button>
                                     </div>
-                                </div>
+                                </div>)
+                            ) : (
+                                <h4 className="text-danger mt-5">{detailsMessage}</h4>
                             )
                         }
 {/*comments*/}
@@ -338,7 +339,7 @@ const ProductDetails = () => {
                                             </p>
                                             {item.user.id === authId ?
                                                 <button
-                                                    className='mx-2 btn btn-secondary delete-comment'
+                                                    className='mx-2 btn btn-danger delete-comment'
                                                     onClick={event => deleteComment(event, item.id)}
                                                 >
                                                     Delete comment
@@ -351,11 +352,11 @@ const ProductDetails = () => {
                                         <div/>
                                     }
                                     <hr />
-                                </div>
-                            ))
-                            : (
-                                <div>No comments</div>
-                            )}
+                                </div>)
+                                ) : (
+                                        <h4 className="text-danger my-5">{message}</h4>
+                                )
+                            }
                         </div>
 
                         {/* add to cart MODAL */}

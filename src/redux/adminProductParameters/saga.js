@@ -30,7 +30,6 @@ import {
     REMOVE_SUBCATEGORY_FAILURE
 } from './actions'
 
-//ADD CATEGORY
 function* addCategory(action) {
     try {
         const response = yield axiosInstance.post('add-category', action.payload)
@@ -47,8 +46,7 @@ function* addCategory(action) {
     }
 }
 
-//GET PRODUCT CATEGORIES
-function* getProductCategories(action) {
+function* getProductCategories() {
     try {
         const response = yield axiosInstance.get('get-product-categories')
         yield put({
@@ -64,10 +62,9 @@ function* getProductCategories(action) {
     }
 }
 
-//REMOVE CATEGORY
 function* removeCategory(action) {
     try {
-        const response = yield axiosInstance.get('/remove-category/'+action.payload)
+        const response = yield axiosInstance.get(`/remove-category/${action.payload}`)
         yield put({
             type: REMOVE_CATEGORY_SUCCESS,
             message: 'product successfully created',
@@ -82,7 +79,6 @@ function* removeCategory(action) {
 }
 
 
-//ADD SIZE
 function* addSize(action) {
     try {
         const response = yield axiosInstance.post('add-size', action.payload)
@@ -99,7 +95,6 @@ function* addSize(action) {
     }
 }
 
-//GET PRODUCT SIZES
 function* getProductSizes(action) {
     try {
         const response = yield axiosInstance.get('get-product-sizes')
@@ -116,10 +111,9 @@ function* getProductSizes(action) {
     }
 }
 
-//REMOVE SIZES
 function* removeSizes(action) {
     try {
-        const response = yield axiosInstance.get('/remove-size/'+action.payload)
+        const response = yield axiosInstance.get(`/remove-size/${action.payload}`)
         yield put({
             type: REMOVE_SIZE_SUCCESS,
             message: 'product successfully created',
@@ -134,7 +128,6 @@ function* removeSizes(action) {
 }
 
 
-//ADD SUBCATEGORY
 function* addSubCategory(action) {
     try {
         const response = yield axiosInstance.post('add-subcategory', action.payload)
@@ -151,7 +144,6 @@ function* addSubCategory(action) {
     }
 }
 
-//GET SUBCATEGORIES
 function* getProductSubCategories(action) {
     try {
         const response = yield axiosInstance.get('get-product-subcategories')
@@ -168,10 +160,9 @@ function* getProductSubCategories(action) {
     }
 }
 
-//REMOVE SUBCATEGORY
 function* removeSubCategory(action) {
     try {
-        const response = yield axiosInstance.get('/remove-subcategory/'+action.payload)
+        const response = yield axiosInstance.get(`/remove-subcategory/${action.payload}`)
         yield put({
             type: REMOVE_SUBCATEGORY_SUCCESS,
             message: 'product successfully created',

@@ -18,7 +18,7 @@ const initialValues = {
 }
 
 const MyStore = () => {
-    const {products, loading} = useSelector((state) => state.products)
+    const {products, loading, message} = useSelector((state) => state.products)
     const dispatch = useDispatch();
     const productImage = useRef('');
     const [allProducts, setAllProducts] = useState([]);
@@ -30,13 +30,13 @@ const MyStore = () => {
         dispatch({
             type: GET_PRODUCTS_REQUEST
         })
-    }, []);
+    }, [dispatch]);
 
     useEffect(() => {
         if (!loading) {
             setAllProducts(products)
         }
-    }, [loading])
+    }, [loading, products])
 
     return (
         <div className="my-store container-fluid">
@@ -47,6 +47,7 @@ const MyStore = () => {
                     allProducts={allProducts}
                     setShow={setShow}
                     setUpdatedProduct={setUpdatedProduct}
+                    message={message}
                 />
 
                 <MyStoreCreate

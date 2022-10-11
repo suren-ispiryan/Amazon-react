@@ -12,8 +12,7 @@ import {
     UPDATE_USER_PRODUCT_FAILURE
 } from './actions'
 
-//ADMIN GET
-function* getAllUsersProducts(action) {
+function* getAllUsersProducts() {
     try {
         const response = yield axiosInstance.get('/get-all-user-data')
         yield put({
@@ -29,10 +28,9 @@ function* getAllUsersProducts(action) {
     }
 }
 
-//ADMIN DELETE
 function* deleteUsersProduct(action) {
     try {
-        const response = yield axiosInstance.delete('/delete-users-product/'+action.payload)
+        const response = yield axiosInstance.delete(`/delete-users-product/${action.payload}`)
         yield put({
             type: DELETE_USER_PRODUCT_SUCCESS,
             message: 'Success fetching data',
@@ -46,7 +44,6 @@ function* deleteUsersProduct(action) {
     }
 }
 
-//ADMIN UPDATE
 function* updateUsersProduct(action) {
     try {
         const response = yield axiosInstance.post('/update-user-product', action.payload)

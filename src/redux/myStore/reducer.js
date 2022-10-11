@@ -30,7 +30,6 @@ const initialStata = {
 }
 const userReducer = (state = initialStata, action) => {
     switch (action.type) {
-    //CREATE
         case CREATE_PRODUCT_REQUEST:
             return {
                 ...state,
@@ -51,7 +50,6 @@ const userReducer = (state = initialStata, action) => {
                 loading: false,
                 message: action.message
             }
-    // GET
         case GET_PRODUCTS_REQUEST:
             return {
                ...state,
@@ -72,7 +70,6 @@ const userReducer = (state = initialStata, action) => {
                 loading: false,
                 message: action.message
             }
-    // DELETE
         case DELETE_PRODUCTS_REQUEST:
             return {
                 ...state,
@@ -94,7 +91,6 @@ const userReducer = (state = initialStata, action) => {
                 loading: false,
                 message: action.message
             }
-    // UPDATE
         case UPDATE_PRODUCT_REQUEST:
             return {
                 ...state,
@@ -107,8 +103,10 @@ const userReducer = (state = initialStata, action) => {
             state.products.map(i => {
                 if(i.id !== parseInt(action.products.id)) {
                     newProducts.push(i)
+                    return newProducts
                 } else {
                     newProducts.push(action.products)
+                    return newProducts
                 }
             })
             return {
@@ -123,7 +121,6 @@ const userReducer = (state = initialStata, action) => {
                 loading: false,
                 message: action.message
             }
-    // UPDATE PUBLISHED
         case PUBLISH_PRODUCT_REQUEST:
             return {
                 ...state,
@@ -136,8 +133,10 @@ const userReducer = (state = initialStata, action) => {
             state.products.map(i => {
                 if(i.id !== parseInt(action.products.id)) {
                     newProducts1.push(i)
+                    return newProducts1
                 } else {
                     newProducts1.push(action.products)
+                    return newProducts1
                 }
             })
             return {
@@ -152,7 +151,6 @@ const userReducer = (state = initialStata, action) => {
                 loading: false,
                 message: action.message
             }
-    // DELETE Product Image
         case DELETE_PRODUCT_IMAGE_REQUEST:
             return {
                 ...state,
@@ -165,8 +163,10 @@ const userReducer = (state = initialStata, action) => {
             state.products.map(i => {
                 if(i.id !== parseInt(action.products.id)) {
                     newProducts2.push(i)
+                    return newProducts2
                 } else {
                     newProducts2.push(action.products)
+                    return newProducts2
                 }
             })
             return {
@@ -181,7 +181,6 @@ const userReducer = (state = initialStata, action) => {
                 loading: false,
                 message: action.message
             }
-    // GETSUBCATEGORIES
         case GET_SUBCATEGORIES_REQUEST:
             return {
                 ...state,
@@ -202,7 +201,6 @@ const userReducer = (state = initialStata, action) => {
                 loading: false,
                 message: action.message
             }
-    // DEFAULT
         default:
             return state
     }

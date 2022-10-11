@@ -20,7 +20,6 @@ const initialState = {
 }
 const profileReducer = (state = initialState, action) => {
     switch (action.type) {
-    //CREATE
         case CREATE_ADDRESS_REQUEST:
             return {
                 ...state,
@@ -41,7 +40,6 @@ const profileReducer = (state = initialState, action) => {
                 loading: false,
                 message: action.message
             }
-    //GET
         case GET_ADDRESS_REQUEST:
             return {
                 ...state,
@@ -62,7 +60,6 @@ const profileReducer = (state = initialState, action) => {
                 loading: false,
                 message: action.message
             }
-    //DELETE
         case DELETE_ADDRESS_REQUEST:
             return {
                 ...state,
@@ -84,7 +81,6 @@ const profileReducer = (state = initialState, action) => {
                 loading: false,
                 message: action.message
             }
-    //MAKE DEFAULT
         case DEFAULT_ADDRESS_REQUEST:
             return {
                 ...state,
@@ -98,8 +94,10 @@ const profileReducer = (state = initialState, action) => {
                 if(i.id !== parseInt(action.address.id)) {
                     i.default = 0
                     newProducts.push(i)
+                    return newProducts
                 } else {
                     newProducts.push(action.address)
+                    return newProducts
                 }
             })
             return {
@@ -114,7 +112,6 @@ const profileReducer = (state = initialState, action) => {
                 loading: false,
                 message: action.message
             }
-    // DEFAULT
         default:
             return state
     }

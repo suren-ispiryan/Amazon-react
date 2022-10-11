@@ -24,7 +24,6 @@ import {
     GET_SUBCATEGORIES_FAILURE
 } from './actions'
 
-//CREATE
 function* createProduct(action) {
     try {
         const response = yield axiosInstance.post('/create-product', action.payload)
@@ -41,27 +40,25 @@ function* createProduct(action) {
     }
 }
 
-//GET
-function* getProducts(action) {
+function* getProducts() {
     try {
         const response = yield axiosInstance.get('/get-auth-user-products')
         yield put({
             type: GET_PRODUCTS_SUCCESS,
-            message: 'Success fetching data',
+            message: 'Can not find products',
             products: response.data
         });
     } catch (e) {
         yield put({
             type: GET_PRODUCTS_FAILURE,
-            message: 'Something went wrong'
+            message: 'Error redux getting product'
         });
     }
 }
 
-//DELETE
 function* deleteProducts(action) {
     try {
-        const response = yield axiosInstance.delete('/delete-auth-user-products/'+action.payload)
+        const response = yield axiosInstance.delete(`/delete-auth-user-products/${action.payload}`)
         yield put({
             type: DELETE_PRODUCTS_SUCCESS,
             message: 'Product successfully deleted',
@@ -75,10 +72,9 @@ function* deleteProducts(action) {
     }
 }
 
-//DELETE PRODUCT IMAGE
 function* deleteProductImage(action) {
     try {
-        const response = yield axiosInstance.delete('/delete-product-image/'+action.payload)
+        const response = yield axiosInstance.delete(`/delete-product-image/${action.payload}`)
         yield put({
             type: DELETE_PRODUCT_IMAGE_SUCCESS,
             message: 'Product successfully deleted',
@@ -92,7 +88,6 @@ function* deleteProductImage(action) {
     }
 }
 
-//UPDATE
 function* updateProducts(action) {
     try {
         const response = yield axiosInstance.post('/update-product', action.payload)
@@ -109,10 +104,9 @@ function* updateProducts(action) {
     }
 }
 
-//PUBLISH
 function*  publishProducts(action) {
     try {
-        const response = yield axiosInstance.get('/publish-product/'+action.payload)
+        const response = yield axiosInstance.get(`/publish-product/${action.payload}`)
         yield put({
             type: PUBLISH_PRODUCT_SUCCESS,
             message: 'product successfully published',
@@ -126,10 +120,9 @@ function*  publishProducts(action) {
     }
 }
 
-//GET SUBCATEGORIES
 function* getProductSubcategories(action) {
     try {
-        const response = yield axiosInstance.get('/get-product-subcategories/'+action.payload)
+        const response = yield axiosInstance.get(`/get-product-subcategories/${action.payload}`)
         yield put({
             type: GET_SUBCATEGORIES_SUCCESS,
             message: 'Success fetching data',
@@ -143,7 +136,7 @@ function* getProductSubcategories(action) {
     }
 }
 
-export default function* () {
+export default function* myStore() {
     yield takeLatest(CREATE_PRODUCT_REQUEST, createProduct);
     yield takeLatest(GET_PRODUCTS_REQUEST, getProducts);
     yield takeLatest(DELETE_PRODUCTS_REQUEST, deleteProducts);

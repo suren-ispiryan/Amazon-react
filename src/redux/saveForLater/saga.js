@@ -12,10 +12,9 @@ import {
     REMOVE_PRODUCT_FOR_LATER_FAILURE
 } from './actions'
 
-//SAVE
 function* saveProduct(action) {
     try {
-        const response = yield axiosInstance.get('/save-product-for-later/'+action.payload)
+        const response = yield axiosInstance.get(`/save-product-for-later/${action.payload}`)
         yield put({
             type: SAVE_PRODUCT_FOR_LATER_SUCCESS,
             message: 'product successfully saved',
@@ -29,13 +28,12 @@ function* saveProduct(action) {
     }
 }
 
-//GET
-function* getProducts(action) {
+function* getProducts() {
     try {
         const response = yield axiosInstance.get('/get-saved-for-later')
         yield put({
             type: GET_PRODUCTS_FOR_LATER_SUCCESS,
-            message: 'Success fetching data',
+            message: 'No saved product',
             savedForLater: response.data
         });
     } catch (e) {
@@ -46,10 +44,9 @@ function* getProducts(action) {
     }
 }
 
-//DELETE
 function* removeProduct(action) {
     try {
-        const response = yield axiosInstance.delete('/remove-product-from-save-for-later/'+action.payload)
+        const response = yield axiosInstance.delete(`/remove-product-from-save-for-later/${action.payload}`)
         yield put({
             type: REMOVE_PRODUCT_FOR_LATER_SUCCESS,
             message: 'Product successfully deleted',
@@ -64,7 +61,7 @@ function* removeProduct(action) {
 }
 
 
-export default function* () {
+export default function* saveForLater() {
     yield takeLatest(SAVE_PRODUCT_FOR_LATER_REQUEST, saveProduct);
     yield takeLatest(GET_PRODUCTS_FOR_LATER_REQUEST, getProducts);
     yield takeLatest(REMOVE_PRODUCT_FOR_LATER_REQUEST, removeProduct);

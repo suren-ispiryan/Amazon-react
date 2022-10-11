@@ -11,7 +11,6 @@ const initialState = {
 }
 const adminOrdersReducer = (state = initialState, action) => {
     switch (action.type) {
-    //GET
         case GET_ALL_ORDERED_PRODUCTS_REQUEST:
             return {
                 ...state,
@@ -32,7 +31,6 @@ const adminOrdersReducer = (state = initialState, action) => {
                 loading: false,
                 message: action.message
             }
-    // DEFAULT
         default:
             return state
     }

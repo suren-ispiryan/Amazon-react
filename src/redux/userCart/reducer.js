@@ -27,7 +27,6 @@ const initialStata = {
 }
 const userReducer = (state = initialStata, action) => {
     switch (action.type) {
-    //CREATE
         case ADD_TO_CART_REQUEST:
             return {
                 ...state,
@@ -48,7 +47,6 @@ const userReducer = (state = initialStata, action) => {
                 loading: false,
                 message: action.message
             }
-    // GET
         case GET_FROM_CART_REQUEST:
             return {
                ...state,
@@ -69,7 +67,6 @@ const userReducer = (state = initialStata, action) => {
                 loading: false,
                 message: action.message
             }
-    // REMOVE
         case REMOVE_FROM_CART_REQUEST:
             return {
                 ...state,
@@ -102,7 +99,6 @@ const userReducer = (state = initialStata, action) => {
                 loading: false,
                 message: action.message
             }
-    //GUEST GET
         case GUEST_PRODUCT_GET_REQUEST:
             return {
                 ...state,
@@ -123,7 +119,6 @@ const userReducer = (state = initialStata, action) => {
                 loading: false,
                 message: action.message
             }
-    //ORDER
         case BUY_PRODUCTS_FROM_CART_REQUEST:
             return {
                 ...state,
@@ -142,7 +137,6 @@ const userReducer = (state = initialStata, action) => {
                 loading: true,
                 message: '',
             }
-    //GET ORDERED
         case GET_ORDERS_REQUEST:
             return {
                 ...state,
@@ -163,7 +157,6 @@ const userReducer = (state = initialStata, action) => {
                 loading: false,
                 message: action.message
             }
-    // DEFAULT
         default:
             return state
     }

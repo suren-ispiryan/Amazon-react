@@ -17,7 +17,6 @@ const initialStata = {
 }
 const savedForLaterReducer = (state = initialStata, action) => {
     switch (action.type) {
-    //save
         case SAVE_PRODUCT_FOR_LATER_REQUEST:
             return {
                 ...state,
@@ -47,7 +46,6 @@ const savedForLaterReducer = (state = initialStata, action) => {
                 loading: false,
                 message: action.message
             }
-    // GET
         case GET_PRODUCTS_FOR_LATER_REQUEST:
             return {
                ...state,
@@ -68,7 +66,6 @@ const savedForLaterReducer = (state = initialStata, action) => {
                 loading: false,
                 message: action.message
             }
-    // REMOVE
         case REMOVE_PRODUCT_FOR_LATER_REQUEST:
             return {
                 ...state,
@@ -90,7 +87,6 @@ const savedForLaterReducer = (state = initialStata, action) => {
                 loading: false,
                 message: action.message
             }
-    // DEFAULT
         default:
             return state
     }

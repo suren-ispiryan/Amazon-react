@@ -11,7 +11,6 @@ const initialState = {
 }
 const guestSavedForLaterReducer = (state = initialState, action) => {
     switch (action.type) {
-    //GET
         case GET_SAVEDFORLATER_REQUEST:
             return {
                 ...state,
@@ -32,7 +31,6 @@ const guestSavedForLaterReducer = (state = initialState, action) => {
                 loading: false,
                 message: action.message
             }
-    // DEFAULT
         default:
             return state
     }

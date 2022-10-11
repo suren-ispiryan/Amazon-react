@@ -9,7 +9,7 @@ import axiosInstance from './../config/axiosInstance';
 import NoImage from "../assets/No-Image.jpg";
 
 const MyCart = () => {
-    const {addedToCart, loading} = useSelector((state) => state.addedToCart)
+    const {addedToCart, loading, message} = useSelector((state) => state.addedToCart)
     const dispatch = useDispatch();
     const [allInCardProducts, setAllInCardProducts] = useState([])
     const [updateProd, setUpdateProd] = useState({})
@@ -18,13 +18,13 @@ const MyCart = () => {
         dispatch({
             type: GET_FROM_CART_REQUEST,
         })
-    }, [updateProd]);
+    }, [updateProd, dispatch]);
 
     useEffect(() => {
         if (!loading) {
             setAllInCardProducts(addedToCart)
         }
-    }, [loading, updateProd])
+    }, [loading, updateProd, addedToCart])
 
     const removeFromCart = (event, id) => {
         dispatch({
@@ -47,7 +47,7 @@ const MyCart = () => {
         <div className="col-md-12 px-5">
             {loading
                 ?
-                <LoadingSpinner />
+                    <LoadingSpinner />
                 :
                 (<>
                     <h4 className="my-4">Products on cart</h4>
@@ -61,8 +61,8 @@ const MyCart = () => {
                     </div>
 
                     <div className="row my-store-parent-row">
-                        {
-                            allInCardProducts.map((item) => {
+                        {allInCardProducts.length ?
+                            (allInCardProducts.map((item) => {
                                 return (
                                     <div className="col-md-4 col-lg-3 users-products" key={uuid()}>
                                         <div className="row">
@@ -156,6 +156,9 @@ const MyCart = () => {
                                     </div>
                                 )
                             })
+                            ) : (
+                                <h4 className="text-danger mt-5">{message}</h4>
+                            )
                         }
                     </div>
                 </>)

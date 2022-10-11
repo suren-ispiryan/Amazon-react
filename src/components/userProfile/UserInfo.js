@@ -8,20 +8,20 @@ import LoadingSpinner from '../LoadingSpinner';
 
 const UserInfo = () => {
     const [userData, setUserData] = useState({});
-    const {addresses, loading} = useSelector((state) => state.addresses)
+    const {addresses, loading, message} = useSelector((state) => state.addresses)
     const dispatch = useDispatch();
 
     useEffect(() => {
         dispatch({
             type: GET_ADDRESS_REQUEST
         })
-    }, []);
+    }, [dispatch]);
 
     useEffect(() => {
         if (!loading) {
             setUserData(addresses)
         }
-    }, [loading])
+    }, [loading, addresses])
 
     const makeDefaultAddress = (event, id) => {
         dispatch({
@@ -43,7 +43,10 @@ const UserInfo = () => {
             {
                 !userData.length
                 ?
-                <LoadingSpinner />
+                    <div>
+                        <h4 className="text-danger mt-5">{message}</h4>
+                        <LoadingSpinner />
+                    </div>
                 :
                 (userData.map((address) => {
                     return(

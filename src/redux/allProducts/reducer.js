@@ -19,7 +19,6 @@ const initialStata = {
 }
 const userReducer = (state = initialStata, action) => {
     switch (action.type) {
-    // GET ALL
         case GET_ALLPRODUCTS_REQUEST:
             return {
                ...state,
@@ -42,7 +41,6 @@ const userReducer = (state = initialStata, action) => {
                 loading: false,
                 message: action.message
             }
-    // GET DETAILS
         case GET_PRODUCTDETAILS_REQUEST:
             return {
                 ...state,
@@ -55,15 +53,14 @@ const userReducer = (state = initialStata, action) => {
                 ...state,
                 loading: false,
                 productDetail: [...state.productDetail, action.product],
-                message: action.message
+                message: action.detailsMessage
             }
         case GET_PRODUCTDETAILS_FAILURE:
             return {
                 ...state,
                 loading: false,
-                message: action.message
+                message: action.detailsMessage
             }
-    // GET SEARCHED
         case GET_SEARCH_FOR_PRODUCT_REQUEST:
             return {
                 ...state,
@@ -84,7 +81,6 @@ const userReducer = (state = initialStata, action) => {
                 loading: false,
                 message: action.message
             }
-    // DEFAULT
         default:
             return state
     }
