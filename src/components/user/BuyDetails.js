@@ -1,13 +1,13 @@
-import {BUY_PRODUCTS_FROM_CART_REQUEST, GET_FROM_CART_REQUEST} from '../redux/userCart/actions';
-import {DEFAULT_ADDRESS_REQUEST, GET_ADDRESS_REQUEST} from '../redux/userProfile/actions';
+import {BUY_PRODUCTS_FROM_CART_REQUEST, GET_FROM_CART_REQUEST} from '../../redux/userCart/actions';
+import {DEFAULT_ADDRESS_REQUEST, GET_ADDRESS_REQUEST} from '../../redux/userProfile/actions';
 import {useDispatch, useSelector} from 'react-redux';
 import {useEffect, useState} from "react";
 import Table from 'react-bootstrap/Table';
 import uuid from 'react-uuid';
 import { useNavigate } from "react-router-dom";
 import { GetColorName } from 'hex-color-to-color-name';
-import axiosInstance from "../config/axiosInstance";
-import NoImage from "../assets/No-Image.jpg";
+import axiosInstance from "../../config/axiosInstance";
+import NoImage from "../../assets/No-Image.jpg";
 
 const BuyDetails = () => {
     const {addedToCart, loading} = useSelector((state) => state.addedToCart)

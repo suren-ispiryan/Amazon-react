@@ -1,73 +1,101 @@
 import { useEffect, useState } from 'react';
-import {
-    GET_PRODUCTS_FOR_LATER_REQUEST,
-    REMOVE_PRODUCT_FOR_LATER_REQUEST
-} from '../redux/saveForLater/actions';
+import { GET_FROM_CART_REQUEST, REMOVE_FROM_CART_REQUEST } from '../../redux/userCart/actions';
 import { useDispatch, useSelector } from 'react-redux';
-import LoadingSpinner from './helpers/LoadingSpinner';
-import uuid from 'react-uuid';
-import { GetColorName } from 'hex-color-to-color-name';
 import { Link } from 'react-router-dom';
-import NoImage from "../assets/No-Image.jpg";
+import uuid from 'react-uuid';
+import LoadingSpinner from '../helpers/LoadingSpinner';
+import { GetColorName } from 'hex-color-to-color-name';
+import axiosInstance from '../../config/axiosInstance';
+import NoImage from "../../assets/No-Image.jpg";
 
-const SavedForLater = () => {
-    const {savedForLater, loading, message} = useSelector((state) => state.savedForLater)
-    const [allSavedForLaterProducts, setAllSavedForLaterProducts] = useState([])
+const MyCart = () => {
+    const {addedToCart, loading, message} = useSelector((state) => state.addedToCart)
     const dispatch = useDispatch();
+    const [allInCardProducts, setAllInCardProducts] = useState([])
+    const [updateProd, setUpdateProd] = useState({})
 
-    //add product to save for later
     useEffect(() => {
         dispatch({
-            type: GET_PRODUCTS_FOR_LATER_REQUEST
+            type: GET_FROM_CART_REQUEST,
         })
-    }, [dispatch]);
+    }, [updateProd, dispatch]);
 
     useEffect(() => {
         if (!loading) {
-            setAllSavedForLaterProducts(savedForLater)
+            setAllInCardProducts(addedToCart)
         }
-    }, [loading, savedForLater])
+    }, [loading, updateProd, addedToCart])
 
-    //remove product from save for later
-    const removeProduct = (event, id) => {
+    const removeFromCart = (event, id) => {
         dispatch({
-            type: REMOVE_PRODUCT_FOR_LATER_REQUEST,
+            type: REMOVE_FROM_CART_REQUEST,
             payload: id
         })
     }
 
-    return (
+    const reduceProduct = (event, id) => {
+        axiosInstance.get('/reduce-product/'+id)
+            .then(response => setUpdateProd(response.data))
+    }
+
+    const addProduct = (event, id) => {
+        axiosInstance.get('/add-product/'+id)
+            .then(response => setUpdateProd(response.data))
+    }
+
+    return(
         <div className="col-md-12 px-5">
             {loading
                 ?
-                <LoadingSpinner />
+                    <LoadingSpinner />
                 :
                 (<>
-                    <h4 className="my-4">Favorite products</h4>
+                    <h4 className="my-4">Products on cart</h4>
+
+                    <div className="row pb-5">
+                        <div className="col-md-12 auth-user-products-buy text-end">
+                            <Link to={"/buy-details"}>
+                                <button className="btn btn-success">Buy products</button>
+                            </Link>
+                        </div>
+                    </div>
 
                     <div className="row my-store-parent-row">
-                        {allSavedForLaterProducts.length ?
-                            (allSavedForLaterProducts.map((product) => {
+                        {allInCardProducts.length ?
+                            (allInCardProducts.map((item) => {
                                 return (
-                                    <div className="col-md-4 col-xl-2 users-products" key={uuid()}>
+                                    <div className="col-md-4 col-lg-3 users-products" key={uuid()}>
                                         <div className="row">
-                                            <div className="text-success col-md-6 px-4 text-start">
-                                                <span className="text-danger">Name: </span>
-                                                {product.name}
-                                            </div>
                                             <div className="text-success col-md-6">
-                                                <p className="products-count p-2 mx-2">{product.in_stock} pcs left</p>
+                                                <span className="text-danger">Name: </span>
+                                                <span>{item.product.name}</span>
+                                            </div>
+
+                                            <div className="text-success col-md-6">
+                                                <span className="text-danger">Count: </span>
+                                                {item.product_count} pcs
+
+                                                <div className="count-control-container cart-page-count-controls">
+                                                    <button
+                                                        className="btn btn-danger count-control cart-page-count-control-left"
+                                                        onClick={event => reduceProduct(event, item.product.id)}
+                                                    >-</button>
+                                                    <button
+                                                        className="btn btn-success count-control cart-page-count-control-right"
+                                                        onClick={event => addProduct(event, item.product.id)}
+                                                    >+</button>
+                                                </div>
                                             </div>
                                         </div>
                                         <hr />
 
                                         <div className="product-images">
-                                            {product.picture
+                                            {item.product.picture
                                                 ?
                                                 <img
                                                     className="img-fluid product-image"
                                                     alt="product-images"
-                                                    src={`http://localhost:8000/assets/product_images/${product.picture}`}
+                                                    src={`http://localhost:8000/assets/product_images/${item.product.picture}`}
                                                 />
                                                 :
                                                 <img
@@ -80,18 +108,18 @@ const SavedForLater = () => {
                                         <hr/>
 
                                         <div className="text-danger">description:</div>
-                                        <div>{product.description}</div>
+                                        <div>{item.product.description}</div>
                                         <hr/>
 
                                         <div className="row auth-user-posts-action">
                                             <div className="col-md-5">
                                                 <div className="text-danger centering-objects">size:</div>
-                                                <div className="centering-objects">{product.size}</div>
+                                                <div className="centering-objects">{item.product.size}</div>
                                             </div>
                                             <div className="col-md-5">
                                                 <div className="text-danger centering-objects">color:</div>
-                                                <div className="centering-objects product-color-box" style={{backgroundColor: `${product.color}`}}>
-                                                    {GetColorName(product.color)}
+                                                <div className="centering-objects product-color-box" style={{backgroundColor: `${item.product.color}`}}>
+                                                    {GetColorName(item.product.color)}
                                                 </div>
                                             </div>
                                         </div>
@@ -99,30 +127,29 @@ const SavedForLater = () => {
                                         <div className="row auth-user-posts-action">
                                             <div className="col-md-5">
                                                 <div className="text-danger centering-objects">owner:</div>
-                                                <div className="centering-objects">{product.user && product.user.name}</div>
+                                                <div className="centering-objects">{item.user && item.user.name}</div>
                                             </div>
                                             <div className="col-md-5">
                                                 <div className="text-danger centering-objects">price:</div>
-                                                <div className="centering-objects">{product.price}$</div>
+                                                <div className="centering-objects">{item.product.price}$</div>
                                             </div>
                                         </div>
 
                                         <hr/>
                                         <div className="row">
                                             <div className="col-md-12 auth-user-posts-action-btn">
-                                                <Link to={"/product-details/"+product.id}>
+                                                <Link to={"/product-details/"+item.product.id}>
                                                     <button
-                                                        className="btn btn-primary"
+                                                        className="mx-2 p-2 btn btn-primary"
                                                     >
                                                         See details
                                                     </button>
                                                 </Link>
-
                                                 <button
-                                                    className="btn btn-danger"
-                                                    onClick={event => removeProduct(event, product.id)}
+                                                    className="mx-2 p-2 btn btn-danger"
+                                                    onClick={event => removeFromCart(event, item.product.id)}
                                                 >
-                                                    Remove
+                                                    Remove from cart
                                                 </button>
                                             </div>
                                         </div>
@@ -137,7 +164,7 @@ const SavedForLater = () => {
                 </>)
             }
         </div>
-    );
+    )
 }
 
-export default SavedForLater;
+export default MyCart;

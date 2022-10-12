@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { CREATE_ADDRESS_REQUEST } from '../../redux/userProfile/actions';
+import { CREATE_ADDRESS_REQUEST } from '../../../redux/userProfile/actions';
 
 const initialState = {
     name: '',

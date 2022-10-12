@@ -1,10 +1,10 @@
 import {useDispatch, useSelector} from 'react-redux';
 import Modal from 'react-bootstrap/Modal';
 import Button from 'react-bootstrap/Button';
-import { UPDATE_PRODUCT_REQUEST } from '../../redux/myStore/actions';
-import LoadingSpinner from '../helpers/LoadingSpinner';
+import { UPDATE_PRODUCT_REQUEST } from '../../../redux/myStore/actions';
+import LoadingSpinner from '../../helpers/LoadingSpinner';
 import {useEffect, useState} from "react";
-import {GET_PRODUCT_CATEGORIES_REQUEST, GET_PRODUCT_SIZES_REQUEST} from "../../redux/adminProductParameters/actions";
+import {GET_PRODUCT_CATEGORIES_REQUEST, GET_PRODUCT_SIZES_REQUEST} from "../../../redux/adminProductParameters/actions";
 import uuid from "react-uuid";
 
 const MyStoreUpdate = ({ initialValues, show, setShow, productImage, updatedProduct, setUpdatedProduct }) => {

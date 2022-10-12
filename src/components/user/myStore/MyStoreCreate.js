@@ -3,11 +3,11 @@ import { useDispatch, useSelector } from 'react-redux';
 import {
     CREATE_PRODUCT_REQUEST,
     GET_SUBCATEGORIES_REQUEST
-} from '../../redux/myStore/actions';
+} from '../../../redux/myStore/actions';
 import {
     GET_PRODUCT_CATEGORIES_REQUEST,
     GET_PRODUCT_SIZES_REQUEST,
-} from '../../redux/adminProductParameters/actions';
+} from '../../../redux/adminProductParameters/actions';
 import uuid from 'react-uuid';
 
 const MyStoreCreate = ({ productImage, initialValues }) => {

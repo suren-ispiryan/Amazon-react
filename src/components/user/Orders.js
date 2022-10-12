@@ -2,10 +2,10 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useEffect, useState } from 'react';
 import Table from 'react-bootstrap/Table';
 import uuid from 'react-uuid';
-import { GET_ORDERS_REQUEST } from '../redux/userCart/actions';
+import { GET_ORDERS_REQUEST } from '../../redux/userCart/actions';
 import { GetColorName } from 'hex-color-to-color-name';
-import LoadingSpinner from "./helpers/LoadingSpinner";
-import NoImage from "../assets/No-Image.jpg";
+import LoadingSpinner from "../helpers/LoadingSpinner";
+import NoImage from "../../assets/No-Image.jpg";
 
 const Orders = () => {
   const dispatch = useDispatch();

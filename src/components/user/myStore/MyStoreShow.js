@@ -1,9 +1,9 @@
 import uuid from 'react-uuid';
-import {DELETE_PRODUCTS_REQUEST, PUBLISH_PRODUCT_REQUEST, DELETE_PRODUCT_IMAGE_REQUEST} from '../../redux/myStore/actions';
+import {DELETE_PRODUCTS_REQUEST, PUBLISH_PRODUCT_REQUEST, DELETE_PRODUCT_IMAGE_REQUEST} from '../../../redux/myStore/actions';
 import { useDispatch } from 'react-redux';
-import axiosInstance from '../../config/axiosInstance';
-import NoImage from "../../assets/No-Image.jpg";
-import Pagination from "../helpers/Pagination";
+import axiosInstance from '../../../config/axiosInstance';
+import NoImage from "../../../assets/No-Image.jpg";
+import Pagination from "../../helpers/Pagination";
 import {useState} from "react";
 
 const MyStoreShow = ({allProducts, setShow, setUpdatedProduct, message}) => {

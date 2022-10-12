@@ -1,10 +1,10 @@
 import { useEffect, useState } from 'react';
 import uuid from 'react-uuid';
 import { useDispatch, useSelector } from 'react-redux';
-import { GET_ADDRESS_REQUEST } from '../../redux/userProfile/actions';
-import { DELETE_ADDRESS_REQUEST } from '../../redux/userProfile/actions';
-import { DEFAULT_ADDRESS_REQUEST } from '../../redux/userProfile/actions';
-import LoadingSpinner from '../helpers/LoadingSpinner';
+import { GET_ADDRESS_REQUEST } from '../../../redux/userProfile/actions';
+import { DELETE_ADDRESS_REQUEST } from '../../../redux/userProfile/actions';
+import { DEFAULT_ADDRESS_REQUEST } from '../../../redux/userProfile/actions';
+import LoadingSpinner from '../../helpers/LoadingSpinner';
 
 const UserInfo = () => {
     const [userData, setUserData] = useState({});
