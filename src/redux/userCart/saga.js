@@ -74,7 +74,7 @@ function* getGuestProductsFromCart (action) {
         const response = yield axiosInstance.post('/get-guest-from-cart', action.payload)
         yield put({
             type: GUEST_PRODUCT_GET_SUCCESS,
-            message: 'product successfully created',
+            message: 'No products',
             addedToCart: response.data
         });
     } catch (e) {

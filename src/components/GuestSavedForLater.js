@@ -47,7 +47,6 @@ const GuestSavedForLater = () => {
 
     const removeFromSavedLs = (event, id) => {
         let productIdArr = [];
-
         productIdArr = JSON.parse(localStorage.getItem('savedForLater'));
         for(let i=0; i<productIdArr.length; i++){
             if(i === id){

@@ -8,7 +8,7 @@ import NoImage from "../assets/No-Image.jpg";
 
 const GuestCart = () => {
     const dispatch = useDispatch();
-    const {addedToCart, loading} = useSelector((state) => state.addedToCart)
+    const {addedToCart, loading, message} = useSelector((state) => state.addedToCart)
     const [allGuestProducts, setAllGuestProducts] = useState([])
     const [productNewIds, setProductNewIds] = useState(null)
 
@@ -49,7 +49,7 @@ const GuestCart = () => {
 
                     <div className="row my-store-parent-row">
                         {
-                            allGuestProducts.map((item) => {
+                            allGuestProducts.length ? allGuestProducts.map((item) => {
                                 return (
                                     <div className="col-md-4 col-lg-3 users-products" key={uuid()}>
                                         <div className="row">
@@ -123,7 +123,9 @@ const GuestCart = () => {
                                         </div>
                                     </div>
                                 )
-                            })
+                            }) : (
+                                <h4 className="text-danger my-5">{message}</h4>
+                            )
                         }
                     </div>
                 </>)
