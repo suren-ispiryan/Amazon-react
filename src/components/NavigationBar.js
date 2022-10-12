@@ -84,16 +84,16 @@ const NavigationBar = () => {
                                     :
                                         // admin
                                         <>
-                                            <li className={splitLocation[1] === "/admin-dashboard" ? "nav-item active" : "nav-item"}>
+                                            <li className={splitLocation[1] === "admin-dashboard" ? "nav-item active" : "nav-item"}>
                                                 <Link className="nav-link" to="/admin-dashboard">Products</Link>
                                             </li>
-                                            <li className={splitLocation[1] === "/admin-product-ordered" ? "nav-item active" : "nav-item"}>
+                                            <li className={splitLocation[1] === "admin-product-ordered" ? "nav-item active" : "nav-item"}>
                                                 <Link className="nav-link" to="/admin-product-ordered">Orders</Link>
                                             </li>
-                                            <li className={splitLocation[1] === "/admin-users" ? "nav-item active" : "nav-item"}>
+                                            <li className={splitLocation[1] === "admin-users" ? "nav-item active" : "nav-item"}>
                                                 <Link className="nav-link" to="/admin-users">Users</Link>
                                             </li>
-                                            <li className={splitLocation[1] === "/admin-product-categories" ? "nav-item active" : "nav-item"}>
+                                            <li className={splitLocation[1] === "admin-product-categories" ? "nav-item active" : "nav-item"}>
                                                 <Link className="nav-link" to="/admin-product-categories">Set categories</Link>
                                             </li>
                                         </>
