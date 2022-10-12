@@ -1,5 +1,5 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
-import NavigationBar from './components/NavigationBar';
+import NavigationBar from './components/helpers/NavigationBar';
 import AllProducts from './components/AllProducts';
 import ProductDetails from './components/ProductDetails';
 import Login from './components/Login';
@@ -10,14 +10,14 @@ import MyStore from './components/MyStore';
 import MyCart from './components/MyCart';
 import SavedForLater from './components/SavedForLater';
 import BuyDetails from './components/BuyDetails';
-import GuestCart from './components/GuestCart';
+import GuestCart from './components/guest/GuestCart';
 import Orders from './components/Orders';
 import LoginAdmin from './components/LoginAdmin';
 import AdminDashboard from './components/admin/AdminDashboard';
 import AdminUsers from './components/admin/AdminUsers';
 import AdminSetCategories from './components/admin/AdminSetCategories';
 import AdminOrderedProducts from './components/admin/AdminOrderedProducts';
-import GuestSavedForLater from './components/GuestSavedForLater';
+import GuestSavedForLater from './components/guest/GuestSavedForLater';
 import './App.css';
 
 const App = () => {

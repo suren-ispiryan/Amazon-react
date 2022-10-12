@@ -1,9 +1,9 @@
 import {useEffect, useState} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
-import {GET_SAVEDFORLATER_REQUEST} from '../redux/guestSavedForLater/actions';
-import LoadingSpinner from "./LoadingSpinner";
+import {GET_SAVEDFORLATER_REQUEST} from '../../redux/guestSavedForLater/actions';
+import LoadingSpinner from "../helpers/LoadingSpinner";
 import uuid from "react-uuid";
-import NoImage from "../assets/No-Image.jpg";
+import NoImage from "../../assets/No-Image.jpg";
 import {GetColorName} from "hex-color-to-color-name";
 import {Link} from "react-router-dom";
 

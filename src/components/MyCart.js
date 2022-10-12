@@ -3,7 +3,7 @@ import { GET_FROM_CART_REQUEST, REMOVE_FROM_CART_REQUEST } from '../redux/userCa
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import uuid from 'react-uuid';
-import LoadingSpinner from './LoadingSpinner';
+import LoadingSpinner from './helpers/LoadingSpinner';
 import { GetColorName } from 'hex-color-to-color-name';
 import axiosInstance from './../config/axiosInstance';
 import NoImage from "../assets/No-Image.jpg";

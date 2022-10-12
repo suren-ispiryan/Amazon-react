@@ -2,7 +2,7 @@ import {useDispatch, useSelector} from 'react-redux';
 import Modal from 'react-bootstrap/Modal';
 import Button from 'react-bootstrap/Button';
 import { UPDATE_PRODUCT_REQUEST } from '../../redux/myStore/actions';
-import LoadingSpinner from './../LoadingSpinner';
+import LoadingSpinner from '../helpers/LoadingSpinner';
 import {useEffect, useState} from "react";
 import {GET_PRODUCT_CATEGORIES_REQUEST, GET_PRODUCT_SIZES_REQUEST} from "../../redux/adminProductParameters/actions";
 import uuid from "react-uuid";

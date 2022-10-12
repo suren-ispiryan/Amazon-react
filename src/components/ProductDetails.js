@@ -5,7 +5,7 @@ import {
 } from '../redux/allProducts/actions';
 import { useDispatch, useSelector } from 'react-redux';
 import uuid from 'react-uuid';
-import LoadingSpinner from './LoadingSpinner';
+import LoadingSpinner from './helpers/LoadingSpinner';
 import { ADD_TO_CART_REQUEST } from '../redux/userCart/actions';
 import { Button, Modal } from 'react-bootstrap';
 import NoImage from "../assets/No-Image.jpg";
@@ -16,7 +16,7 @@ import {
     LIKE_PRODUCTS_COMMENT_REQUEST,
     DISLIKE_PRODUCTS_COMMENT_REQUEST
 } from "../redux/productComments/actions";
-import Like from './Like';
+import Like from './helpers/Like';
 import {GET_PRODUCTS_LIKE_REQUEST, LIKE_PRODUCTS_REQUEST, UNLIKE_PRODUCTS_REQUEST} from "../redux/productLikes/actions";
 
 const ProductDetails = () => {

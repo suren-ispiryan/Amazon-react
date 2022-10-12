@@ -1,7 +1,7 @@
 import { GET_ALL_ORDERED_PRODUCTS_REQUEST } from '../../redux/adminOrders/actions';
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import LoadingSpinner from '../LoadingSpinner';
+import LoadingSpinner from '../helpers/LoadingSpinner';
 import Table from 'react-bootstrap/Table';
 import uuid from 'react-uuid';
 import { GetColorName } from 'hex-color-to-color-name';

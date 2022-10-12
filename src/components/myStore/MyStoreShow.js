@@ -3,7 +3,7 @@ import {DELETE_PRODUCTS_REQUEST, PUBLISH_PRODUCT_REQUEST, DELETE_PRODUCT_IMAGE_R
 import { useDispatch } from 'react-redux';
 import axiosInstance from '../../config/axiosInstance';
 import NoImage from "../../assets/No-Image.jpg";
-import Pagination from "../Pagination";
+import Pagination from "../helpers/Pagination";
 import {useState} from "react";
 
 const MyStoreShow = ({allProducts, setShow, setUpdatedProduct, message}) => {

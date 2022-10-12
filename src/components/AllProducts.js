@@ -4,12 +4,12 @@ import { GET_ALLPRODUCTS_REQUEST, GET_SEARCH_FOR_PRODUCT_REQUEST } from '../redu
 import { ADD_TO_CART_REQUEST } from '../redux/userCart/actions';
 import uuid from 'react-uuid';
 import { Link } from 'react-router-dom';
-import LoadingSpinner from './LoadingSpinner';
+import LoadingSpinner from './helpers/LoadingSpinner';
 import { GetColorName } from 'hex-color-to-color-name';
 import { Modal, Button } from 'react-bootstrap';
 import { SAVE_PRODUCT_FOR_LATER_REQUEST } from "../redux/saveForLater/actions";
 import NoImage from "../assets/No-Image.jpg";
-import Pagination from "./Pagination";
+import Pagination from "./helpers/Pagination";
 
 const AllProducts = () => {
     const {allProducts, loading} = useSelector((state) => state.allProducts)

@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { GET_ADDRESS_REQUEST } from '../../redux/userProfile/actions';
 import { DELETE_ADDRESS_REQUEST } from '../../redux/userProfile/actions';
 import { DEFAULT_ADDRESS_REQUEST } from '../../redux/userProfile/actions';
-import LoadingSpinner from '../LoadingSpinner';
+import LoadingSpinner from '../helpers/LoadingSpinner';
 
 const UserInfo = () => {
     const [userData, setUserData] = useState({});

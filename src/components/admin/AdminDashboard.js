@@ -5,7 +5,7 @@ import {
     UPDATE_USER_PRODUCT_REQUEST
 } from '../../redux/adminDashboard/actions';
 import { useDispatch, useSelector } from 'react-redux';
-import LoadingSpinner from '../LoadingSpinner';
+import LoadingSpinner from '../helpers/LoadingSpinner';
 import Table from 'react-bootstrap/Table';
 import uuid from 'react-uuid';
 import { GetColorName } from 'hex-color-to-color-name';
@@ -16,7 +16,7 @@ import {
     GET_PRODUCT_CATEGORIES_REQUEST,
     GET_PRODUCT_SIZES_REQUEST
 } from "../../redux/adminProductParameters/actions";
-import Pagination from "../Pagination";
+import Pagination from "../helpers/Pagination";
 
 const initialValidationValues = {
     name: '',

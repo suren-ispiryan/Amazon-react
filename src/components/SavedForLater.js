@@ -4,7 +4,7 @@ import {
     REMOVE_PRODUCT_FOR_LATER_REQUEST
 } from '../redux/saveForLater/actions';
 import { useDispatch, useSelector } from 'react-redux';
-import LoadingSpinner from './LoadingSpinner';
+import LoadingSpinner from './helpers/LoadingSpinner';
 import uuid from 'react-uuid';
 import { GetColorName } from 'hex-color-to-color-name';
 import { Link } from 'react-router-dom';

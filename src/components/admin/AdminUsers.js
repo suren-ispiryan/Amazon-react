@@ -1,5 +1,5 @@
 import { useDispatch, useSelector } from 'react-redux';
-import LoadingSpinner from '../LoadingSpinner';
+import LoadingSpinner from '../helpers/LoadingSpinner';
 import {
     GET_ALL_USERS_REQUEST,
     DELETE_USER_REQUEST,
@@ -10,7 +10,7 @@ import Table from 'react-bootstrap/Table';
 import uuid from 'react-uuid';
 import Modal from 'react-bootstrap/Modal';
 import Button from 'react-bootstrap/Button';
-import Pagination from "../Pagination";
+import Pagination from "../helpers/Pagination";
 
 const updateInitialValues = {
     name: '',

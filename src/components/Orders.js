@@ -4,7 +4,7 @@ import Table from 'react-bootstrap/Table';
 import uuid from 'react-uuid';
 import { GET_ORDERS_REQUEST } from '../redux/userCart/actions';
 import { GetColorName } from 'hex-color-to-color-name';
-import LoadingSpinner from "./LoadingSpinner";
+import LoadingSpinner from "./helpers/LoadingSpinner";
 import NoImage from "../assets/No-Image.jpg";
 
 const Orders = () => {
