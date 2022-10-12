@@ -3,9 +3,22 @@ import {DELETE_PRODUCTS_REQUEST, PUBLISH_PRODUCT_REQUEST, DELETE_PRODUCT_IMAGE_R
 import { useDispatch } from 'react-redux';
 import axiosInstance from '../../config/axiosInstance';
 import NoImage from "../../assets/No-Image.jpg";
+import Pagination from "../Pagination";
+import {useState} from "react";
 
 const MyStoreShow = ({allProducts, setShow, setUpdatedProduct, message}) => {
     const dispatch = useDispatch();
+// Pagination Posts
+    const [currentPage, setCurrentPage] = useState(1);
+    const [postsPerPage] = useState(3);
+    const indexOfLastPost = currentPage * postsPerPage;
+    const indexOfFirstPost = indexOfLastPost - postsPerPage;
+    const currentPosts = allProducts.slice(indexOfFirstPost, indexOfLastPost);
+
+    //pagination
+    const paginate = (pageNumber) => {
+        setCurrentPage(pageNumber);
+    }
 
     const getUpdatePostData = (event, id) => {
         setShow(true);
@@ -42,8 +55,8 @@ const MyStoreShow = ({allProducts, setShow, setUpdatedProduct, message}) => {
         <div className="col-md-8 product-create-user px-5">
             <h4 className="my-4">My products</h4>
             <div className="row my-store-parent-row">
-                {allProducts ?
-                    (allProducts.map((product) => {
+                {currentPosts ?
+                    (currentPosts.map((product) => {
                         return (
                             <div className="col-xl-3 col-lg-5 col-md-8 col-sm-8 users-products" key={uuid()}>
                                 <div className="text-success d-flex justify-content-between px-3">
@@ -166,6 +179,12 @@ const MyStoreShow = ({allProducts, setShow, setUpdatedProduct, message}) => {
                     )
                 }
             </div>
+            {/*Pagination*/}
+            <Pagination
+                allUsersProducts={allProducts}
+                postsPerPage={postsPerPage}
+                paginate={paginate}
+            />
         </div>
     );
 }

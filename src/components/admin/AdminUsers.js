@@ -10,6 +10,7 @@ import Table from 'react-bootstrap/Table';
 import uuid from 'react-uuid';
 import Modal from 'react-bootstrap/Modal';
 import Button from 'react-bootstrap/Button';
+import Pagination from "../Pagination";
 
 const updateInitialValues = {
     name: '',
@@ -26,6 +27,12 @@ const AdminUsers = () => {
     const [updatedUser, setUpdatedUser] = useState(updateInitialValues);
     const [id, setId] = useState();
     const [formErrors, setFormErrors] = useState({})
+// Pagination Posts
+    const [currentPage, setCurrentPage] = useState(1);
+    const [postsPerPage] = useState(10);
+    const indexOfLastPost = currentPage * postsPerPage;
+    const indexOfFirstPost = indexOfLastPost - postsPerPage;
+    const currentPosts = users.slice(indexOfFirstPost, indexOfLastPost);
 
     useEffect(() => {
         dispatch({
@@ -101,6 +108,10 @@ const AdminUsers = () => {
             payload: id
         })
     }
+//pagination
+    const paginate = (pageNumber) => {
+        setCurrentPage(pageNumber);
+    }
 
     return (
         <>
@@ -124,40 +135,50 @@ const AdminUsers = () => {
                             </tr>
                             </thead>
                             <tbody>
-                            {users.length ?
-                                (users.map((item, index) => {
-                                    return (
-                                        <tr key={uuid()}>
-                                            <th className="pt-4">{index + 1}</th>
-                                            <th className="pt-4"><h6>{item.name}</h6></th>
-                                            <th className="pt-4"><h6>{item.surname}</h6></th>
-                                            <th className="pt-4"><h6>{item.email}</h6></th>
-                                            <th className="pt-4"><h6>{item.role}</h6></th>
-                                            <th className="pt-4 d-flex justify-content-around">
-                                                <button
-                                                    className="btn btn-primary"
-                                                    onClick={event => changeUserData(event, item, item.id)}
-                                                >
-                                                    Change
-                                                </button>
-                                                <button
-                                                    className="btn btn-danger"
-                                                    onClick={event => deleteUser(event, item.id)}
-                                                >
-                                                    Delete
-                                                </button>
-                                            </th>
+                                {currentPosts.length ?
+                                    (currentPosts.map((item, index) => {
+                                        return (
+                                            <tr key={uuid()}>
+                                                <th className="pt-4">{index + 1}</th>
+                                                <th className="pt-4"><h6>{item.name}</h6></th>
+                                                <th className="pt-4"><h6>{item.surname}</h6></th>
+                                                <th className="pt-4"><h6>{item.email}</h6></th>
+                                                <th className="pt-4"><h6>{item.role}</h6></th>
+                                                <th className="pt-4 d-flex justify-content-around">
+                                                    <button
+                                                        className="btn btn-primary"
+                                                        onClick={event => changeUserData(event, item, item.id)}
+                                                    >
+                                                        Change
+                                                    </button>
+                                                    <button
+                                                        className="btn btn-danger"
+                                                        onClick={event => deleteUser(event, item.id)}
+                                                    >
+                                                        Delete
+                                                    </button>
+                                                </th>
+                                            </tr>
+                                        )
+                                    })
+                                    ) : (
+                                        <tr>
+                                            <td>
+                                                <h4 className="text-danger mt-5">
+                                                    {message}
+                                                </h4>
+                                            </td>
                                         </tr>
                                     )
-                                })
-                                ) : (
-                                    <h4 className="text-danger mt-5">
-                                        {message}
-                                    </h4>
-                                )
-                            }
+                                }
                             </tbody>
                         </Table>
+                        {/*Pagination*/}
+                        <Pagination
+                            allUsersProducts={users}
+                            postsPerPage={postsPerPage}
+                            paginate={paginate}
+                        />
                     </>)
                 }
             </div>

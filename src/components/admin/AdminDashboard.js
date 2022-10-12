@@ -16,6 +16,7 @@ import {
     GET_PRODUCT_CATEGORIES_REQUEST,
     GET_PRODUCT_SIZES_REQUEST
 } from "../../redux/adminProductParameters/actions";
+import Pagination from "../Pagination";
 
 const initialValidationValues = {
     name: '',
@@ -40,6 +41,13 @@ const AdminDashboard = () => {
     // validation
     const [updatedProduct, setUpdatedProduct] = useState(initialValidationValues);
     const [formErrors, setFormErrors] = useState({})
+    // Pagination Posts
+    const [currentPage, setCurrentPage] = useState(1);
+    const [postsPerPage] = useState(6);
+    const indexOfLastPost = currentPage * postsPerPage;
+    const indexOfFirstPost = indexOfLastPost - postsPerPage;
+    const currentPosts = ownersProducts.slice(indexOfFirstPost, indexOfLastPost);
+
 
     //show categories
     useEffect(() => {
@@ -154,6 +162,10 @@ const AdminDashboard = () => {
             payload: id
         })
     }
+//pagination
+    const paginate = (pageNumber) => {
+        setCurrentPage(pageNumber);
+    }
 
     return (
         <>
@@ -183,7 +195,7 @@ const AdminDashboard = () => {
                             <tbody>
                             {/* Product */}
                             {
-                                ownersProducts.map((item, index) => {
+                                currentPosts.map((item, index) => {
                                     return (
                                         <tr key={uuid()}>
                                             <th className="pt-4">{index + 1}</th>
@@ -308,6 +320,12 @@ const AdminDashboard = () => {
                         </Table>
                     </>)
                 }
+                {/*Pagination*/}
+                <Pagination
+                    allUsersProducts={ownersProducts}
+                    paginate={paginate}
+                    postsPerPage={postsPerPage}
+                />
             </div>
 
             {/* modal for update */}

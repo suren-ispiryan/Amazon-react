@@ -9,6 +9,7 @@ import { GetColorName } from 'hex-color-to-color-name';
 import { Modal, Button } from 'react-bootstrap';
 import { SAVE_PRODUCT_FOR_LATER_REQUEST } from "../redux/saveForLater/actions";
 import NoImage from "../assets/No-Image.jpg";
+import Pagination from "./Pagination";
 
 const AllProducts = () => {
     const {allProducts, loading} = useSelector((state) => state.allProducts)
@@ -21,7 +22,14 @@ const AllProducts = () => {
     const [productCount, setProductCount] = useState(1);
     const [show, setShow] = useState(false);
     const [stock, setStock] = useState();
+    // Pagination Posts
+    const [currentPage, setCurrentPage] = useState(1);
+    const [postsPerPage] = useState(6);
+    const indexOfLastPost = currentPage * postsPerPage;
+    const indexOfFirstPost = indexOfLastPost - postsPerPage;
+    const currentPosts = allUsersProducts.slice(indexOfFirstPost, indexOfLastPost);
 
+    // order product
     const handleClose = () => setShow(false);
 
     const handleShow = (event, id, inStock) => {
@@ -126,6 +134,11 @@ const AllProducts = () => {
         }
     }
 
+    //pagination
+    const paginate = (pageNumber) => {
+        setCurrentPage(pageNumber);
+    }
+
     return (
         <div className="col-md-12 px-5">
             {loading
@@ -134,7 +147,7 @@ const AllProducts = () => {
                 :
                 (<>
                     <h4 className="my-4">All products</h4>
-
+{/*search*/}
                     <div className="row search-parent-row">
                         <div className="col-md-2 mt-1">
                             <input
@@ -175,115 +188,114 @@ const AllProducts = () => {
                             </button>
                         </div>
                     </div>
-
+{/*products list*/}
                     <div className="row my-store-parent-row">
                         {
-                            allUsersProducts.length > 0 ? allUsersProducts.map((product) => {
+                            currentPosts.length > 0 ? currentPosts.map((product) => {
                                 return (
                                     product.published === 1 &&
-                                        <div className="col-md-4 col-xl-2 users-products" key={uuid()}>
-                                            <div className="row">
-                                                <div className="text-success col-md-6 px-4 text-start">
-                                                    <span className="text-danger">Name: </span>
-                                                    {product.name}
+                                            <div className="col-md-4 col-xl-3 users-products" key={uuid()}>
+                                                <div className="ro w">
+                                                    <div className="text-success col-md-6 px-4 text-start">
+                                                        <span className="text-danger">Name: </span>
+                                                        {product.name}
+                                                    </div>
+                                                    <div className="text-success col-md-6">
+                                                        <p className="products-count p-2 mx-3">{product.in_stock} pcs left</p>
+                                                    </div>
                                                 </div>
-                                                <div className="text-success col-md-6">
-                                                    <p className="products-count p-2 mx-3">{product.in_stock} pcs left</p>
+                                                <hr />
+
+                                                <div className="product-images">
+                                                    {product.picture
+                                                        ?
+                                                        <img
+                                                            className="img-fluid product-image"
+                                                            alt="product images"
+                                                            src={`http://localhost:8000/assets/product_images/${product.picture}`}
+                                                        />
+                                                        :
+                                                        <img
+                                                            className="img-fluid admin-products-image"
+                                                            alt="product-images"
+                                                            src={NoImage}
+                                                        />
+                                                    }
                                                 </div>
-                                            </div>
-                                            <hr />
+                                                <hr/>
 
-                                            <div className="product-images">
-                                                {product.picture
-                                                    ?
-                                                    <img
-                                                        className="img-fluid product-image"
-                                                        alt="product images"
-                                                        src={`http://localhost:8000/assets/product_images/${product.picture}`}
-                                                    />
-                                                    :
-                                                    <img
-                                                        className="img-fluid admin-products-image"
-                                                        alt="product-images"
-                                                        src={NoImage}
-                                                    />
-                                                }
-                                            </div>
-                                            <hr/>
+                                                <div className="text-danger">description:</div>
+                                                <div>{product.description}</div>
+                                                <hr/>
 
-                                            <div className="text-danger">description:</div>
-                                            <div>{product.description}</div>
-                                            <hr/>
-
-                                            <div className="row auth-user-posts-action">
-                                                <div className="col-md-5">
-                                                    <div className="text-danger centering-objects">size:</div>
-                                                    <div className="centering-objects">{product.size}</div>
+                                                <div className="row auth-user-posts-action">
+                                                    <div className="col-md-5">
+                                                        <div className="text-danger centering-objects">size:</div>
+                                                        <div className="centering-objects">{product.size}</div>
+                                                    </div>
+                                                    <div className="col-md-5">
+                                                        <div className="text-danger centering-objects">color:</div>
+                                                        <div className="centering-objects product-color-box" style={{backgroundColor: `${product.color}`}}>
+                                                            {GetColorName(product.color)}
+                                                        </div>
+                                                    </div>
                                                 </div>
-                                                <div className="col-md-5">
-                                                    <div className="text-danger centering-objects">color:</div>
-                                                    <div className="centering-objects product-color-box" style={{backgroundColor: `${product.color}`}}>
-                                                        {GetColorName(product.color)}
+                                                <hr/>
+                                                <div className="row auth-user-posts-action">
+                                                    <div className="col-md-5">
+                                                        <div className="text-danger centering-objects">owner:</div>
+                                                        <div className="centering-objects">{product.user && product.user.name}</div>
+                                                    </div>
+                                                    <div className="col-md-5">
+                                                        <div className="text-danger centering-objects">price:</div>
+                                                        <div className="centering-objects">{product.price}$</div>
+                                                    </div>
+                                                </div>
+
+                                                <hr/>
+                                                <div className="row">
+                                                    <div className="col-md-12 auth-user-posts-action-btn">
+                                                        <Link to={"/product-details/"+product.id}>
+                                                            <button
+                                                                className="mx-1 btn btn-primary"
+                                                            >
+                                                                See details
+                                                            </button>
+                                                        </Link>
+
+                                                        {localStorage.getItem('token')
+                                                         ?
+                                                             <button
+                                                                 className="mx-1 btn btn-warning"
+                                                                 onClick={event => saveForLater(event, product.id)}
+                                                             >
+                                                                 <img src="../../../assets/icons/saveForLater.svg" alt="save for later"/>
+                                                             </button>
+                                                         :
+                                                             <button
+                                                                 className="mx-1 btn btn-warning"
+                                                                 onClick={event => guestSaveForLater(event, product.id)}
+                                                             >
+                                                                 <img src="../../../assets/icons/saveForLater.svg" alt="save for later"/>
+                                                             </button>
+                                                        }
+
+                                                        <button
+                                                            className="mx-1 btn btn-success"
+                                                            onClick={event => handleShow(event, product.id, product.in_stock)}
+                                                        >
+                                                            Add to cart
+                                                        </button>
                                                     </div>
                                                 </div>
                                             </div>
-                                            <hr/>
-                                            <div className="row auth-user-posts-action">
-                                                <div className="col-md-5">
-                                                    <div className="text-danger centering-objects">owner:</div>
-                                                    <div className="centering-objects">{product.user && product.user.name}</div>
-                                                </div>
-                                                <div className="col-md-5">
-                                                    <div className="text-danger centering-objects">price:</div>
-                                                    <div className="centering-objects">{product.price}$</div>
-                                                </div>
-                                            </div>
-
-                                            <hr/>
-                                            <div className="row">
-                                                <div className="col-md-12 auth-user-posts-action-btn">
-                                                    <Link to={"/product-details/"+product.id}>
-                                                        <button
-                                                            className="mx-1 btn btn-primary"
-                                                        >
-                                                            See details
-                                                        </button>
-                                                    </Link>
-
-                                                    {localStorage.getItem('token')
-                                                     ?
-                                                         <button
-                                                             className="mx-1 btn btn-warning"
-                                                             onClick={event => saveForLater(event, product.id)}
-                                                         >
-                                                             <img src="../../../assets/icons/saveForLater.svg" alt="save for later"/>
-                                                         </button>
-                                                     :
-                                                         <button
-                                                             className="mx-1 btn btn-warning"
-                                                             onClick={event => guestSaveForLater(event, product.id)}
-                                                         >
-                                                             <img src="../../../assets/icons/saveForLater.svg" alt="save for later"/>
-                                                         </button>
-                                                    }
-
-                                                    <button
-                                                        className="mx-1 btn btn-success"
-                                                        onClick={event => handleShow(event, product.id, product.in_stock)}
-                                                    >
-                                                        Add to cart
-                                                    </button>
-                                                </div>
-                                            </div>
-                                        </div>
                                         )
                                     })
                                 :
                             (<div className="no-item text-danger">No product</div>)
                         }
                     </div>
-
-                    {/* MODAL */}
+{/* MODAL */}
                     <Modal show={show} onHide={handleClose}>
                         <Modal.Header closeButton>
                             <Modal.Title>Choose product count, in stock {stock} pcs</Modal.Title>
@@ -308,7 +320,12 @@ const AllProducts = () => {
                             </Button>
                         </Modal.Footer>
                     </Modal>
-
+{/*Pagination*/}
+                    <Pagination
+                        allUsersProducts={allUsersProducts}
+                        postsPerPage={postsPerPage}
+                        paginate={paginate}
+                    />
                 </>)
             }
         </div>
