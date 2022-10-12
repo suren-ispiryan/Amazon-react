@@ -283,3 +283,14 @@ li {
 .delete-comment{
   font-size: 12px;
 }
+
+/*nav*/
+a{
+  font-style: italic;
+}
+
+.active a{
+  color: white !important;
+  font-weight: bold;
+  font-style: italic;
+}
