@@ -85,6 +85,7 @@ const userReducer = (state = initialStata, action) => {
                     } else {
                         removedProduct.push(action.addedToCart)
                     }
+                    return removedProduct
                 })
            }
             return {

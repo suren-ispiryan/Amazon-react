@@ -73,6 +73,7 @@ const adminDashboardReducer = (state = initialState, action) => {
                 } else {
                     newProducts.push(action.adminProducts)
                 }
+                return newProducts
             })
             return {
                 ...state,

@@ -8,8 +8,10 @@ const NavigationBar = () => {
 
     useEffect(() => {
         axiosInstance.get('/get-auth-user-role')
-              .then(function (response) {setRole(response.data)})
-              .catch(function (error) {console.log(error)});
+                     .then(function (response) {
+                         setRole(response.data)
+                     })
+                     .catch(function (error) {});
     }, [])
 
     const logoutUser = () => {
@@ -122,7 +124,9 @@ const NavigationBar = () => {
                                 Logout
                             </button>
                         :
-                            <Link className="nav-link" to="/login">Login</Link>
+                            <Link className="nav-link" to="/login">
+                                Login
+                            </Link>
                         }
                     </div>
                 </nav>

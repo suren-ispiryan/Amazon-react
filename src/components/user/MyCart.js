@@ -6,7 +6,7 @@ import uuid from 'react-uuid';
 import LoadingSpinner from '../helpers/LoadingSpinner';
 import { GetColorName } from 'hex-color-to-color-name';
 import axiosInstance from '../../config/axiosInstance';
-import NoImage from "../../assets/No-Image.jpg";
+import NoImage from '../../assets/No-Image.jpg';
 
 const MyCart = () => {
     const {addedToCart, loading, message} = useSelector((state) => state.addedToCart)

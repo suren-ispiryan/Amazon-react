@@ -5,5 +5,6 @@
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="library" name="react" level="application" />
+    <orderEntry type="library" name="bottom-e810b7" level="application" />
   </component>
 </module>

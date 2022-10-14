@@ -103,6 +103,7 @@ const productCommentsReducer = (state = initialStata, action) => {
                        item.likes = [...item.likes, action.likeProductComments];
                        return item
                    }
+                   return item
                 })
             return {
                 ...state,

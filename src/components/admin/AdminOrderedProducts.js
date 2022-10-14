@@ -23,13 +23,13 @@ const AdminOrderedProducts = () => {
                          })
                      })
                      .catch(function (error) {console.log(error)})
-    }, [])
+    }, [dispatch])
 
     useEffect(() => {
         if (!loading) {
             setOrderedProducts(adminOrders)
         }
-    }, [loading])
+    }, [loading, adminOrders])
 
     return (
         <>

@@ -8,7 +8,7 @@ import LoadingSpinner from '../helpers/LoadingSpinner';
 import uuid from 'react-uuid';
 import { GetColorName } from 'hex-color-to-color-name';
 import { Link } from 'react-router-dom';
-import NoImage from "../../assets/No-Image.jpg";
+import NoImage from '../../assets/No-Image.jpg';
 
 const SavedForLater = () => {
     const {savedForLater, loading, message} = useSelector((state) => state.savedForLater)

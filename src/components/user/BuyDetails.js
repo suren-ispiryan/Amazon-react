@@ -25,19 +25,20 @@ const BuyDetails = () => {
         dispatch({
             type: GET_FROM_CART_REQUEST
         })
-    }, [update]);
+    }, [update, dispatch]);
 
     useEffect(() => {
         if (!loading) {
             setAllInCardProducts(addedToCart)
             setUsersAddresses(addresses)
         }
-    }, [addresses, loading, update])
+    }, [addresses, loading, update, addedToCart])
 
     const countTotalPrice = () => {
         let totalPrice = 0;
-        allInCardProducts.map((item, index) => {
+        allInCardProducts.map((item) => {
             totalPrice += item.product_count * item.product.price
+            return totalPrice
         })
         return totalPrice;
     }

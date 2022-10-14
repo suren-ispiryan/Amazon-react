@@ -15,7 +15,7 @@ const Verify = () => {
                             }
                      })
                      .catch(function (error) {console.log(error)});
-    }, [token])
+    }, [token, navigate])
 
     return (
         <div className="user-profile">

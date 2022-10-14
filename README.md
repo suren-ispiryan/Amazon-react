@@ -1,14 +1,21 @@
 Amazon
 
-Project setup
+//======Project setup======\\
 1) clone
 2) npm install
 3) npm start
 4) install in browser react redux extention
 
+//========Captcha========\\
+5) 5.1 Captcha site-key for connecting frontend and backend
+       REACT_APP_SITE_KEY=6LdnJnYiAAAAAHtXqZf7ZQOkceIB72wuWgPei7yR
+   5.2 Captcha secret-key for connecting backend and google profile
+       RECAPTCHA_KEY=6LdnJnYiAAAAABZS3vOtysSp-_j0uKmnNo6nFe1O
+
 //=========Login========\\
-5) for admin login go to "/login-admin" page
+6) for admin login go to "/login-admin" page
    for user login  go to "/login" page
+
 
 Description
 
@@ -36,6 +43,7 @@ Registration
 + Password
 + Re-enter password
 + Confirm email
++ Captcha v3
 
 Logged In User
 + Form validations.

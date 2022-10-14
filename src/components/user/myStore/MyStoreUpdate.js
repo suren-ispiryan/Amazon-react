@@ -19,25 +19,25 @@ const MyStoreUpdate = ({ initialValues, show, setShow, productImage, updatedProd
         dispatch({
             type: GET_PRODUCT_CATEGORIES_REQUEST
         })
-    }, [])
+    }, [dispatch])
 
     useEffect(() => {
         if (!loading) {
             setGetCategories(categories)
         }
-    }, [loading])
+    }, [loading, categories])
     //show sizes
     useEffect(() => {
         dispatch({
             type: GET_PRODUCT_SIZES_REQUEST
         })
-    }, [])
+    }, [dispatch])
 
     useEffect(() => {
         if (!loading) {
             setGetProductSizes(sizes)
         }
-    }, [sizes])
+    }, [sizes, loading])
     //change product
     const handleChangeUpdate = ({target}) => {
         setUpdatedProduct({

@@ -7,9 +7,9 @@ import { Link } from 'react-router-dom';
 import LoadingSpinner from './helpers/LoadingSpinner';
 import { GetColorName } from 'hex-color-to-color-name';
 import { Modal, Button } from 'react-bootstrap';
-import { SAVE_PRODUCT_FOR_LATER_REQUEST } from "../redux/saveForLater/actions";
-import NoImage from "../assets/No-Image.jpg";
-import Pagination from "./helpers/Pagination";
+import { SAVE_PRODUCT_FOR_LATER_REQUEST } from '../redux/saveForLater/actions';
+import NoImage from '../assets/No-Image.jpg';
+import Pagination from './helpers/Pagination';
 
 const AllProducts = () => {
     const {allProducts, loading} = useSelector((state) => state.allProducts)

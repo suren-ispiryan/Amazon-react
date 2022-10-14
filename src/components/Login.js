@@ -7,7 +7,7 @@ import { Link, useNavigate } from 'react-router-dom';
 
 const Login = () => {
     const dispatch = useDispatch();
-    const {login, loading, status, message} = useSelector((state) => state.login)
+    const {login, loading, message} = useSelector((state) => state.login)
     const navigate = useNavigate();
     const [loginInfo, setLoginInfo] = useState({});
     const [logMessage, setLogMessage] = useState('');
@@ -37,7 +37,7 @@ const Login = () => {
                 window.location.reload()
             }
         }
-    }, [loading])
+    }, [loading, login, navigate])
 
     return (
         <div className="login container-fluid">

@@ -52,13 +52,13 @@ const SubCategories = () => {
         dispatch({
             type: GET_PRODUCT_SUBCATEGORIES_REQUEST
         })
-    }, [])
+    }, [dispatch])
 
     useEffect(() => {
         if (!loadingSub) {
             setGetCategories(subCategories)
         }
-    }, [loadingSub])
+    }, [loadingSub, subCategories])
 
     //remove
     const removeSubcategory = (event, id) => {

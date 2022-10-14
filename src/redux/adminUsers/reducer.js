@@ -73,6 +73,7 @@ const adminUsersReducer = (state = initialState, action) => {
                 } else {
                     newUser.push(action.updatedUser)
                 }
+                return newUser
             })
             return {
                 ...state,

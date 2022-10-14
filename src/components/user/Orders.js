@@ -16,13 +16,13 @@ const Orders = () => {
     dispatch({
       type: GET_ORDERS_REQUEST
     })
-  }, []);
+  }, [dispatch]);
 
   useEffect(() => {
     if (!loading) {
       setOrdered(orderedProducts)
     }
-  }, [loading])
+  }, [loading, orderedProducts])
 
   return (
       <>

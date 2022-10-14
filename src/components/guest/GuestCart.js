@@ -2,9 +2,9 @@ import uuid from 'react-uuid';
 import { useDispatch, useSelector } from 'react-redux';
 import {useEffect, useState} from 'react';
 import { GUEST_PRODUCT_GET_REQUEST } from '../../redux/userCart/actions';
-import LoadingSpinner from "../helpers/LoadingSpinner";
-import {Link} from "react-router-dom";
-import NoImage from "../../assets/No-Image.jpg";
+import LoadingSpinner from '../helpers/LoadingSpinner';
+import {Link} from 'react-router-dom';
+import NoImage from '../../assets/No-Image.jpg';
 
 const GuestCart = () => {
     const dispatch = useDispatch();
@@ -18,13 +18,13 @@ const GuestCart = () => {
             type: GUEST_PRODUCT_GET_REQUEST,
             payload: {guestCartProducts: guestCartProducts}
         })
-    }, [productNewIds]);
+    }, [productNewIds, dispatch]);
 
     useEffect(() => {
         if (!loading) {
             setAllGuestProducts(addedToCart)
         }
-    }, [loading])
+    }, [loading, addedToCart])
 
     const removeFromGuestCart = (event, id) => {
         let productIds;
