@@ -45,9 +45,13 @@ const Register = () => {
         guestCardProducts = JSON.parse(localStorage.getItem('addedToCart'))
         axiosInstance.post('register', registerInfo, guestCardProducts)
             .then(function (response) {
-                if (response.status === 200) {
-                    setRegisterMessage('For completing registration process please check your male.')
-                    localStorage.removeItem('addedToCart');
+                if (response.data === 'Wrong captcha') {
+                    setRegisterMessage(response.data)
+                } else {
+                         if (response.status === 200) {
+                            setRegisterMessage('For completing registration process please check your male.')
+                            localStorage.removeItem('addedToCart');
+                        }
                 }
             })
             .catch(function (error) {
@@ -57,7 +61,7 @@ const Register = () => {
                     'surname': error.response.data.errors.surname ? error.response.data.errors.surname : '',
                     'email': error.response.data.errors.email ? error.response.data.errors.email : '',
                     'password': error.response.data.errors.password ? error.response.data.errors.password : '',
-                    'confirmation': error.response.data.errors.confirmation ? error.response.data.errors.confirmation : ''
+                    'confirmation': error.response.data.errors.confirmation ? error.response.data.errors.confirmation : '',
                 })
             });
     }
