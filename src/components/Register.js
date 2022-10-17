@@ -45,11 +45,11 @@ const Register = () => {
         guestCardProducts = JSON.parse(localStorage.getItem('addedToCart'))
         axiosInstance.post('register', registerInfo, guestCardProducts)
             .then(function (response) {
-                if (response.data === 'Wrong captcha') {
+                if (response.data) {
                     setRegisterMessage(response.data)
                 } else {
                          if (response.status === 200) {
-                            setRegisterMessage('For completing registration process please check your male.')
+                            setRegisterMessage(response.data)
                             localStorage.removeItem('addedToCart');
                         }
                 }
