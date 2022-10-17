@@ -11,6 +11,8 @@ Amazon
        REACT_APP_SITE_KEY=6LdnJnYiAAAAAHtXqZf7ZQOkceIB72wuWgPei7yR
    5.2 Captcha secret-key for connecting backend and google profile
        RECAPTCHA_KEY=6LdnJnYiAAAAABZS3vOtysSp-_j0uKmnNo6nFe1O
+   5.3 Recaptcha verify api link
+   RECAPTCHA_SITE_VERIFY=https://www.google.com/recaptcha/api/siteverify
 
 //=========Login========\\
 6) for admin login go to "/login-admin" page
