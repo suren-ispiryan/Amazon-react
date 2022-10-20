@@ -12,7 +12,8 @@ import savedForLaterReducer from './saveForLater/reducer';
 import searchedCategories from './allProducts/reducer';
 import guestSavedForLaterReducer from './guestSavedForLater/reducer';
 import productCommentsReducer from './productComments/reducer';
-import productLikesReducer from "./productLikes/reducer";
+import productLikesReducer from './productLikes/reducer';
+import chatReducer from './chat/reducer';
 
 const rootReducer = combineReducers({
     products: myStore,
@@ -35,7 +36,9 @@ const rootReducer = combineReducers({
     productComments: productCommentsReducer,
     authUserId: productCommentsReducer,
     productLikes: productLikesReducer,
-    authUsersId: productCommentsReducer
+    authUsersId: productCommentsReducer,
+    chatMessages: chatReducer,
+    chatUsers: chatReducer,
 })
 
 export default rootReducer

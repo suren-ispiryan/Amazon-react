@@ -9,6 +9,7 @@ import UserProfile from './components/user/UserProfile';
 import MyStore from './components/user/MyStore';
 import MyCart from './components/user/MyCart';
 import SavedForLater from './components/user/SavedForLater';
+import Chat from './components/user/myChat/Chat';
 import BuyDetails from './components/user/BuyDetails';
 import GuestCart from './components/guest/GuestCart';
 import Orders from './components/user/Orders';
@@ -36,6 +37,8 @@ const App = () => {
                 <Route path="saved-for-later" element={<SavedForLater />} />
                 <Route path="my-cart" element={<MyCart />} />
                 <Route path="user-profile" element={<UserProfile />} />
+                <Route path="chat" element={<Chat />} />
+                <Route path="chat/:id" element={<Chat />} />
                 <Route path="product-details/:id" element={<ProductDetails />} />
                 <Route path="buy-details" element={<BuyDetails />} />
                 <Route path="orders" element={<Orders />} />

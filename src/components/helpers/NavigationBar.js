@@ -82,6 +82,9 @@ const NavigationBar = () => {
                                             <li className={splitLocation[1] === "orders" ? "nav-item active" : "nav-item"}>
                                                 <Link className="nav-link" to="/orders">My orders</Link>
                                             </li>
+                                            <li className={splitLocation[1] === "chat" ? "nav-item active" : "nav-item"}>
+                                                <Link className="nav-link" to="/chat">Chat</Link>
+                                            </li>
                                         </>
                                     :
                                         // admin

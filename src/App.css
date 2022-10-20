@@ -294,3 +294,33 @@ a{
   font-weight: bold;
   font-style: italic;
 }
+
+/*chat*/
+.chat-box {
+  border: 1px black solid;
+  background-color: #eee;
+  margin: 30px;
+}
+
+.chat-active-room {
+  background-color: #eee;
+}
+
+.headings {
+  text-align: center !important;
+}
+
+.room-links {
+  text-align: left !important;
+  text-decoration: none;
+}
+
+.room-body {
+  max-height: 60vh;
+  overflow: auto;
+}
+
+.user-names {
+  text-align: center !important;
+  width: 100% !important;
+}

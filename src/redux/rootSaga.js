@@ -12,6 +12,7 @@ import savedForLater from './saveForLater/saga';
 import guestSavedForLater from './guestSavedForLater/saga';
 import productComment from './productComments/saga';
 import productLikes from './productLikes/saga';
+import chat from './chat/saga';
 
 function* rootSaga() {
     yield all([
@@ -27,7 +28,8 @@ function* rootSaga() {
         savedForLater(),
         guestSavedForLater(),
         productComment(),
-        productLikes()
+        productLikes(),
+        chat()
     ])
 }
 export default rootSaga

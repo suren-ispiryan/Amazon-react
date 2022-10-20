@@ -1,8 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import {
-    GET_PRODUCTDETAILS_REQUEST
-} from '../redux/allProducts/actions';
+import {GET_PRODUCTDETAILS_REQUEST} from '../redux/allProducts/actions';
 import { useDispatch, useSelector } from 'react-redux';
 import uuid from 'react-uuid';
 import LoadingSpinner from './helpers/LoadingSpinner';
@@ -17,7 +15,11 @@ import {
     DISLIKE_PRODUCTS_COMMENT_REQUEST
 } from "../redux/productComments/actions";
 import Like from './helpers/Like';
-import {GET_PRODUCTS_LIKE_REQUEST, LIKE_PRODUCTS_REQUEST, UNLIKE_PRODUCTS_REQUEST} from "../redux/productLikes/actions";
+import {
+    GET_PRODUCTS_LIKE_REQUEST,
+    LIKE_PRODUCTS_REQUEST,
+    UNLIKE_PRODUCTS_REQUEST
+} from "../redux/productLikes/actions";
 
 const ProductDetails = () => {
     let { id } = useParams();

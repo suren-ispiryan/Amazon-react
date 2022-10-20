@@ -26,9 +26,8 @@ const Register = () => {
     };
 
     const onChange = (value) => {
-        console.log("Captcha value:", value);
+        // console.log("Captcha value:", value);
     }
-
     //form
     const handleChange = async ({target}) => {
         setRegisterInfo({
@@ -44,26 +43,26 @@ const Register = () => {
         let guestCardProducts;
         guestCardProducts = JSON.parse(localStorage.getItem('addedToCart'))
         axiosInstance.post('register', registerInfo, guestCardProducts)
-            .then(function (response) {
-                if (response.data) {
-                    setRegisterMessage(response.data)
-                } else {
-                         if (response.status === 200) {
+                     .then(function (response) {
+                         if (response.data) {
                             setRegisterMessage(response.data)
-                            localStorage.removeItem('addedToCart');
-                        }
-                }
-            })
-            .catch(function (error) {
-                setRegisterErrorMessage({
-                    ...initialStateRegister,
-                    'name': error.response.data.errors.name ? error.response.data.errors.name : '',
-                    'surname': error.response.data.errors.surname ? error.response.data.errors.surname : '',
-                    'email': error.response.data.errors.email ? error.response.data.errors.email : '',
-                    'password': error.response.data.errors.password ? error.response.data.errors.password : '',
-                    'confirmation': error.response.data.errors.confirmation ? error.response.data.errors.confirmation : '',
-                })
-            });
+                         } else {
+                            if (response.status === 200) {
+                               setRegisterMessage(response.data)
+                               localStorage.removeItem('addedToCart');
+                            }
+                         }
+                     })
+                     .catch(function (error) {
+                         setRegisterErrorMessage({
+                             ...initialStateRegister,
+                             'name': error.response.data.errors.name ? error.response.data.errors.name : '',
+                             'surname': error.response.data.errors.surname ? error.response.data.errors.surname : '',
+                             'email': error.response.data.errors.email ? error.response.data.errors.email : '',
+                             'password': error.response.data.errors.password ? error.response.data.errors.password : '',
+                             'confirmation': error.response.data.errors.confirmation ? error.response.data.errors.confirmation : '',
+                         })
+                     });
     }
 
     return (
@@ -72,7 +71,6 @@ const Register = () => {
                 <div className="col-md-12 sign-parent">
                     <div className="sign-form">
                         <h2>Register</h2>
-
                         <h6 className="mt-3 text-success"> { registerMessage } </h6>
                         <h6 className="mt-3 text-danger"> { registerErrorMessage.name } </h6>
                         <form onSubmit={registerUser}>
