@@ -1,4 +1,4 @@
-import {useEffect, useState} from 'react';
+import {useEffect, useRef, useState} from 'react';
 import {
     GET_CHOOSEN_USER_MESSAGES_REQUEST,
     GET_MESSAGES_REQUEST,
@@ -22,6 +22,8 @@ const Chat = () => {
     const location = useLocation();
     const { pathname } = location;
     const splitLocation = pathname.split("/")
+
+    const bottomRef = useRef(null);
 
     //get all chatusers
     useEffect(() => {
@@ -53,6 +55,10 @@ const Chat = () => {
         setInputValue(initialValueOfInput)
         setMessageText(initialValue)
     }
+    //scroll down chat
+    useEffect(() => {
+        bottomRef.current?.scrollIntoView();
+    }, [chatMessages]);
 
     return (
         <>
@@ -92,14 +98,14 @@ const Chat = () => {
     {/*active chat messages*/}
                         <div className="col-md-6 col-lg-7 col-xl-8 room-body">
                             <h5 className="font-weight-bold mb-3 headings text-lg-start">Messages</h5>
-                            <ul className="list-unstyled">
+                            <ul className="list-unstyled" >
                                 {chatMessages.length ? chatMessages.map((messages) => {
                                     return (
-                                        <li key={uuid()} className="d-flex justify-content-between mb-4">
+                                        <li key={uuid()} ref={bottomRef} className="d-flex justify-content-between mb-4">
                                             <div className="card w-100">
                                                 <div className="card-header d-flex justify-content-between p-3">
                                                     <p className="fw-bold mb-0 text-success">
-                                                        {messages.receiver_id.id === +splitLocation[2] ? messages.user_receiver.name : messages.user_sender.name}
+                                                        {+messages.receiver_id.id === +splitLocation[2] ? messages.user_receiver.name : messages.user_sender.name}
                                                     </p>
                                                     <p className="text-muted small mb-0">
                                                         <i className="far fa-clock"/>
