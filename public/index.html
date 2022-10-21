@@ -34,6 +34,20 @@
             integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3"
             crossorigin="anonymous"
     />
+    <!--chat-->
+    <script src="https://js.pusher.com/7.2/pusher.min.js"></script>
+    <script>
+      // Enable pusher logging - don't include this in production
+      Pusher.logToConsole = true;
+
+      let pusher = new Pusher('6014ac3bdb98a5b9f8c9', {
+        cluster: 'mt1'
+      });
+      let channel = pusher.subscribe('chat');
+      channel.bind('chat-message', function(data) {
+        alert(JSON.stringify(data));
+      });
+    </script>
     <title>React App</title>
     </head>
     <body>

@@ -96,57 +96,59 @@ const Chat = () => {
                             </div>
                         </div>
     {/*active chat messages*/}
-                        <div className="col-md-6 col-lg-7 col-xl-8 room-body">
+                        <div className="col-md-6 col-lg-7 col-xl-8 ">
                             <h5 className="font-weight-bold mb-3 headings text-lg-start">Messages</h5>
-                            <ul className="list-unstyled" >
-                                {chatMessages.length ? chatMessages.map((messages) => {
-                                    return (
-                                        <li key={uuid()} ref={bottomRef} className="d-flex justify-content-between mb-4">
-                                            <div className="card w-100">
-                                                <div className="card-header d-flex justify-content-between p-3">
-                                                    <p className="fw-bold mb-0 text-success">
-                                                        {+messages.receiver_id.id === +splitLocation[2] ? messages.user_receiver.name : messages.user_sender.name}
-                                                    </p>
-                                                    <p className="text-muted small mb-0">
-                                                        <i className="far fa-clock"/>
-                                                        {messages.created_at.slice(0,10).split('-').reverse().join('-')+' '}
-                                                        {messages.created_at.slice(11,16)}
-                                                    </p>
-                                                </div>
+                            <div className='room-body'>
+                                <ul className="list-unstyled" >
+                                    {chatMessages.length ? chatMessages.map((messages) => {
+                                        return (
+                                            <li key={uuid()} ref={bottomRef} className="d-flex justify-content-between mb-4">
+                                                <div className="card w-100">
+                                                    <div className="card-header d-flex justify-content-between p-3">
+                                                        <p className="fw-bold mb-0 text-success">
+                                                            {+messages.receiver_id.id === +splitLocation[2] ? messages.user_receiver.name : messages.user_sender.name}
+                                                        </p>
+                                                        <p className="text-muted small mb-0">
+                                                            <i className="far fa-clock"/>
+                                                            {messages.created_at.slice(0,10).split('-').reverse().join('-')+' '}
+                                                            {messages.created_at.slice(11,16)}
+                                                        </p>
+                                                    </div>
 
-                                                <div className="card-body">
-                                                    <p className={+messages.receiver_id === +splitLocation[2] ? "mb-0 text-lg-end" : "text-lg-start mb-0"}>
-                                                        <b className="text-back bg-info text-white">{messages.message}</b>
-                                                    </p>
+                                                    <div className="card-body">
+                                                        <p className={+messages.receiver_id === +splitLocation[2] ? "mb-0 text-lg-end" : "text-lg-start mb-0"}>
+                                                            <b className="text-back bg-info text-white">{messages.message}</b>
+                                                        </p>
+                                                    </div>
                                                 </div>
-                                            </div>
-                                        </li>
-                                    )
-                                    }) : (<h4 className="my-5">Choose a room</h4>)
-                                }
+                                            </li>
+                                        )
+                                        }) : (<h4 className="my-5">Choose a room</h4>)
+                                    }
 
-                               <li className="row">
-                                   <div className="col-md-11">
-                                       <textarea
-                                           onChange={event => onChangeMsg(event)}
-                                           className="form-control"
-                                           id="textAreaExample2"
-                                           rows="1"
-                                           value={inputValue}
-                                           placeholder={messageText}
-                                       />
-                                   </div>
-                                   <div className="col-md-1">
-                                       <button
-                                           onClick={event => sendMessage(event, +splitLocation[2])}
-                                           type="button"
-                                           className="btn btn-primary btn-rounded float-end"
-                                       >
-                                           Send
-                                       </button>
-                                   </div>
-                               </li>
-                            </ul>
+                                   <li className="row">
+                                       <div className="col-md-11">
+                                           <textarea
+                                               onChange={event => onChangeMsg(event)}
+                                               className="form-control"
+                                               id="textAreaExample2"
+                                               rows="1"
+                                               value={inputValue}
+                                               placeholder={messageText}
+                                           />
+                                       </div>
+                                       <div className="col-md-1">
+                                           <button
+                                               onClick={event => sendMessage(event, +splitLocation[2])}
+                                               type="button"
+                                               className="btn btn-primary btn-rounded float-end"
+                                           >
+                                               Send
+                                           </button>
+                                       </div>
+                                   </li>
+                                </ul>
+                            </div>
                         </div>
                     </div>
                 </div>

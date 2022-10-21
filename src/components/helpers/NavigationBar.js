@@ -101,6 +101,9 @@ const NavigationBar = () => {
                                             <li className={splitLocation[1] === "admin-product-categories" ? "nav-item active" : "nav-item"}>
                                                 <Link className="nav-link" to="/admin-product-categories">Set categories</Link>
                                             </li>
+                                            <li className={splitLocation[1] === "chat" ? "nav-item active" : "nav-item"}>
+                                                <Link className="nav-link" to="/chat">Chat</Link>
+                                            </li>
                                         </>
                                 :
                                     // guest

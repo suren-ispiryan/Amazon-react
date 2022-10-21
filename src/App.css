@@ -317,7 +317,9 @@ a{
 
 .room-body {
   max-height: 60vh;
-  overflow: auto;
+  overflow-y: auto;
+  overflow-x: hidden;
+  padding: 5px;
 }
 
 .user-names {
