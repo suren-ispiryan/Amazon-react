@@ -29,7 +29,6 @@ function* getMessages() {
 function* getChosenUserMessages(action) {
     try {
         const response = yield axiosInstance.get(`/get-chosen-user-messages/${action.payload}`)
-        console.log(response.data)
         yield put({
             type: GET_CHOOSEN_USER_MESSAGES_SUCCESS,
             message: 'Can not find messages',

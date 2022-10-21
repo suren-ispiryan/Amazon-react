@@ -324,3 +324,8 @@ a{
   text-align: center !important;
   width: 100% !important;
 }
+
+.text-back {
+  padding: 10px;
+  border-radius: 5px;
+}
