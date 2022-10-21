@@ -1,28 +1,28 @@
 import {useEffect, useState} from 'react';
-import {GET_CHOOSEN_USER_MESSAGES_REQUEST, GET_MESSAGES_REQUEST} from '../../../redux/chat/actions';
+import {
+    GET_CHOOSEN_USER_MESSAGES_REQUEST,
+    GET_MESSAGES_REQUEST,
+    SEND_MESSAGE_REQUEST
+} from '../../../redux/chat/actions';
 import { useDispatch, useSelector } from 'react-redux';
 import uuid from "react-uuid";
 import {Link, useLocation} from "react-router-dom";
+
+const initialValue = 'Type a message';
+const initialValueOfInput = '';
 
 const Chat = () => {
     const dispatch = useDispatch();
     const {chatUsers} = useSelector((state) => state.chatUsers)
     const {chatMessages} = useSelector((state) => state.chatMessages)
     //send message
-    const [messageText, setMessageText] = useState('Type a message');
+    const [messageText, setMessageText] = useState(initialValue);
+    const [inputValue, setInputValue] = useState(initialValueOfInput);
     //active nav links
     const location = useLocation();
     const { pathname } = location;
     const splitLocation = pathname.split("/")
 
-    //send message
-    const onChangeMsg = (event) => {
-        setMessageText(event.target.value)
-    }
-
-    const sendMessage = (event, id) => {
-      console.log('msg', messageText)
-    }
     //get all chatusers
     useEffect(() => {
         dispatch({
@@ -35,6 +35,23 @@ const Chat = () => {
             type: GET_CHOOSEN_USER_MESSAGES_REQUEST,
             payload: id
         })
+    }
+    //send message
+    const onChangeMsg = (event) => {
+        setMessageText(event.target.value)
+        setInputValue(event.target.value)
+    }
+
+    const sendMessage = (event, id) => {
+        dispatch({
+            type: SEND_MESSAGE_REQUEST,
+            payload: {
+                id: id,
+                messageText: messageText
+            }
+        })
+        setInputValue(initialValueOfInput)
+        setMessageText(initialValue)
     }
 
     return (
@@ -92,7 +109,7 @@ const Chat = () => {
                                                 </div>
 
                                                 <div className="card-body">
-                                                    <p className={messages.receiver_id === +splitLocation[2] ? "mb-0 text-lg-start" : "text-lg-end mb-0"}>
+                                                    <p className={+messages.receiver_id === +splitLocation[2] ? "mb-0 text-lg-end" : "text-lg-start mb-0"}>
                                                         <b className="text-back bg-info text-white">{messages.message}</b>
                                                     </p>
                                                 </div>
@@ -109,6 +126,7 @@ const Chat = () => {
                                            className="form-control"
                                            id="textAreaExample2"
                                            rows="1"
+                                           value={inputValue}
                                            placeholder={messageText}
                                        />
                                    </div>

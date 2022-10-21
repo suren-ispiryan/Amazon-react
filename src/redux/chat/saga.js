@@ -7,6 +7,9 @@ import {
     GET_CHOOSEN_USER_MESSAGES_REQUEST,
     GET_CHOOSEN_USER_MESSAGES_SUCCESS,
     GET_CHOOSEN_USER_MESSAGES_FAILURE,
+    SEND_MESSAGE_REQUEST,
+    SEND_MESSAGE_SUCCESS,
+    SEND_MESSAGE_FAILURE,
 } from './actions'
 
 
@@ -42,7 +45,24 @@ function* getChosenUserMessages(action) {
     }
 }
 
+function* createMessage(action) {
+    try {
+        const response = yield axiosInstance.post(`/create-message/${action.payload.id}`, action.payload)
+        yield put({
+            type: SEND_MESSAGE_SUCCESS,
+            message: 'Can not create messages',
+            createdMessage: response.data
+        });
+    } catch (e) {
+        yield put({
+            type: SEND_MESSAGE_FAILURE,
+            message: 'Something went wrong'
+        });
+    }
+}
+
 export default function* chat() {
     yield takeLatest(GET_MESSAGES_REQUEST, getMessages);
     yield takeLatest(GET_CHOOSEN_USER_MESSAGES_REQUEST, getChosenUserMessages);
+    yield takeLatest(SEND_MESSAGE_REQUEST, createMessage);
 }
