@@ -296,9 +296,9 @@ a{
 }
 
 .controls {
-  position: absolute;
-  bottom: 150px;
-  width: 42%;
+  position: relative;
+  bottom: 0;
+  width: 100%;
 }
 
 /*chat*/
@@ -343,7 +343,10 @@ a{
   --epr-emoji-size: 20px !important;
 }
 
-.emoji{
+.emoji {
+  position: absolute;
+  max-width: 80%;
+  bottom: 50px;
   z-index: 100;
-   display: none;
+  display: none;
 }

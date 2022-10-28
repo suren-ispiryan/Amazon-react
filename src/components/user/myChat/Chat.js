@@ -177,7 +177,7 @@ const Chat = () => {
                                 (<div className="row controls">
                                     <div className="col-md-12 emoji" id="emoji" ref={emojiRef}>
                                         <EmojiPicker
-                                            height="300px"
+                                            height="340px"
                                             width="450px"
                                             theme="dark"
                                             emojiStyle="native" // google, apple, facebook, twitter, native
