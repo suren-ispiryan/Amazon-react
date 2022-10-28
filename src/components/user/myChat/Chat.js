@@ -141,9 +141,9 @@ const Chat = () => {
                             </div>
                         </div>
     {/*real time chat messages*/}
-                        <div className="col-md-6 col-lg-7 col-xl-8">
+                        <div className="col-md-6 col-lg-7 chat-cont col-xl-8">
                             <h5 className="font-weight-bold mb-3 headings text-lg-start">Messages</h5>
-                            <div className='room-body'>
+                            <div className='room-body body-messages'>
                                 <ul className="list-unstyled" id="chat-ul">
                                     {chatMessages.length ? chatMessages.map((messages) => {
                                         return (
@@ -213,7 +213,7 @@ const Chat = () => {
                                             Send
                                         </button>
                                     </div>
-                                </div>) : (<h4 className="my-5">Choose a room</h4>)
+                                </div>) : (<h4 className="my-5 choose-room-message">Choose a room</h4>)
                             }
                         </div>
                     </div>

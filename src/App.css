@@ -323,10 +323,23 @@ a{
 }
 
 .room-body {
-  max-height: 50vh;
+  max-height: 90%;
   overflow-y: auto;
   overflow-x: hidden;
   padding: 5px;
+}
+
+.body-messages {
+  height: 100%;
+}
+
+.chat-cont {
+  height: 68vh;
+}
+
+.choose-room-message {
+  position: relative;
+  bottom: 500px;
 }
 
 .user-names {
