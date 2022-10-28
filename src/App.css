@@ -295,11 +295,18 @@ a{
   font-style: italic;
 }
 
+.controls {
+  position: absolute;
+  bottom: 150px;
+  width: 42%;
+}
+
 /*chat*/
 .chat-box {
   border: 1px black solid;
   background-color: #eee;
   margin: 30px;
+  min-height: 70vh;
 }
 
 .chat-active-room {
@@ -316,7 +323,7 @@ a{
 }
 
 .room-body {
-  max-height: 60vh;
+  max-height: 50vh;
   overflow-y: auto;
   overflow-x: hidden;
   padding: 5px;
@@ -337,5 +344,6 @@ a{
 }
 
 .emoji{
+  z-index: 100;
    display: none;
 }
