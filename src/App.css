@@ -331,3 +331,11 @@ a{
   padding: 10px;
   border-radius: 5px;
 }
+
+.EmojiPickerReact {
+  --epr-emoji-size: 20px !important;
+}
+
+.emoji{
+   display: none;
+}

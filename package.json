@@ -10,10 +10,13 @@
     "axios": "^0.27.2",
     "bootstrap": "^5.1.3",
     "clone-deep": "^4.0.1",
+    "clsx": "^1.2.1",
+    "emoji-picker-react": "^4.4.4",
     "formik": "^2.2.9",
     "hex-color-to-color-name": "^1.0.2",
     "js-cookie": "^3.0.1",
     "jwt-decode": "^3.1.2",
+    "npm-watch": "^0.11.0",
     "react": "^18.2.0",
     "react-axios": "^2.0.6",
     "react-bootstrap": "^2.4.0",
@@ -34,7 +37,8 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "watch": "react-scripts start"
   },
   "eslintConfig": {
     "extends": [
@@ -53,5 +57,9 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "laravel-echo": "^1.14.1",
+    "pusher-js": "^7.4.0"
   }
 }

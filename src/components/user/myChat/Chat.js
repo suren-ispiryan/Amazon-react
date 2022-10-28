@@ -7,7 +7,10 @@ import {
 import { useDispatch, useSelector } from 'react-redux';
 import uuid from "react-uuid";
 import {Link, useLocation} from "react-router-dom";
-
+// Broadcasting
+import Pusher from 'pusher-js';
+//emoji
+import EmojiPicker from 'emoji-picker-react';
 const initialValue = 'Type a message';
 const initialValueOfInput = '';
 
@@ -15,7 +18,7 @@ const Chat = () => {
     const dispatch = useDispatch();
     const {chatUsers} = useSelector((state) => state.chatUsers)
     const {chatMessages} = useSelector((state) => state.chatMessages)
-    //send message
+    // Broadcasting
     const [messageText, setMessageText] = useState(initialValue);
     const [inputValue, setInputValue] = useState(initialValueOfInput);
     //active nav links
@@ -24,8 +27,9 @@ const Chat = () => {
     const splitLocation = pathname.split("/")
 
     const bottomRef = useRef(null);
+    const emojiRef = useRef(null);
 
-    //get all chatusers
+    //get all chatUsers
     useEffect(() => {
         dispatch({
             type: GET_MESSAGES_REQUEST
@@ -37,8 +41,42 @@ const Chat = () => {
             type: GET_CHOOSEN_USER_MESSAGES_REQUEST,
             payload: id
         })
+        //broadcasting
+        Pusher.logToConsole = true;
+
+        let pusher = new Pusher('6014ac3bdb98a5b9f8c9', {cluster: 'mt1'})
+
+        // pusher.subscribe('chat')
+        let channel = pusher.subscribe('chat')
+
+        // pusher.connection.bind('message', function(messages) {
+        channel.bind('message', function(messages) {
+            console.log('11111111111', messages)
+            let newMessage ='' +
+                '<li key='+uuid()+' ref='+bottomRef+' className="d-flex justify-content-between mb-4">' +
+                    '<div className="card w-100">' +
+                        '<div className="card-header d-flex justify-content-between p-3">' +
+                            '<p className="fw-bold mb-0 text-success">'
+                                +(+messages.receiver_id.id === +splitLocation[2]) ? messages.user_receiver.name : messages.user_sender.name+'' +
+                            '</p>' +
+                            '<p className="text-muted small mb-0"> ' +
+                                '<i className="far fa-clock"/>' +
+                            '</p>' +
+                        '</div>' +
+                        '<div className="card-body"> ' +
+                            '<p className='+(+messages.receiver_id === +splitLocation[2]) ? + "mb-0 text-lg-end" : + "text-lg-start mb-0" +'>' +
+                                '<b className="text-back bg-info text-white">'+messages.message+'</b>' +
+                            '</p>' +
+                        '</div>' +
+                    '</div>' +
+                '</li>'
+            document.getElementById('chat-ul').innerHTML += newMessage;
+        })
+        return (() => {
+            pusher.unsubscribe('message')
+        })
     }
-    //send message
+
     const onChangeMsg = (event) => {
         setMessageText(event.target.value)
         setInputValue(event.target.value)
@@ -49,7 +87,7 @@ const Chat = () => {
             type: SEND_MESSAGE_REQUEST,
             payload: {
                 id: id,
-                messageText: messageText
+                messageText: inputValue
             }
         })
         setInputValue(initialValueOfInput)
@@ -59,10 +97,20 @@ const Chat = () => {
     useEffect(() => {
         bottomRef.current?.scrollIntoView();
     }, [chatMessages]);
+    //emoji 
+    const addEmoji = (e) => {
+      setInputValue(inputValue+e.emoji)
+    }
+
+    const toggleEmoji = () => {
+        emojiRef.current.style.display === "none" ?
+        emojiRef.current.style.display = "block" :
+        emojiRef.current.style.display = "none"
+    }
 
     return (
-        <>
-            <h4 className="mt-5 mb-4">Chat rooms</h4>
+        <div className="container">
+            <h4 className="mt-5">Chat rooms</h4>
             <section className="chat-box">
                 <div className="container py-5">
                     <div className="row">
@@ -71,7 +119,7 @@ const Chat = () => {
                             <div className="card">
                                 <div className="card-body">
                                     <ul className="list-unstyled mb-0 room-body">
-    {/*active chat*/}
+    {/*real time chat members*/}
                                         {chatUsers ? chatUsers.map((user) => {
                                             return (
                                                 <li
@@ -95,14 +143,14 @@ const Chat = () => {
                                 </div>
                             </div>
                         </div>
-    {/*active chat messages*/}
+    {/*real time chat messages*/}
                         <div className="col-md-6 col-lg-7 col-xl-8 ">
                             <h5 className="font-weight-bold mb-3 headings text-lg-start">Messages</h5>
                             <div className='room-body'>
-                                <ul className="list-unstyled" >
+                                <ul className="list-unstyled" id="chat-ul">
                                     {chatMessages.length ? chatMessages.map((messages) => {
                                         return (
-                                            <li key={uuid()} ref={bottomRef} className="d-flex justify-content-between mb-4">
+                                            <li key={uuid()} className="d-flex justify-content-between mb-4">
                                                 <div className="card w-100">
                                                     <div className="card-header d-flex justify-content-between p-3">
                                                         <p className="fw-bold mb-0 text-success">
@@ -123,37 +171,58 @@ const Chat = () => {
                                                 </div>
                                             </li>
                                         )
-                                        }) : (<h4 className="my-5">Choose a room</h4>)
+                                        }) : (<p/>)
                                     }
-
-                                   <li className="row">
-                                       <div className="col-md-11">
-                                           <textarea
-                                               onChange={event => onChangeMsg(event)}
-                                               className="form-control"
-                                               id="textAreaExample2"
-                                               rows="1"
-                                               value={inputValue}
-                                               placeholder={messageText}
-                                           />
-                                       </div>
-                                       <div className="col-md-1">
-                                           <button
-                                               onClick={event => sendMessage(event, +splitLocation[2])}
-                                               type="button"
-                                               className="btn btn-primary btn-rounded float-end"
-                                           >
-                                               Send
-                                           </button>
-                                       </div>
-                                   </li>
                                 </ul>
+    {/*real time chat controls*/}
+                                {chatMessages.length ?
+                                    (<div className="row" ref={bottomRef}>
+                                        <div className="col-md-12 d-flex flex-wrap-nowrap my-1" id="textAreaExample2">
+                                            <textarea
+                                                onChange={event => onChangeMsg(event)}
+                                                className="form-control my-1"
+                                                rows="1"
+                                                value={inputValue}
+                                                placeholder={messageText}
+                                            />
+
+                                            <button
+                                                onClick={toggleEmoji}
+                                                type="button"
+                                                className="btn btn-success btn-rounded float-end mx-2 form-text"
+                                            >
+                                                Emoji
+                                            </button>
+
+                                            <button
+                                                onClick={event => sendMessage(event, +splitLocation[2])}
+                                                type="button"
+                                                className="btn btn-primary btn-rounded float-end form-text"
+                                            >
+                                                Send
+                                            </button>
+                                        </div>
+
+                                        <div className="col-md-12 emoji" id="emoji" ref={emojiRef}>
+                                            <EmojiPicker
+                                                height="300px"
+                                                width="450px"
+                                                theme="dark"
+                                                emojiStyle="native" // google, apple, facebook, twitter, native
+                                                suggestedEmojisMode='frequent' // recent
+                                                autoFocusSearch={false}
+                                                skinTonePickerLocation="PREVIEW"
+                                                onEmojiClick={event => addEmoji(event)}
+                                            />
+                                        </div>
+                                    </div>) : (<h4 className="my-5">Choose a room</h4>)
+                                }
                             </div>
                         </div>
                     </div>
                 </div>
             </section>
-        </>
+        </div>
     );
 }
 
