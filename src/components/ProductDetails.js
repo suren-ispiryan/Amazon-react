@@ -1,5 +1,5 @@
-import { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import {useEffect, useRef, useState} from 'react';
+import {useLocation, useParams} from 'react-router-dom';
 import {GET_PRODUCTDETAILS_REQUEST} from '../redux/allProducts/actions';
 import { useDispatch, useSelector } from 'react-redux';
 import uuid from 'react-uuid';
@@ -20,6 +20,10 @@ import {
     LIKE_PRODUCTS_REQUEST,
     UNLIKE_PRODUCTS_REQUEST
 } from "../redux/productLikes/actions";
+import EmojiPicker from "emoji-picker-react";
+import {SEND_MESSAGE_REQUEST} from "../redux/chat/actions";
+const initialValue = 'Type a message';
+const initialValueOfInput = '';
 
 const ProductDetails = () => {
     let { id } = useParams();
@@ -36,6 +40,14 @@ const ProductDetails = () => {
     const [productComment, setProductComment] = useState({comment: ''});
     const {productComments, authUserId, loadingComents, message} = useSelector((state) => state.productComments)
     const [authId, setAuthId] = useState(null)
+//message
+    const [messageText, setMessageText] = useState(initialValue);
+    const [inputValue, setInputValue] = useState(initialValueOfInput)
+    const emojiRef = useRef(null);
+    const [openEmoji, setOpenEmoji] = useState('none');
+    const location = useLocation();
+    const { pathname } = location;
+    const splitLocation = pathname.split("/")
 
 // product details
     const handleClose = () => setShow(false);
@@ -171,6 +183,35 @@ const ProductDetails = () => {
         })
     }
 
+    //message
+    const onChangeMsg = (event) => {
+        setMessageText(event.target.value)
+        setInputValue(event.target.value)
+    }
+
+    const toggleEmoji = () => {
+        emojiRef.current.style.display === 'none' ?
+            setOpenEmoji('block') :
+            setOpenEmoji('none')
+    }
+
+    const sendMessage = (event, id) => {
+        dispatch({
+            type: SEND_MESSAGE_REQUEST,
+            payload: {
+                id: id,
+                messageText: inputValue
+            }
+        })
+        setInputValue(initialValueOfInput)
+        setMessageText(initialValue)
+        setOpenEmoji('none')
+    }
+
+    const addEmoji = (e) => {
+        setInputValue(inputValue+e.emoji)
+    }
+
     return (
         <div>
             {loading
@@ -263,6 +304,55 @@ const ProductDetails = () => {
                                 <h4 className="text-danger mt-5">{detailsMessage}</h4>
                             )
                         }
+{/*message*/}
+                        <div className="container p-5">
+                            <h4>Send message</h4>
+                            <div className="row controls">
+                                <div className="col-md-12 d-flex flex-wrap-nowrap my-1" id="textAreaExample2">
+                                    <textarea
+                                        onChange={event => onChangeMsg(event)}
+                                        className="form-control my-1"
+                                        rows="1"
+                                        value={inputValue}
+                                        placeholder={messageText}
+                                    />
+
+                                    <button
+                                        onClick={toggleEmoji}
+                                        type="button"
+                                        className="btn btn-success btn-rounded float-end mx-2 form-text"
+                                    >
+                                        Emoji
+                                    </button>
+
+                                    <button
+                                        onClick={event => sendMessage(event, +splitLocation[2])}
+                                        type="button"
+                                        className="btn btn-primary btn-rounded float-end form-text"
+                                    >
+                                        Send
+                                    </button>
+                                </div>
+
+                                <div
+                                    style={{display: openEmoji}}
+                                    className="col-md-12 emoji"
+                                    id="emoji"
+                                    ref={emojiRef}
+                                >
+                                    <EmojiPicker
+                                        height="340px"
+                                        width="450px"
+                                        theme="dark"
+                                        emojiStyle="native" // google, apple, facebook, twitter, native
+                                        suggestedEmojisMode='frequent' // recent
+                                        autoFocusSearch={false}
+                                        skinTonePickerLocation="PREVIEW"
+                                        onEmojiClick={event => addEmoji(event)}
+                                    />
+                                </div>
+                            </div>
+                        </div>
 {/*comments*/}
                         {/*add comment*/}
                         <div className="container pt-4 px-5">
@@ -360,8 +450,7 @@ const ProductDetails = () => {
                                 )
                             }
                         </div>
-
-                        {/* add to cart MODAL */}
+{/* add to cart MODAL */}
                         <Modal show={show} onHide={handleClose}>
                             <Modal.Header closeButton>
                                 <Modal.Title>Choose product count, max {stock}</Modal.Title>
