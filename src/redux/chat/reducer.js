@@ -2,9 +2,9 @@ import {
     GET_MESSAGES_REQUEST,
     GET_MESSAGES_SUCCESS,
     GET_MESSAGES_FAILURE,
-    GET_CHOOSEN_USER_MESSAGES_REQUEST,
-    GET_CHOOSEN_USER_MESSAGES_SUCCESS,
-    GET_CHOOSEN_USER_MESSAGES_FAILURE,
+    GET_CHOSEN_USER_MESSAGES_REQUEST,
+    GET_CHOSEN_USER_MESSAGES_SUCCESS,
+    GET_CHOSEN_USER_MESSAGES_FAILURE,
     SEND_MESSAGE_REQUEST,
     SEND_MESSAGE_SUCCESS,
     SEND_MESSAGE_FAILURE,
@@ -38,21 +38,21 @@ const chatReducer = (state = initialState, action) => {
                 loading: false,
                 message: action.message
             }
-        case GET_CHOOSEN_USER_MESSAGES_REQUEST:
+        case GET_CHOSEN_USER_MESSAGES_REQUEST:
             return {
                 ...state,
                 loading: true,
                 message: '',
                 chatMessages: []
             }
-        case GET_CHOOSEN_USER_MESSAGES_SUCCESS:
+        case GET_CHOSEN_USER_MESSAGES_SUCCESS:
             return {
                 ...state,
                 loading: false,
                 chatMessages: action.chosenUserMessages,
                 message: action.message
             }
-        case GET_CHOOSEN_USER_MESSAGES_FAILURE:
+        case GET_CHOSEN_USER_MESSAGES_FAILURE:
             return {
                 ...state,
                 loading: false,

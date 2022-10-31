@@ -1,6 +1,6 @@
 import {useEffect, useRef, useState} from 'react';
 import {
-    GET_CHOOSEN_USER_MESSAGES_REQUEST,
+    GET_CHOSEN_USER_MESSAGES_REQUEST,
     GET_MESSAGES_REQUEST,
     SEND_MESSAGE_REQUEST
 } from '../../../redux/chat/actions';
@@ -29,6 +29,8 @@ const Chat = () => {
     const bottomRef = useRef(null);
     const emojiRef = useRef(null);
 
+    const [openEmoji, setOpenEmoji] = useState('none');
+
     //get all chatUsers
     useEffect(() => {
         dispatch({
@@ -38,39 +40,39 @@ const Chat = () => {
     //get chosen user chat messages
     const getChatMessages = (event, id) => {
         dispatch({
-            type: GET_CHOOSEN_USER_MESSAGES_REQUEST,
+            type: GET_CHOSEN_USER_MESSAGES_REQUEST,
             payload: id
         })
         Pusher.logToConsole = true;
-        let pusher = new Pusher('6014ac3bdb98a5b9f8c9', {cluster: 'mt1'})
-        // pusher.subscribe('chat')
+
+        let pusher = new Pusher('6014ac3bdb98a5b9f8c9')
+
         let channel = pusher.subscribe('chat')
-        // pusher.connection.bind('message', function(messages) {
-        channel.bind('message', function(messages) {
-            console.log('11111111111', messages)
-            let newMessage ='' +
+
+        let callback = (messages) => {
+            console.log('Message', messages)
+            let newMessage =
                 '<li key='+uuid()+' ref='+bottomRef+' className="d-flex justify-content-between mb-4">' +
                     '<div className="card w-100">' +
                         '<div className="card-header d-flex justify-content-between p-3">' +
-                            '<p className="fw-bold mb-0 text-success">'
-                                +(+messages.receiver_id.id === +splitLocation[2]) ? messages.user_receiver.name : messages.user_sender.name+'' +
+                            '<p className="fw-bold mb-0 text-success">' +
+                                (+messages.receiver_id.id === +splitLocation[2]) ? messages.user_receiver.name : messages.user_sender.name + '' +
                             '</p>' +
                             '<p className="text-muted small mb-0"> ' +
                                 '<i className="far fa-clock"/>' +
                             '</p>' +
                         '</div>' +
                         '<div className="card-body"> ' +
-                            '<p className='+(+messages.receiver_id === +splitLocation[2]) ? + "mb-0 text-lg-end" : + "text-lg-start mb-0" +'>' +
+                            '<p className='+(+messages.receiver_id === +splitLocation[2]) ? (+ "mb-0 text-lg-end") : (+ "text-lg-start mb-0") +'>' +
                                 '<b className="text-back bg-info text-white">'+messages.message+'</b>' +
                             '</p>' +
                         '</div>' +
                     '</div>' +
                 '</li>'
             document.getElementById('chat-ul').innerHTML += newMessage;
-        })
-        return (() => {
-            pusher.unsubscribe('message')
-        })
+        }
+
+        channel.bind('message', callback)
     }
 
     const sendMessage = (event, id) => {
@@ -100,23 +102,22 @@ const Chat = () => {
     }
 
     const toggleEmoji = () => {
-        emojiRef.current.style.display === "none" ?
-        emojiRef.current.style.display = "block" :
-        emojiRef.current.style.display = "none"
+        emojiRef.current.style.display === 'none' ?
+        setOpenEmoji('block') :
+        setOpenEmoji('none')
     }
-
     return (
         <div className="container">
-            <h4 className="mt-5">Chat rooms</h4>
+            <h4 className="mt-4">Chat rooms</h4>
             <section className="chat-box">
                 <div className="container py-5">
                     <div className="row">
                         <div className="col-md-6 col-lg-5 col-xl-4 mb-4 mb-md-0">
                             <h5 className="font-weight-bold mb-3 headings text-lg-start">Rooms</h5>
+    {/*real time chat members*/}
                             <div className="card">
                                 <div className="card-body">
                                     <ul className="list-unstyled mb-0 room-body">
-    {/*real time chat members*/}
                                         {chatUsers ? chatUsers.map((user) => {
                                             return (
                                                 <li
@@ -175,19 +176,6 @@ const Chat = () => {
     {/*real time chat controls*/}
                             {chatMessages.length ?
                                 (<div className="row controls">
-                                    <div className="col-md-12 emoji" id="emoji" ref={emojiRef}>
-                                        <EmojiPicker
-                                            height="340px"
-                                            width="450px"
-                                            theme="dark"
-                                            emojiStyle="native" // google, apple, facebook, twitter, native
-                                            suggestedEmojisMode='frequent' // recent
-                                            autoFocusSearch={false}
-                                            skinTonePickerLocation="PREVIEW"
-                                            onEmojiClick={event => addEmoji(event)}
-                                        />
-                                    </div>
-
                                     <div className="col-md-12 d-flex flex-wrap-nowrap my-1" id="textAreaExample2">
                                         <textarea
                                             onChange={event => onChangeMsg(event)}
@@ -213,7 +201,29 @@ const Chat = () => {
                                             Send
                                         </button>
                                     </div>
-                                </div>) : (<h4 className="my-5 choose-room-message">Choose a room</h4>)
+
+                                    <div
+                                        style={{display: openEmoji}}
+                                        className="col-md-12 emoji"
+                                        id="emoji"
+                                        ref={emojiRef}
+                                    >
+                                        <EmojiPicker
+                                            height="340px"
+                                            width="450px"
+                                            theme="dark"
+                                            emojiStyle="native" // google, apple, facebook, twitter, native
+                                            suggestedEmojisMode='frequent' // recent
+                                            autoFocusSearch={false}
+                                            skinTonePickerLocation="PREVIEW"
+                                            onEmojiClick={event => addEmoji(event)}
+                                        />
+                                    </div>
+                                </div>)
+                                :
+                                (<h4 className="my-5 choose-room-message">
+                                    Choose a room
+                                </h4>)
                             }
                         </div>
                     </div>

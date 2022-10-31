@@ -4,9 +4,9 @@ import {
     GET_MESSAGES_REQUEST,
     GET_MESSAGES_SUCCESS,
     GET_MESSAGES_FAILURE,
-    GET_CHOOSEN_USER_MESSAGES_REQUEST,
-    GET_CHOOSEN_USER_MESSAGES_SUCCESS,
-    GET_CHOOSEN_USER_MESSAGES_FAILURE,
+    GET_CHOSEN_USER_MESSAGES_REQUEST,
+    GET_CHOSEN_USER_MESSAGES_SUCCESS,
+    GET_CHOSEN_USER_MESSAGES_FAILURE,
     SEND_MESSAGE_REQUEST,
     SEND_MESSAGE_SUCCESS,
     SEND_MESSAGE_FAILURE,
@@ -33,13 +33,13 @@ function* getChosenUserMessages(action) {
     try {
         const response = yield axiosInstance.get(`/get-chosen-user-messages/${action.payload}`)
         yield put({
-            type: GET_CHOOSEN_USER_MESSAGES_SUCCESS,
+            type: GET_CHOSEN_USER_MESSAGES_SUCCESS,
             message: 'Can not find messages',
             chosenUserMessages: response.data
         });
     } catch (e) {
         yield put({
-            type: GET_CHOOSEN_USER_MESSAGES_FAILURE,
+            type: GET_CHOSEN_USER_MESSAGES_FAILURE,
             message: 'Something went wrong'
         });
     }
@@ -63,6 +63,6 @@ function* createMessage(action) {
 
 export default function* chat() {
     yield takeLatest(GET_MESSAGES_REQUEST, getMessages);
-    yield takeLatest(GET_CHOOSEN_USER_MESSAGES_REQUEST, getChosenUserMessages);
+    yield takeLatest(GET_CHOSEN_USER_MESSAGES_REQUEST, getChosenUserMessages);
     yield takeLatest(SEND_MESSAGE_REQUEST, createMessage);
 }

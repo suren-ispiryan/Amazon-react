@@ -296,6 +296,7 @@ a{
 }
 
 .controls {
+  left: 6px;
   position: relative;
   bottom: 0;
   width: 100%;
@@ -353,7 +354,7 @@ a{
 }
 
 .EmojiPickerReact {
-  --epr-emoji-size: 20px !important;
+  --epr-emoji-size: 25px !important;
 }
 
 .emoji {
@@ -361,5 +362,4 @@ a{
   max-width: 80%;
   bottom: 50px;
   z-index: 100;
-  display: none;
 }
