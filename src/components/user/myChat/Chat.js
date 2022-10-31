@@ -105,6 +105,7 @@ const Chat = () => {
         setOpenEmoji('block') :
         setOpenEmoji('none')
     }
+
     return (
         <div className="container">
             <h4 className="mt-4">Chat rooms</h4>
@@ -161,7 +162,7 @@ const Chat = () => {
                                                     </div>
 
                                                     <div ref={bottomRef} className="card-body">
-                                                        <p className={+messages.receiver_id === +splitLocation[2] ? "mb-0 text-lg-end" : "text-lg-start mb-0"}>
+                                                        <p className={+messages.receiver_id === +splitLocation[2] ? "mb-0 text-end" : "text-start mb-0"}>
                                                             <b className="text-back bg-info text-white">{messages.message}</b>
                                                         </p>
                                                     </div>
