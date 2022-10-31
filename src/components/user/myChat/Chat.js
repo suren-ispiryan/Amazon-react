@@ -25,10 +25,9 @@ const Chat = () => {
     const location = useLocation();
     const { pathname } = location;
     const splitLocation = pathname.split("/")
-
     const bottomRef = useRef(null);
+    //emoji
     const emojiRef = useRef(null);
-
     const [openEmoji, setOpenEmoji] = useState('none');
 
     //get all chatUsers
@@ -85,7 +84,7 @@ const Chat = () => {
         })
         setInputValue(initialValueOfInput)
         setMessageText(initialValue)
-        emojiRef ? emojiRef.current.style.display = "none" : console.log('')
+        setOpenEmoji('none')
     }
 
     const onChangeMsg = (event) => {
