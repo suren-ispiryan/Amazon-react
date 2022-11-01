@@ -206,6 +206,7 @@ const ProductDetails = () => {
         setInputValue(initialValueOfInput)
         setMessageText(initialValue)
         setOpenEmoji('none')
+        alert('Message sent successfully')
     }
 
     const addEmoji = (e) => {

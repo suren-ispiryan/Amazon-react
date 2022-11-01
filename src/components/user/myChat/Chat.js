@@ -42,35 +42,33 @@ const Chat = () => {
             type: GET_CHOSEN_USER_MESSAGES_REQUEST,
             payload: id
         })
-        Pusher.logToConsole = true;
-
+        // Pusher.logToConsole = true;
         let pusher = new Pusher('6014ac3bdb98a5b9f8c9')
-
         let channel = pusher.subscribe('chat')
-
-        let callback = (messages) => {
-            console.log('Message', messages)
-            let newMessage =
-                '<li key='+uuid()+' ref='+bottomRef+' className="d-flex justify-content-between mb-4">' +
-                    '<div className="card w-100">' +
-                        '<div className="card-header d-flex justify-content-between p-3">' +
-                            '<p className="fw-bold mb-0 text-success">' +
-                                (+messages.receiver_id.id === +splitLocation[2]) ? messages.user_receiver.name : messages.user_sender.name + '' +
-                            '</p>' +
-                            '<p className="text-muted small mb-0"> ' +
-                                '<i className="far fa-clock"/>' +
-                            '</p>' +
-                        '</div>' +
-                        '<div className="card-body"> ' +
-                            '<p className='+(+messages.receiver_id === +splitLocation[2]) ? (+ "mb-0 text-lg-end") : (+ "text-lg-start mb-0") +'>' +
-                                '<b className="text-back bg-info text-white">'+messages.message+'</b>' +
-                            '</p>' +
-                        '</div>' +
-                    '</div>' +
-                '</li>'
-            document.getElementById('chat-ul').innerHTML += newMessage;
+        let callback = (data) => {
+            console.log(data.fullMessage)
+            // let newMessage =
+            //     '<li key='+uuid()+' className="d-flex justify-content-between mb-4">' +
+            //         '<div className="card w-100">' +
+            //             '<div className="card-header d-flex justify-content-between p-3">' +
+            //                 '<p className="fw-bold mb-0 text-success">' +
+            //                     (+messages.fullMessage.receiver_id.id === +splitLocation[2]) ? messages.fullMessage.user_receiver.name : messages.fullMessage.user_sender.name + '' +
+            //                 '</p>' +
+            //                 '<p className="text-muted small mb-0"> ' +
+            //                     '<i className="far fa-clock"/>' +
+            //                         (messages.fullMessage.created_at.slice(0,10).split('-').reverse().join('-') +' ')+ '' +
+            //                         (messages.fullMessage.created_at.slice(11,16)) + '' +
+            //                 '</p>' +
+            //             '</div>' +
+            //             '<div ref='+bottomRef+' className="card-body"> ' +
+            //                 '<p className='+(+messages.fullMessage.receiver_id === +splitLocation[2]) ? (+ "mb-0 text-lg-end") : (+ "text-lg-start mb-0") +'>' +
+            //                     '<b className="text-back bg-info text-white">'+messages.fullMessage.message+'</b>' +
+            //                 '</p>' +
+            //             '</div>' +
+            //         '</div>' +
+            //     '</li>'
+            // document.getElementById('chat-ul').innerHTML += newMessage;
         }
-
         channel.bind('message', callback)
     }
 
