@@ -208,7 +208,7 @@ const Chat = () => {
                                     >
                                         <EmojiPicker
                                             height="340px"
-                                            width="450px"
+                                            width="100%"
                                             theme="dark"
                                             emojiStyle="native" // google, apple, facebook, twitter, native
                                             suggestedEmojisMode='frequent' // recent

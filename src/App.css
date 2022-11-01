@@ -359,8 +359,7 @@ a{
 
 .emoji {
   position: absolute;
-  max-width: 80%;
+  max-width: 450px;
   bottom: 50px;
   z-index: 100;
-  overflow: auto;
 }
