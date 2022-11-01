@@ -362,5 +362,5 @@ a{
   max-width: 80%;
   bottom: 50px;
   z-index: 100;
-  overflow: hidden auto;
+  overflow: auto;
 }
